@@ -53,16 +53,16 @@
 ### 2. Base de données et authentification [ ]
 
 - [x] Configurer PostgreSQL (variable `DATABASE_URL` déjà définie)
-- [ ] Initialiser Prisma (`npx prisma init`)
-- [ ] Définir le schéma Prisma:
+- [x] Initialiser Prisma (`npx prisma init`)
+- [x] Définir le schéma Prisma:
   - Modèle `User`
   - Modèle `Product`
   - Modèle `Category`
   - Modèle `Order`
   - Modèle `Review`
   - Modèle `Cart`
-- [ ] Générer les migrations (`npx prisma migrate dev`)
-- [ ] Créer un script de seed
+- [x] Générer les migrations (`npx prisma migrate dev`)
+- [x] Créer un script de seed
 - [ ] Mettre en place NextAuth.js:
   - Credentials (email/mot de passe)
   - OAuth (Google, GitHub)
