@@ -1,0 +1,162 @@
+# Cursor Rules
+
+## Instructions
+
+- Record fixes for mistakes or corrections to avoid repetition in the `Lessons` section.
+- Organize thoughts and plan steps before starting a task in the `Scratchpad` section.
+- Clear old tasks if necessary.
+- Use todo markers for progress tracking:
+  - `[X]` Completed tasks
+  - `[ ]` Pending tasks
+- Update Scratchpad after completing subtasks.
+- Reflect and plan after milestones for better task management.
+- Always refer to Scratchpad before planning the next step.
+
+## Lessons
+
+1. Use `npx shadcn@latest add [component]` instead of `npx shadcn-ui@latest add [component]` when installing Shadcn UI components.
+2. In Next.js 14+, page props params must be typed as a Promise. Example:
+   ```typescript
+   type tParams = Promise<{ id: string }>
+   interface PageProps {
+     params: tParams
+   }
+   ```
+   Then await the params in the component:
+   ```typescript
+   export default async function Page(props: PageProps) {
+     const { id } = await props.params
+   }
+   ```
+3. Use `const session = await auth()` instead of `const session = await getServerSession(authOptions)` for Next.js authentication. The new `auth()` function is the recommended way to get the session in Next.js Auth v5.
+4. When importing `useRouter` from 'next/navigation', the component must be marked as a client component using the `'use client'` directive at the top of the file, as this hook only works on the client side.
+
+## Scratchpad
+### 1. Mise en place du projet et configuration [ ]
+
+- [x] Initialiser un projet Next.js 15 avec TypeScript
+- [x] Structurer les dossiers et l’architecture (`app`, `components`, `lib`, `hooks`, `server`, etc.)
+- [x] Configurer ESLint et Prettier
+- [ ] Installer et configurer les dépendances:
+  - [x] Shadcn UI
+  - [x] Lucide
+  - [x] Zod (validation)
+  - [x] Zustand (state management)
+  - [x] Recharts (graphiques)
+  - [x] Resend (emails)
+  - [x] Uploadthing (upload)
+  - [x] Prisma (ORM)
+  - [x] PostgreSQL (base de données)
+  - [x] next-auth@beta (authentification)
+  - [x] Stripe (paiements)
+
+### 2. Base de données et authentification [ ]
+
+- [x] Configurer PostgreSQL (variable `DATABASE_URL` déjà définie)
+- [ ] Initialiser Prisma (`npx prisma init`)
+- [ ] Définir le schéma Prisma:
+  - Modèle `User`
+  - Modèle `Product`
+  - Modèle `Category`
+  - Modèle `Order`
+  - Modèle `Review`
+  - Modèle `Cart`
+- [ ] Générer les migrations (`npx prisma migrate dev`)
+- [ ] Créer un script de seed
+- [ ] Mettre en place NextAuth.js:
+  - Credentials (email/mot de passe)
+  - OAuth (Google, GitHub)
+  - JWT (callbacks, claims, rotation)
+  - Routes protégées (middleware)
+
+### 3. Design system et fondations UI [ ]
+
+- [x] Installer Shadcn et configurer le thème
+- [ ] Ajouter les composants de base:
+  - Button, Input, Select, Card, Dialog, Dropdown Menu, Sheet, Tabs, Tooltip
+  - Table, Skeleton, Toast/Toaster, Badge, Breadcrumb
+- [x] Intégrer les icônes Lucide
+
+### 4. Parcours client (front office) [ ]
+
+- [ ] Layout d’accueil:
+  - En-tête (logo, recherche, navigation)
+  - Pied de page (liens, réseaux)
+- [ ] Page d’accueil:
+  - Carrousel de bannières
+  - Produits récents / populaires
+- [ ] Catalogue produits:
+  - Catégories, filtres, tri, recherche
+  - Grille produits et pagination
+- [ ] Page produit:
+  - Galerie images
+  - Infos (titre, prix, description, stock)
+  - Bouton ajouter au panier
+  - Avis et notes
+  - Produits similaires
+- [ ] Panier:
+  - Ajout/suppression/mise à jour quantités
+  - Persistance (Zustand + storage)
+- [ ] Checkout:
+  - Adresse et livraison
+  - Paiement Stripe (SDK + webhooks)
+  - Confirmation de commande
+- [ ] Espace utilisateur:
+  - Historique commandes
+  - Profil et adresses
+  - Wishlist
+
+### 5. Tableau de bord administrateur (back office) [ ]
+
+- [ ] Authentification/autorisation admin
+- [ ] Vue d’ensemble (dashboard):
+  - Cartes KPI (CA, commandes, clients, panier moyen)
+  - Graphiques Recharts (revenus, vol. commandes, statuts)
+  - Table des commandes récentes (tri/filtre/actions rapides)
+- [ ] Gestion produits:
+  - CRUD produits
+  - Upload d’images (Uploadthing)
+  - Catégories et stocks
+- [ ] Gestion commandes:
+  - Traitement, mise à jour statuts, remboursements
+- [ ] Gestion utilisateurs:
+  - Clients, rôles admin
+  - Actions utilisateur
+- [ ] Exports et rapports:
+  - CSV/PDF, plage de dates
+
+### 6. Emails et notifications [ ]
+
+- [ ] Emails via Resend:
+  - Confirmation de commande
+  - Expédition
+  - Réinitialisation mot de passe
+- [ ] Notifications temps réel:
+  - WebSocket/Server-Sent Events (si nécessaire)
+
+### 7. Qualité, sécurité et performance [ ]
+
+- [ ] Validation avec Zod (API et formulaires)
+- [ ] Sécurité (rate limiting, headers, auth côté serveur)
+- [ ] Optimisation performance:
+  - Optimisation images
+  - Cache (revalidate, ISR, CDN)
+  - Optimisation API
+- [ ] SEO et accessibilité (meta, sitemap, robots)
+
+### 8. Tests et déploiement [ ]
+
+- [ ] Tests unitaires, intégration, E2E
+- [ ] Audit sécurité
+- [ ] Déploiement prod:
+  - Variables d’environnement
+  - CI/CD
+  - Monitoring et logs
+  - Sauvegardes
+
+### 9. Documentation [ ]
+
+- [ ] Documentation API
+- [ ] Guide utilisateur
+- [ ] Guide administrateur
+- [ ] Guide de déploiement
