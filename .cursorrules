@@ -79,24 +79,24 @@
 
 ### 4. Parcours client (front office) [ ]
 
-- [ ] Layout d’accueil:
-  - En-tête (logo, recherche, navigation)
-  - Pied de page (liens, réseaux)
-- [ ] Page d’accueil:
-  - Carrousel de bannières
-  - Produits récents / populaires
-- [ ] Catalogue produits:
-  - Catégories, filtres, tri, recherche
-  - Grille produits et pagination
+- [x] Layout d’accueil:
+  - [x] En-tête (logo, recherche, navigation)
+  - [x] Pied de page (liens, réseaux)
+- [x] Page d’accueil:
+  - [x] Carrousel de bannières
+  - [x] Produits récents / populaires
+- [x] Catalogue produits:
+  - [x] Catégories, filtres, tri, recherche
+  - [x] Grille produits et pagination
 - [ ] Page produit:
-  - Galerie images
-  - Infos (titre, prix, description, stock)
-  - Bouton ajouter au panier
-  - Avis et notes
-  - Produits similaires
+  - [x] Galerie images
+  - [x] Infos (titre, prix, description) — stock à ajouter au schéma
+  - [x] Bouton ajouter au panier
+  - [x] Avis et notes (affichage)
+  - [x] Produits similaires
 - [ ] Panier:
-  - Ajout/suppression/mise à jour quantités
-  - Persistance (Zustand + storage)
+  - [x] Ajout/suppression/mise à jour quantités
+  - [x] Persistance (Zustand + storage)
 - [ ] Checkout:
   - Adresse et livraison
   - Paiement Stripe (SDK + webhooks)
