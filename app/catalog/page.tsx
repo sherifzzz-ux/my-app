@@ -23,7 +23,11 @@ export default async function CatalogPage({ searchParams }: { searchParams: Prom
   const sort = toString(sp.sort, "recent");
   const page = Math.max(1, toNumber(sp.page, 1));
 
-  const categories = await prisma.category.findMany({ orderBy: { name: "asc" } });
+  type CategoryOption = { id: string; slug: string; name: string };
+  const categories: CategoryOption[] = await prisma.category.findMany({
+    select: { id: true, slug: true, name: true },
+    orderBy: { name: "asc" },
+  });
 
   const andFilters: unknown[] = [];
   if (q) {
@@ -54,12 +58,25 @@ export default async function CatalogPage({ searchParams }: { searchParams: Prom
   const totalPages = Math.max(1, Math.ceil(totalCount / PAGE_SIZE));
   const skip = (page - 1) * PAGE_SIZE;
 
-  const products = await prisma.product.findMany({
+  type ProductCard = {
+    id: string;
+    name: string;
+    imageUrl: string | null;
+    priceCents: number;
+    category: { name: string };
+  };
+  const products: ProductCard[] = await prisma.product.findMany({
     where: where as never,
     orderBy,
     skip,
     take: PAGE_SIZE,
-    include: { category: true },
+    select: {
+      id: true,
+      name: true,
+      imageUrl: true,
+      priceCents: true,
+      category: { select: { name: true } },
+    },
   });
 
   function makeUrl(nextPage: number) {
