@@ -4,6 +4,9 @@ import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import AddToCartButton from "@/components/product/AddToCartButton";
+import type { Review, User } from "@prisma/client";
+
+type ReviewWithUser = Review & { user: User };
 
 export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -26,7 +29,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
   });
   const avgRating = product.reviews.length
     ? product.reviews.reduce(
-        (sum: number, r: { rating: number }) => sum + r.rating,
+        (sum: number, r: ReviewWithUser) => sum + r.rating,
         0,
       ) / product.reviews.length
     : null;
@@ -77,7 +80,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
         <section className="mt-12">
           <h2 className="text-lg font-semibold mb-4">Avis</h2>
           <ul className="space-y-4">
-            {product.reviews.slice(0, 5).map((r) => (
+            {product.reviews.slice(0, 5).map((r: ReviewWithUser) => (
               <li key={r.id} className="rounded-xl border p-4">
                 <div className="flex items-center gap-2 text-sm mb-1">
                   <span className="font-medium">{r.user.name ?? r.user.email}</span>
