@@ -68,6 +68,7 @@ export default async function Header() {
                 ))}
               </div>
             </div>
+            <Link href="/categories" className="text-sm text-muted-foreground hover:text-foreground">Catégories</Link>
             <Link href="/brands" className="text-sm text-muted-foreground hover:text-foreground">Marques</Link>
             <Link href="/promo" className="text-sm text-muted-foreground hover:text-foreground">Promotions</Link>
           </nav>

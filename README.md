@@ -1,33 +1,35 @@
+# Mami Shop
+
 Ce projet est une application [Next.js](https://nextjs.org) utilisant Prisma, Auth.js (NextAuth v5), Tailwind v4, et Zustand.
 
 ## Installation
 
-1) Copier et remplir les variables d'environnement
+1. Copier et remplir les variables d'environnement
 
 ```bash
 cp env.example .env
 ```
 
-2) Installer les dépendances
+1. Installer les dépendances
 
 ```bash
 npm install
 ```
 
-3) Générer le client Prisma et appliquer les migrations
+1. Générer le client Prisma et appliquer les migrations
 
 ```bash
 npm run db:generate
 npm run db:migrate
 ```
 
-4) (Optionnel) Peupler la base de données
+1. (Optionnel) Peupler la base de données
 
 ```bash
 npm run db:seed
 ```
 
-5) Lancer le serveur de développement
+1. Lancer le serveur de développement
 
 ```bash
 npm run dev

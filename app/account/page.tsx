@@ -23,6 +23,7 @@ export default async function AccountPage() {
 				<Link href="/orders" className="rounded-md border p-4 text-sm">Commandes</Link>
 				<Link href="/addresses" className="rounded-md border p-4 text-sm">Adresses</Link>
 				<Link href="/account/details" className="rounded-md border p-4 text-sm">Détails du compte</Link>
+				<Link href="/account/wishlist" className="rounded-md border p-4 text-sm">Mes favoris</Link>
 				<form action={async () => {
 					"use server";
 					await signOut();

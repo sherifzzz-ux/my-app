@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { prisma } from "@/lib/prisma";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
+import { formatCFA } from "@/lib/utils";
 
 export default async function PromoPage() {
 	const products = await prisma.product.findMany({
@@ -20,8 +21,8 @@ export default async function PromoPage() {
 						) : null}
 						<div className="font-semibold line-clamp-2 min-h-[2.5rem]">{p.name}</div>
 						<div className="text-sm">
-							<span className="text-muted-foreground line-through mr-2">{((p.oldPriceCents ?? 0) / 100).toFixed(2)} €</span>
-							<span className="font-medium">{(p.priceCents / 100).toFixed(2)} €</span>
+							<span className="text-muted-foreground line-through mr-2">{formatCFA(p.oldPriceCents ?? 0)}</span>
+							<span className="font-medium">{formatCFA(p.priceCents)}</span>
 						</div>
 						<div className="mt-3">
 							<Link href={`/product/${p.id}`} className="text-sm underline underline-offset-4">

@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "@/hooks/use-cart";
 import { Button } from "@/components/ui/button";
+import { formatCFA } from "@/lib/utils";
 
 export default function CartPage() {
   const { items, removeItem, setQuantity, clear } = useCart();
@@ -28,7 +29,7 @@ export default function CartPage() {
                 )}
                 <div className="flex-1">
                   <div className="font-medium">{i.name}</div>
-                  <div className="text-sm text-muted-foreground">{(i.priceCents / 100).toFixed(2)} €</div>
+                  <div className="text-sm text-muted-foreground">{formatCFA(i.priceCents)}</div>
                 </div>
                 <div className="flex items-center gap-2">
                   <label htmlFor={`qty-${i.productId}`} className="sr-only">Quantité pour {i.name}</label>
@@ -51,9 +52,9 @@ export default function CartPage() {
           <div className="rounded-xl border p-4 h-fit">
             <div className="flex items-center justify-between mb-2">
               <div className="text-sm text-muted-foreground">Sous-total</div>
-              <div className="font-medium">{(totalCents / 100).toFixed(2)} €</div>
+              <div className="font-medium">{formatCFA(totalCents)}</div>
             </div>
-            <Button className="w-full mt-4">Passer au paiement</Button>
+            <Button asChild className="w-full mt-4"><Link href="/checkout">Passer au paiement</Link></Button>
             <Button variant="outline" className="w-full mt-2" onClick={() => clear()}>Vider le panier</Button>
           </div>
         </div>

@@ -16,23 +16,28 @@
 
 1. Use `npx shadcn@latest add [component]` instead of `npx shadcn-ui@latest add [component]` when installing Shadcn UI components.
 2. In Next.js 14+, page props params must be typed as a Promise. Example:
+
    ```typescript
    type tParams = Promise<{ id: string }>
    interface PageProps {
      params: tParams
    }
    ```
+
    Then await the params in the component:
+
    ```typescript
    export default async function Page(props: PageProps) {
      const { id } = await props.params
    }
    ```
+
 3. Use `const session = await auth()` instead of `const session = await getServerSession(authOptions)` for Next.js authentication. The new `auth()` function is the recommended way to get the session in Next.js Auth v5.
 4. When importing `useRouter` from 'next/navigation', the component must be marked as a client component using the `'use client'` directive at the top of the file, as this hook only works on the client side.
 
 ## Scratchpad
-### 1. Mise en place du projet et configuration [ ]
+
+### 1. Mise en place du projet et configuration [x]
 
 - [x] Initialiser un projet Next.js 15 avec TypeScript
 - [x] Structurer les dossiers et l’architecture (`app`, `components`, `lib`, `hooks`, `server`, etc.)
@@ -52,7 +57,7 @@
   - [x] next-auth@beta (authentification)
   - [x] Stripe (paiements)
 
-### 2. Base de données et authentification [ ]
+### 2. Base de données et authentification [x]
 
 - [x] Configurer PostgreSQL (variable `DATABASE_URL` déjà définie)
 - [x] Initialiser Prisma (`npx prisma init`)
@@ -83,7 +88,7 @@
 - [x] Méga-menu catégories multi-niveaux (Promotion, Soin du visage, Corps & Bain, Maquillage, Parapharmacie, Cheveux, Parfumerie, Bébé & Enfant, Marques, Korean Beauty, Sexualité, Idées Cadeaux)
 - [x] Footer: blocs Catégories, Infos pratiques, Paiement sécurisé (logos), lien Blog, Conditions, Livraison, Politique cookies, mention Agence + bouton Retour en haut
 
-### 4. Parcours client (front office) [ ]
+### 4. Parcours client (front office) [x]
 
 - [x] Layout d’accueil:
   - [x] En-tête (logo, recherche, navigation)
@@ -94,34 +99,35 @@
 - [x] Catalogue produits:
   - [x] Catégories, filtres, tri, recherche
   - [x] Grille produits et pagination
-- [ ] Page "Boutique" globale (listing agrégé)
-- [ ] Pages Catégories (ex: Promotion, Cadeau & Promo, Soins du visage…) avec sous-catégories listées
-- [ ] Pages Marques (archives par marque) avec tri & pagination
-- [ ] Grille produits:
-  - [ ] Devise CFA + formatage prix
-  - [ ] Badge Promo + ancien prix barré
-  - [ ] Bouton Ajouter au panier + Voir les détails depuis la grille
-  - [ ] Sélecteur densité (16/32/48 par page)
-  - [ ] Tri (Nom, Prix, Date, Mise en avant, Note, Pertinence, Aléatoire, Product ID)
-  - [ ] Pagination profonde (Page 1 sur N)
-- [ ] Page produit:
+- [x] Page "Boutique" globale (listing agrégé)
+- [x] Pages Catégories (ex: Promotion, Cadeau & Promo, Soins du visage…) avec sous-catégories listées
+- [x] Pages Marques (archives par marque) avec tri & pagination
+- [x] Grille produits:
+  - [x] Devise CFA + formatage prix
+  - [x] Badge Promo + ancien prix barré
+  - [x] Bouton Ajouter au panier + Voir les détails depuis la grille
+  - [x] Sélecteur densité (16/32/48 par page)
+  - [x] Tri (Nom, Prix, Date, Mise en avant, Note, Pertinence, Aléatoire, Product ID)
+    - Implémenté: Nom, Prix, Date, Mise en avant, Note, Product ID, Pertinence (basée sur _relevance), Aléatoire (client-side stable par page)
+  - [x] Pagination profonde (Page 1 sur N)
+- [x] Page produit:
   - [x] Galerie images
   - [x] Infos (titre, prix, description) — stock à ajouter au schéma
   - [x] Bouton ajouter au panier
   - [x] Avis et notes (affichage)
   - [x] Produits similaires
-- [ ] Panier:
+- [x] Panier:
   - [x] Ajout/suppression/mise à jour quantités
   - [x] Persistance (Zustand + storage)
-  - [ ] État vide: message + CTA "Continuer les achats"
-- [ ] Checkout:
-  - Adresse et livraison
-  - Paiement Stripe (SDK + webhooks)
-  - Confirmation de commande
-- [ ] Espace utilisateur:
-  - Historique commandes
-  - Profil et adresses
-  - Wishlist
+  - [x] État vide: message + CTA "Continuer les achats"
+- [x] Checkout:
+  - [x] Adresse et livraison (formulaire de base)
+  - [x] Paiement Stripe (création de session + webhook)
+  - [x] Confirmation de commande
+- [x] Espace utilisateur:
+  - [x] Historique commandes (listing de base)
+  - [x] Profil et adresses (édition profil + CRUD adresses)
+  - [x] Wishlist
 
 ### 5. Tableau de bord administrateur (back office) [ ]
 
@@ -182,6 +188,7 @@
 - [ ] Guide de déploiement
 
 ### 10. Parité Univers Cosmetix (structure & features) [ ]
+
 - [x] A. En-tête & navigation
   - [x] Logo cliquable vers l’accueil
   - [x] Barre de recherche visible

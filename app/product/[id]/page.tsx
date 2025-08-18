@@ -4,7 +4,11 @@ import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import AddToCartButton from "@/components/product/AddToCartButton";
+import AddToWishlistButton from "@/components/product/AddToWishlistButton";
+import { Badge } from "@/components/ui/badge";
+import { formatCFA } from "@/lib/utils";
 import type { Prisma } from "@prisma/client";
+import { Button } from "@/components/ui/button";
 
 type ReviewWithUser = Prisma.ReviewGetPayload<{ include: { user: true } }>;
 
@@ -53,7 +57,28 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
         <div>
           <h1 className="text-2xl font-semibold mb-2">{product.name}</h1>
           <div className="text-sm text-muted-foreground mb-4">{product.category.name}</div>
-          <div className="text-xl font-semibold mb-6">{(product.priceCents / 100).toFixed(2)} €</div>
+          {product.oldPriceCents ? (
+            <div className="mb-2">
+              <Badge variant="destructive">Promo</Badge>
+            </div>
+          ) : null}
+          <div className="text-xl font-semibold mb-6">
+            {product.oldPriceCents ? (
+              <>
+                <span className="text-muted-foreground line-through mr-2">{formatCFA(product.oldPriceCents)}</span>
+                <span>{formatCFA(product.priceCents)}</span>
+              </>
+            ) : (
+              <span>{formatCFA(product.priceCents)}</span>
+            )}
+          </div>
+          <div className="mb-4">
+            {product.stock > 0 ? (
+              <span className="text-sm text-green-700">En stock: {product.stock}</span>
+            ) : (
+              <span className="text-sm text-red-600">Rupture de stock</span>
+            )}
+          </div>
           {product.description ? <p className="text-sm leading-6 mb-6 whitespace-pre-line">{product.description}</p> : null}
           {avgRating !== null ? (
             <div className="mb-6 text-sm">
@@ -67,12 +92,26 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
           ) : (
             <div className="mb-6 text-sm text-muted-foreground">Aucun avis pour le moment</div>
           )}
-          <AddToCartButton
-            productId={product.id}
-            name={product.name}
-            priceCents={product.priceCents}
-            imageUrl={product.imageUrl}
-          />
+          {product.stock > 0 ? (
+            <AddToCartButton
+              productId={product.id}
+              name={product.name}
+              priceCents={product.priceCents}
+              imageUrl={product.imageUrl}
+            />
+          ) : (
+            <Button className="h-11 px-6" disabled>
+              Indisponible
+            </Button>
+          )}
+          <div className="mt-3">
+            <AddToWishlistButton
+              productId={product.id}
+              name={product.name}
+              priceCents={product.priceCents}
+              imageUrl={product.imageUrl}
+            />
+          </div>
         </div>
       </div>
 
@@ -107,7 +146,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
                 ) : null}
                 <div className="text-xs text-muted-foreground mb-1">{p.category.name}</div>
                 <div className="font-semibold line-clamp-2 min-h-[2.5rem]">{p.name}</div>
-                <div className="text-sm">{(p.priceCents / 100).toFixed(2)} €</div>
+                <div className="text-sm">{formatCFA(p.priceCents)}</div>
                 <div className="mt-3">
                   <Link href={`/product/${p.id}`} className="text-sm underline underline-offset-4">
                     Voir les détails

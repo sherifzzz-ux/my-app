@@ -29,7 +29,7 @@ export default function Footer() {
         <div>
           <div className="font-semibold mb-3">Paiement sécurisé</div>
           <div className="text-muted-foreground">Orange Money, Wave, Visa, MasterCard…</div>
-          <div className="mt-3 text-muted-foreground text-xs">Site par <a className="underline" href="https://example-agency.com" target="_blank" rel="noreferrer">Votre Agence</a></div>
+          <div className="mt-3 text-muted-foreground text-xs">Site par <a className="underline" href="https://example-agency.com" target="_blank" rel="noopener noreferrer">Votre Agence</a></div>
         </div>
       </div>
       <div className="text-xs text-muted-foreground py-4 border-t">
