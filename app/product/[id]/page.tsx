@@ -4,9 +4,9 @@ import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import AddToCartButton from "@/components/product/AddToCartButton";
-import type { Review, User } from "@prisma/client";
+import type { Prisma } from "@prisma/client";
 
-type ReviewWithUser = Review & { user: User };
+type ReviewWithUser = Prisma.ReviewGetPayload<{ include: { user: true } }>;
 
 export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
