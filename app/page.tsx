@@ -2,11 +2,25 @@ import Image from "next/image";
 import { prisma } from "@/lib/prisma";
 import { HeroCarousel } from "@/components/HeroCarousel";
 
-async function getProducts() {
+type ProductCard = {
+  id: string;
+  name: string;
+  imageUrl: string | null;
+  priceCents: number;
+  category: { name: string };
+};
+
+async function getProducts(): Promise<ProductCard[]> {
   return prisma.product.findMany({
-    include: { category: true },
     orderBy: { createdAt: "desc" },
     take: 12,
+    select: {
+      id: true,
+      name: true,
+      imageUrl: true,
+      priceCents: true,
+      category: { select: { name: true } },
+    },
   });
 }
 
