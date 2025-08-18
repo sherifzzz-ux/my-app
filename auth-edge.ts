@@ -17,6 +17,7 @@ export const { auth } = NextAuth({
 
 			if (pathname.startsWith("/admin")) return isLoggedIn;
 			if (pathname.startsWith("/api/admin")) return isLoggedIn;
+			if (pathname.startsWith("/account")) return isLoggedIn;
 
 			return true;
 		},

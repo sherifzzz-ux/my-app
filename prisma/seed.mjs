@@ -3,11 +3,13 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
+  const { hash } = await import('bcryptjs');
+  const demoPasswordHash = await hash('password123', 10);
   const users = await Promise.all([
     prisma.user.upsert({
       where: { email: 'demo@mami-shop.test' },
       update: {},
-      create: { email: 'demo@mami-shop.test', name: 'Demo User' }
+      create: { email: 'demo@mami-shop.test', name: 'Demo User', password: demoPasswordHash }
     }),
     prisma.user.upsert({
       where: { email: 'alice@mami-shop.test' },
