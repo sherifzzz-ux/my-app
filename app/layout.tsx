@@ -16,7 +16,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased">
+      <body id="top" className="antialiased">
+        <div className="w-full text-center text-xs py-2 bg-amber-50 text-amber-800 border-b">
+          Livraison en moins de 24h à Dakar (hors dimanches/jours fériés)
+        </div>
         <Header />
         {children}
         <Footer />

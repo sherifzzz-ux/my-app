@@ -4,7 +4,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, Search, ShoppingCart, User, ChevronDown } from "lucide-react";
+import { Menu, Search, User, ChevronDown } from "lucide-react";
+import CartButton from "@/components/CartButton";
 
 async function getTopCategories() {
   return prisma.category.findMany({
@@ -84,9 +85,7 @@ export default async function Header() {
             <Link href="/account" className="p-2" aria-label="Compte">
               <User className="h-5 w-5" />
             </Link>
-            <Link href="/cart" className="p-2" aria-label="Panier">
-              <ShoppingCart className="h-5 w-5" />
-            </Link>
+            <CartButton />
           </div>
         </div>
       </div>
