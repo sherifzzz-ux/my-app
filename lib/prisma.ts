@@ -13,6 +13,7 @@ export const prisma =
     ? prismaClient()
     : ({
         category: { findMany: async () => [] },
+        brand: { findMany: async () => [] },
         product: {
           findMany: async () => [],
           findUnique: async () => null,
