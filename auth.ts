@@ -4,7 +4,6 @@ import Google from "next-auth/providers/google";
 import GitHub from "next-auth/providers/github";
 import { prisma } from "@/lib/prisma";
 import { z } from "zod";
-import { compare } from "bcryptjs";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   session: { strategy: "jwt" },
@@ -27,6 +26,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const user = await prisma.user.findUnique({ where: { email } });
         if (!user || !user.password) return null;
 
+        // Import dynamique pour éviter de charger bcryptjs dans le runtime Edge (middleware)
+        const { compare } = await import("bcryptjs");
         const isValid = await compare(password, user.password);
         if (!isValid) return null;
 

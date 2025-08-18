@@ -116,12 +116,12 @@ export function CarouselDots({ className }: { className?: string }) {
           onClick={() => api?.scrollTo(i)}
           disabled={!api}
           className={cn(
-            "h-2 w-2 rounded-full border",
+            "h-2 w-2 rounded-full border pointer-events-auto",
             i === selectedIndex ? "bg-zinc-900 border-zinc-900/80" : "bg-white/70 border-white/80",
             !api && "opacity-50"
           )}
           aria-label={`Aller à la diapositive ${i + 1}`}
-          style={{ pointerEvents: "auto" }}
+          
         />
       ))}
     </div>

@@ -31,9 +31,14 @@ export default function CartPage() {
                   <div className="text-sm text-muted-foreground">{(i.priceCents / 100).toFixed(2)} €</div>
                 </div>
                 <div className="flex items-center gap-2">
+                  <label htmlFor={`qty-${i.productId}`} className="sr-only">Quantité pour {i.name}</label>
                   <input
                     type="number"
                     min={1}
+                    id={`qty-${i.productId}`}
+                    placeholder="Quantité"
+                    title={`Quantité pour ${i.name}`}
+                    aria-label={`Quantité pour ${i.name}`}
                     value={i.quantity}
                     onChange={(e) => setQuantity(i.productId, Number(e.target.value) || 1)}
                     className="h-10 w-20 rounded-md border border-input bg-background px-3 text-sm"

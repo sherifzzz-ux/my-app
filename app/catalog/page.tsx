@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
-import type { Prisma } from "@prisma/client";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 
 type tSearchParams = { [key: string]: string | string[] | undefined };
@@ -26,7 +25,7 @@ export default async function CatalogPage({ searchParams }: { searchParams: Prom
 
   const categories = await prisma.category.findMany({ orderBy: { name: "asc" } });
 
-  const andFilters: Prisma.ProductWhereInput[] = [];
+  const andFilters: unknown[] = [];
   if (q) {
     andFilters.push({
       OR: [
@@ -38,7 +37,7 @@ export default async function CatalogPage({ searchParams }: { searchParams: Prom
   if (cat) {
     andFilters.push({ category: { slug: cat } });
   }
-  const where: Prisma.ProductWhereInput | undefined = andFilters.length ? { AND: andFilters } : undefined;
+  const where = andFilters.length ? { AND: andFilters } : undefined;
 
   const orderBy =
     sort === "priceAsc"
@@ -51,12 +50,12 @@ export default async function CatalogPage({ searchParams }: { searchParams: Prom
       ? { name: "desc" as const }
       : { createdAt: "desc" as const };
 
-  const totalCount = await prisma.product.count({ where });
+  const totalCount = await prisma.product.count({ where: where as never });
   const totalPages = Math.max(1, Math.ceil(totalCount / PAGE_SIZE));
   const skip = (page - 1) * PAGE_SIZE;
 
   const products = await prisma.product.findMany({
-    where,
+    where: where as never,
     orderBy,
     skip,
     take: PAGE_SIZE,
