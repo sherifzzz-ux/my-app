@@ -5,9 +5,9 @@ export default function Footer() {
         <div>
           <div className="font-semibold mb-3">Informations</div>
           <ul className="space-y-2 text-muted-foreground">
-            <li>Livraison</li>
-            <li>Politique de cookies</li>
-            <li>Conditions d’utilisations</li>
+            <li><a href="/livraison" className="hover:underline">Livraison</a></li>
+            <li><a href="/conditions" className="hover:underline">Conditions d’utilisations</a></li>
+            <li><a href="#" className="hover:underline">Politique de cookies</a></li>
           </ul>
         </div>
         <div>
@@ -27,7 +27,7 @@ export default function Footer() {
         </div>
         <div>
           <div className="font-semibold mb-3">Paiement sécurisé</div>
-          <div className="text-muted-foreground">Visa, MasterCard, Mobile Money…</div>
+          <div className="text-muted-foreground">Orange Money, Wave, Visa, MasterCard…</div>
         </div>
       </div>
       <div className="text-xs text-muted-foreground py-4 border-t">

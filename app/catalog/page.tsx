@@ -20,6 +20,8 @@ export default async function CatalogPage({ searchParams }: { searchParams: Prom
   const sp = await searchParams;
   const q = toString(sp.q);
   const cat = toString(sp.cat);
+  const sub = toString(sp.sub);
+  const brand = toString(sp.brand);
   const sort = toString(sp.sort, "recent");
   const page = Math.max(1, toNumber(sp.page, 1));
 
@@ -38,9 +40,9 @@ export default async function CatalogPage({ searchParams }: { searchParams: Prom
       ],
     });
   }
-  if (cat) {
-    andFilters.push({ category: { slug: cat } });
-  }
+  if (cat) andFilters.push({ category: { slug: cat } });
+  if (sub) andFilters.push({ subcategory: { slug: sub } });
+  if (brand) andFilters.push({ brand: { slug: brand } });
   const where = andFilters.length ? { AND: andFilters } : undefined;
 
   const orderBy =
@@ -83,6 +85,8 @@ export default async function CatalogPage({ searchParams }: { searchParams: Prom
     const params = new URLSearchParams();
     if (q) params.set("q", q);
     if (cat) params.set("cat", cat);
+    if (sub) params.set("sub", sub);
+    if (brand) params.set("brand", brand);
     if (sort && sort !== "recent") params.set("sort", sort);
     params.set("page", String(nextPage));
     return `/catalog?${params.toString()}`;

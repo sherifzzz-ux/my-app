@@ -36,6 +36,7 @@ model Category {
   updatedAt DateTime  @updatedAt
 
   products Product[]
+  subcategories Subcategory[]
 }
 
 model Product {
@@ -50,9 +51,42 @@ model Product {
   category   Category  @relation(fields: [categoryId], references: [id])
   categoryId String
 
+  // Optionnels: relations et attributs marketing/stock
+  subcategory   Subcategory? @relation(fields: [subcategoryId], references: [id])
+  subcategoryId String?
+
+  brand   Brand?   @relation(fields: [brandId], references: [id])
+  brandId String?
+
+  oldPriceCents Int?
+  isFeatured    Boolean   @default(false)
+  rating        Float?    @default(0)
+  stock         Int       @default(0)
+
   reviews   Review[]
   orderItems OrderItem[]
   cartItems  CartItem[]
+}
+
+model Subcategory {
+  id         String   @id @default(cuid())
+  name       String
+  slug       String   @unique
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
+
+  products Product[]
+}
+
+model Brand {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  slug      String   @unique
+  imageUrl  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  products Product[]
 }
 
 model Review {

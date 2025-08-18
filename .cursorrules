@@ -37,7 +37,9 @@
 - [x] Initialiser un projet Next.js 15 avec TypeScript
 - [x] Structurer les dossiers et l’architecture (`app`, `components`, `lib`, `hooks`, `server`, etc.)
 - [x] Configurer ESLint et Prettier
-- [ ] Installer et configurer les dépendances:
+  - [x] ESLint configuré
+  - [x] Prettier configuré
+- [x] Installer et configurer les dépendances:
   - [x] Shadcn UI
   - [x] Lucide
   - [x] Zod (validation)
@@ -63,7 +65,7 @@
   - Modèle `Cart`
 - [x] Générer les migrations (`npx prisma migrate dev`)
 - [x] Créer un script de seed
-- [ ] Mettre en place NextAuth.js:
+- [x] Mettre en place NextAuth.js:
   - [x] Credentials (email/mot de passe)
   - [x] OAuth (Google, GitHub)
   - [x] JWT (callbacks, claims, rotation)
@@ -76,6 +78,10 @@
   - Button, Input, Select, Card, Dialog, Dropdown Menu, Sheet, Tabs, Tooltip
   - Table, Skeleton, Toast/Toaster, Badge, Breadcrumb
 - [x] Intégrer les icônes Lucide
+- [ ] Header: Barre de recherche visible, icônes Mon compte + Panier (compteur)
+- [ ] Bandeau USP en haut: "Livraison en moins de 24h à Dakar (hors dimanches/jours fériés)"
+- [ ] Méga-menu catégories multi-niveaux (Promotion, Soin du visage, Corps & Bain, Maquillage, Parapharmacie, Cheveux, Parfumerie, Bébé & Enfant, Marques, Korean Beauty, Sexualité, Idées Cadeaux)
+- [ ] Footer: blocs Catégories, Infos pratiques, Paiement sécurisé (logos), lien Blog, Conditions, Livraison, Politique cookies, mention Agence + bouton Retour en haut
 
 ### 4. Parcours client (front office) [ ]
 
@@ -88,6 +94,16 @@
 - [x] Catalogue produits:
   - [x] Catégories, filtres, tri, recherche
   - [x] Grille produits et pagination
+- [ ] Page "Boutique" globale (listing agrégé)
+- [ ] Pages Catégories (ex: Promotion, Cadeau & Promo, Soins du visage…) avec sous-catégories listées
+- [ ] Pages Marques (archives par marque) avec tri & pagination
+- [ ] Grille produits:
+  - [ ] Devise CFA + formatage prix
+  - [ ] Badge Promo + ancien prix barré
+  - [ ] Bouton Ajouter au panier + Voir les détails depuis la grille
+  - [ ] Sélecteur densité (16/32/48 par page)
+  - [ ] Tri (Nom, Prix, Date, Mise en avant, Note, Pertinence, Aléatoire, Product ID)
+  - [ ] Pagination profonde (Page 1 sur N)
 - [ ] Page produit:
   - [x] Galerie images
   - [x] Infos (titre, prix, description) — stock à ajouter au schéma
@@ -97,6 +113,7 @@
 - [ ] Panier:
   - [x] Ajout/suppression/mise à jour quantités
   - [x] Persistance (Zustand + storage)
+  - [ ] État vide: message + CTA "Continuer les achats"
 - [ ] Checkout:
   - Adresse et livraison
   - Paiement Stripe (SDK + webhooks)
@@ -143,6 +160,9 @@
   - Cache (revalidate, ISR, CDN)
   - Optimisation API
 - [ ] SEO et accessibilité (meta, sitemap, robots)
+- [ ] Fil d’Ariane sur pages catalogue/catégories
+- [ ] Titres H1/H2 cohérents (catégorie/produit)
+- [ ] Recherche accessible sur toutes les pages catalogue
 
 ### 8. Tests et déploiement [ ]
 
@@ -160,3 +180,54 @@
 - [ ] Guide utilisateur
 - [ ] Guide administrateur
 - [ ] Guide de déploiement
+
+### 10. Parité Univers Cosmetix (structure & features) [ ]
+- [ ] A. En-tête & navigation
+  - [ ] Logo cliquable vers l’accueil
+  - [ ] Barre de recherche visible
+  - [ ] Icône/lien Mon compte, Panier (compteur)
+  - [ ] Bandeau USP (Livraison <24h à Dakar)
+  - [ ] Méga-menu catégories multi-niveaux (toutes familles listées)
+- [ ] B. Pages principales
+  - [ ] Accueil (bannières/hero promos + accès rapides)
+  - [ ] Boutique (listing global)
+  - [ ] Catégories (toutes familles)
+  - [ ] Marques (archives par marque, tri, pagination)
+  - [ ] Fiche produit (détails, ajouter au panier, description)
+  - [ ] Panier (état vide + CTA)
+  - [ ] Mon compte (connexion/inscription + zones post-login)
+  - [ ] Livraison (délais Dakar <24h, régions 24–72h)
+  - [ ] Conditions d’utilisations (paiements, délais)
+- [ ] C. Listing produits (catégories & marques)
+  - [ ] Grille prix en CFA, badge Promo, CTA Ajouter au panier & Voir détails
+  - [ ] Tri complet (Nom, Prix, Date, Mise en avant, Note, Pertinence, Aléatoire, Product ID)
+  - [ ] Sélecteur 16/32/48 produits par page
+  - [ ] Pagination profonde
+  - [ ] Sous-catégories listées par famille
+- [ ] D. Fiche produit
+  - [ ] Titre, prix (CFA), Ajouter au panier
+  - [ ] Bloc Description
+  - [ ] Lien Voir les détails depuis la grille
+- [ ] E. Panier & Checkout
+  - [ ] Panier vide + CTA Continuer les achats
+  - [ ] Moyens de paiement locaux (Orange Money, Wave, CB) affichés et intégrés au checkout
+  - [ ] Conditions de paiement documentées
+- [ ] F. Compte client
+  - [ ] Connexion / Inscription
+  - [ ] Dashboard, Commandes, Adresses, Détails du compte, Déconnexion
+- [ ] G. SEO & navigation secondaire
+  - [ ] Fil d’Ariane
+  - [ ] H1/H2 cohérents
+  - [ ] Recherche accessible
+- [ ] H. Marques & éditorial
+  - [ ] Pages de marques avec tri/pagination
+  - [ ] Cadeau & Promo: sous-page dédiée (tri + 48 par page)
+- [ ] I. Footer
+  - [ ] Catégories raccourcis (Cadeau & Promo, Cheveux, Corps & Bain, Maquillage, Parapharmacie)
+  - [ ] Infos pratiques (Nos Marques, Mon compte, Blog, Conditions, Livraison, Politique cookies)
+  - [ ] Logos Paiement sécurisé (Orange Money, Wave, Visa, Mastercard…)
+  - [ ] Mention Agence + Retour en haut
+- [ ] J. Spécificités marché (SN)
+  - [ ] Devise CFA sur tout le site (formatage global)
+  - [ ] Promesse logistique (<24h Dakar / 24–72h régions)
+  - [ ] Moyens de paiement locaux au checkout
