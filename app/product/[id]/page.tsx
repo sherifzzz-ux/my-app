@@ -25,7 +25,10 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
     include: { category: true },
   });
   const avgRating = product.reviews.length
-    ? product.reviews.reduce((s, r) => s + r.rating, 0) / product.reviews.length
+    ? product.reviews.reduce(
+        (sum: number, r: { rating: number }) => sum + r.rating,
+        0,
+      ) / product.reviews.length
     : null;
   return (
     <div className="mx-auto max-w-7xl px-4 md:px-6 py-8">
