@@ -38,17 +38,56 @@ async function main() {
       where: { slug: 'chaussures' },
       update: {},
       create: { name: 'Chaussures', slug: 'chaussures', imageUrl: '/images/c-shoes.jpg' }
-    })
+    }),
+    // Flawless categories
+    prisma.category.upsert({
+      where: { slug: 'soin-du-visage' },
+      update: {},
+      create: { name: 'Soin du visage', slug: 'soin-du-visage', imageUrl: '/woman-skincare-smile.png' }
+    }),
+    prisma.category.upsert({
+      where: { slug: 'corps-bain' },
+      update: {},
+      create: { name: 'Corps & Bain', slug: 'corps-bain', imageUrl: '/woman-spa-products.png' }
+    }),
+    prisma.category.upsert({
+      where: { slug: 'maquillage' },
+      update: {},
+      create: { name: 'Maquillage', slug: 'maquillage', imageUrl: '/placeholder-15xmv.png' }
+    }),
+    prisma.category.upsert({
+      where: { slug: 'parapharmacie' },
+      update: {},
+      create: { name: 'Parapharmacie', slug: 'parapharmacie', imageUrl: '/cosmetic-beauty-trends.png' }
+    }),
+    prisma.category.upsert({
+      where: { slug: 'cheveux' },
+      update: {},
+      create: { name: 'Cheveux', slug: 'cheveux', imageUrl: '/beautiful-hair-care.png' }
+    }),
+    prisma.category.upsert({
+      where: { slug: 'korean-beauty' },
+      update: {},
+      create: { name: 'Korean Beauty', slug: 'korean-beauty', imageUrl: '/korean-beauty-products.png' }
+    }),
   ]);
 
-  const [tshirts, jeans, shoes] = categories;
+  const [tshirts, jeans, shoes, soinVisage, corpsBain, maquillage, parapharmacie, cheveux, koreanBeauty] = categories;
 
   // Marques de base
   const brands = await prisma.$transaction([
-    prisma.brand.upsert({ where: { slug: 'brand-a' }, update: {}, create: { name: 'Brand A', slug: 'brand-a' } }),
-    prisma.brand.upsert({ where: { slug: 'brand-b' }, update: {}, create: { name: 'Brand B', slug: 'brand-b' } }),
+    prisma.brand.upsert({ where: { slug: 'brand-a' }, update: {}, create: { name: 'Brand A', slug: 'brand-a', imageUrl: '/placeholder-logo.svg' } }),
+    prisma.brand.upsert({ where: { slug: 'brand-b' }, update: {}, create: { name: 'Brand B', slug: 'brand-b', imageUrl: '/placeholder-logo.svg' } }),
+    prisma.brand.upsert({ where: { slug: 'nivea' }, update: {}, create: { name: 'NIVEA', slug: 'nivea', imageUrl: '/placeholder-logo.svg' } }),
+    prisma.brand.upsert({ where: { slug: 'the-ordinary' }, update: {}, create: { name: 'The Ordinary', slug: 'the-ordinary', imageUrl: '/placeholder-logo.svg' } }),
+    prisma.brand.upsert({ where: { slug: 'eucerin' }, update: {}, create: { name: 'Eucerin', slug: 'eucerin', imageUrl: '/placeholder-logo.svg' } }),
+    prisma.brand.upsert({ where: { slug: 'vichy' }, update: {}, create: { name: 'Vichy', slug: 'vichy', imageUrl: '/placeholder-logo.svg' } }),
+    prisma.brand.upsert({ where: { slug: 'la-roche-posay' }, update: {}, create: { name: 'La Roche-Posay', slug: 'la-roche-posay', imageUrl: '/placeholder-logo.svg' } }),
+    prisma.brand.upsert({ where: { slug: 'acm' }, update: {}, create: { name: 'ACM', slug: 'acm', imageUrl: '/placeholder-logo.svg' } }),
+    prisma.brand.upsert({ where: { slug: 'klorane' }, update: {}, create: { name: 'Klorane', slug: 'klorane', imageUrl: '/placeholder-logo.svg' } }),
+    prisma.brand.upsert({ where: { slug: 'revolution' }, update: {}, create: { name: 'Revolution', slug: 'revolution', imageUrl: '/placeholder-logo.svg' } }),
   ]);
-  const [brandA, brandB] = brands;
+  const [brandA, brandB, brandNivea, brandOrdinary, brandEucerin, brandVichy, brandLRP, brandACM, brandKlorane, brandRevolution] = brands;
 
   // Sous-catégories de base
   const subcategories = await prisma.$transaction([
@@ -151,6 +190,99 @@ async function main() {
         categoryId: shoes.id,
         subcategoryId: scRun.id,
         brandId: brandB.id,
+      },
+      // Flawless demo products
+      {
+        name: 'Sérum Vitamine C Éclat',
+        description: 'Boost d’éclat et anti-oxydant pour un teint lumineux.',
+        priceCents: 15500,
+        oldPriceCents: 18000,
+        isFeatured: true,
+        rating: 4.8,
+        stock: 40,
+        imageUrl: '/vitamin-c-serum.png',
+        categoryId: soinVisage.id,
+        brandId: brandOrdinary.id,
+      },
+      {
+        name: 'Masque Purifiant à l’Argile',
+        description: 'Élimine les impuretés et affine le grain de peau.',
+        priceCents: 8500,
+        oldPriceCents: 10000,
+        isFeatured: false,
+        rating: 4.7,
+        stock: 70,
+        imageUrl: '/clay-mask-tube.png',
+        categoryId: soinVisage.id,
+        brandId: brandEucerin.id,
+      },
+      {
+        name: 'Crème Corps Nourrissante',
+        description: 'Hydrate intensément pour une peau douce toute la journée.',
+        priceCents: 12000,
+        isFeatured: true,
+        rating: 4.6,
+        stock: 60,
+        imageUrl: '/nivea-body-cream-jar.png',
+        categoryId: corpsBain.id,
+        brandId: brandNivea.id,
+      },
+      {
+        name: 'Eau de Parfum Élégance',
+        description: 'Sillage floral délicat et raffiné.',
+        priceCents: 35900,
+        isFeatured: false,
+        rating: 4.5,
+        stock: 22,
+        imageUrl: '/chanel-chance-pink-bottle.png',
+        categoryId: parapharmacie.id,
+        brandId: brandB.id,
+      },
+      {
+        name: 'Niacinamide 10% + Zinc 1%',
+        description: 'Sérum anti-imperfections, affine le grain de peau.',
+        priceCents: 14900,
+        oldPriceCents: 16900,
+        isFeatured: true,
+        rating: 4.9,
+        stock: 80,
+        imageUrl: '/the-ordinary-niacinamide.png',
+        categoryId: soinVisage.id,
+        brandId: brandOrdinary.id,
+      },
+      {
+        name: 'Masque Nuit Hydratant',
+        description: 'Hydratation longue durée pendant le sommeil.',
+        priceCents: 22000,
+        isFeatured: false,
+        rating: 4.6,
+        stock: 30,
+        imageUrl: '/laneige-water-mask.png',
+        categoryId: koreanBeauty.id,
+        brandId: brandB.id,
+      },
+      {
+        name: 'Gel Nettoyant Doux',
+        description: 'Nettoie en douceur sans dessécher la peau.',
+        priceCents: 9900,
+        isFeatured: false,
+        rating: 4.4,
+        stock: 55,
+        imageUrl: '/gentle-face-cleansers.png',
+        categoryId: soinVisage.id,
+        brandId: brandLRP.id,
+      },
+      {
+        name: 'Palette Maquillage Essentials',
+        description: 'Teintes polyvalentes pour un look parfait.',
+        priceCents: 25900,
+        oldPriceCents: 29900,
+        isFeatured: false,
+        rating: 4.3,
+        stock: 45,
+        imageUrl: '/placeholder-9culf.png',
+        categoryId: maquillage.id,
+        brandId: brandRevolution.id,
       }
     ]
   });
