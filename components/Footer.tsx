@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Footer() {
   return (
     <footer className="border-t mt-16">
@@ -5,10 +7,10 @@ export default function Footer() {
         <div>
           <div className="font-semibold mb-3">Informations</div>
           <ul className="space-y-2 text-muted-foreground">
-            <li><a href="/livraison" className="hover:underline">Livraison</a></li>
-            <li><a href="/conditions" className="hover:underline">Conditions d’utilisations</a></li>
+            <li><Link href="/livraison" className="hover:underline">Livraison</Link></li>
+            <li><Link href="/conditions" className="hover:underline">Conditions d’utilisations</Link></li>
             <li><a href="#" className="hover:underline">Politique de cookies</a></li>
-            <li><a href="/blog" className="hover:underline">Blog</a></li>
+            <li><Link href="/blog" className="hover:underline">Blog</Link></li>
           </ul>
         </div>
         <div>
