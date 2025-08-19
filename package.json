@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "prisma migrate deploy && prisma db seed && next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "db:generate": "prisma generate",
@@ -12,6 +12,7 @@
     "db:studio": "prisma studio",
     "db:seed": "prisma db seed",
     "prebuild": "prisma generate",
+    "build:full": "prisma migrate deploy && prisma db seed && next build",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },

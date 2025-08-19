@@ -9,7 +9,7 @@ export default function MobileFooterNav() {
       <div className="flex items-center justify-around py-2">
         <Link
           href="/"
-          className="flex flex-col items-center py-2 px-4 text-gray-600 hover:text-green-600"
+          className="flex flex-col items-center py-2 px-4 text-gray-600 hover:text-[#F792CC]"
         >
           <Home className="h-6 w-6 mb-1" />
           <span className="text-xs font-medium">ACCUEIL</span>
@@ -17,7 +17,7 @@ export default function MobileFooterNav() {
 
         <Link
           href="/marques"
-          className="flex flex-col items-center py-2 px-4 text-gray-600 hover:text-green-600"
+          className="flex flex-col items-center py-2 px-4 text-gray-600 hover:text-[#F792CC]"
         >
           <Grid3X3 className="h-6 w-6 mb-1" />
           <span className="text-xs font-medium">MARQUES</span>
@@ -25,7 +25,7 @@ export default function MobileFooterNav() {
 
         <Link
           href="/panier"
-          className="flex flex-col items-center py-2 px-4 text-gray-600 hover:text-green-600"
+          className="flex flex-col items-center py-2 px-4 text-gray-600 hover:text-[#F792CC]"
         >
           <ShoppingCart className="h-6 w-6 mb-1" />
           <span className="text-xs font-medium">PANIER</span>
@@ -33,7 +33,7 @@ export default function MobileFooterNav() {
 
         <Link
           href="/compte"
-          className="flex flex-col items-center py-2 px-4 text-gray-600 hover:text-green-600"
+          className="flex flex-col items-center py-2 px-4 text-gray-600 hover:text-[#F792CC]"
         >
           <User className="h-6 w-6 mb-1" />
           <span className="text-xs font-medium">COMPTE</span>

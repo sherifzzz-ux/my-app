@@ -79,16 +79,24 @@ export default function ProductDetail({ product }: ProductDetailProps) {
               {images.length > 1 && (
                 <>
                   <button
+                    title="Image précédente"
+                    aria-label="Image précédente"
+                    type="button"
                     onClick={prevImage}
                     className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-2 shadow-md"
                   >
-                    <ChevronLeft className="w-5 h-5" />
+                    <ChevronLeft className="w-5 h-5" aria-hidden="true" />
+                    <span className="sr-only">Image précédente</span>
                   </button>
                   <button
+                    title="Image suivante"
+                    aria-label="Image suivante"
+                    type="button"
                     onClick={nextImage}
                     className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-2 shadow-md"
                   >
-                    <ChevronRight className="w-5 h-5" />
+                    <ChevronRight className="w-5 h-5" aria-hidden="true" />
+                    <span className="sr-only">Image suivante</span>
                   </button>
                 </>
               )}
@@ -100,6 +108,9 @@ export default function ProductDetail({ product }: ProductDetailProps) {
                 {images.map((image, index) => (
                   <button
                     key={index}
+                    type="button"
+                    title={`Voir l'image ${index + 1}`}
+                    aria-label={`Voir l'image ${index + 1}`}
                     onClick={() => setSelectedImageIndex(index)}
                     className={`flex-shrink-0 w-20 h-20 bg-white rounded-lg overflow-hidden border-2 ${
                       selectedImageIndex === index ? "border-pink-500" : "border-gray-200"
@@ -112,6 +123,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
                       height={80}
                       className="object-contain p-2"
                     />
+                    <span className="sr-only">{`Voir l'image ${index + 1}`}</span>
                   </button>
                 ))}
               </div>
@@ -124,16 +136,39 @@ export default function ProductDetail({ product }: ProductDetailProps) {
               <div className="flex items-center justify-between mb-2">
                 <p className="text-pink-600 font-medium">{product.brand}</p>
                 <div className="flex items-center space-x-2">
+                  {isWishlisted ? (
+                    <button
+                      type="button"
+                      title="Retirer des favoris"
+                      aria-label="Retirer des favoris"
+                      aria-pressed="true"
+                      onClick={toggleWishlist}
+                      className="p-2 rounded-full bg-pink-100 text-pink-600 hover:bg-pink-100 hover:text-pink-600"
+                    >
+                      <Heart className="w-5 h-5 fill-current" aria-hidden="true" />
+                      <span className="sr-only">Retirer des favoris</span>
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      title="Ajouter aux favoris"
+                      aria-label="Ajouter aux favoris"
+                      aria-pressed="false"
+                      onClick={toggleWishlist}
+                      className="p-2 rounded-full bg-gray-100 text-gray-600 hover:bg-pink-100 hover:text-pink-600"
+                    >
+                      <Heart className="w-5 h-5" aria-hidden="true" />
+                      <span className="sr-only">Ajouter aux favoris</span>
+                    </button>
+                  )}
                   <button
-                    onClick={toggleWishlist}
-                    className={`p-2 rounded-full ${
-                      isWishlisted ? "bg-pink-100 text-pink-600" : "bg-gray-100 text-gray-600"
-                    } hover:bg-pink-100 hover:text-pink-600`}
+                    type="button"
+                    title="Partager le produit"
+                    aria-label="Partager le produit"
+                    className="p-2 rounded-full bg-gray-100 text-gray-600 hover:bg-pink-100 hover:text-pink-600"
                   >
-                    <Heart className={`w-5 h-5 ${isWishlisted ? "fill-current" : ""}`} />
-                  </button>
-                  <button className="p-2 rounded-full bg-gray-100 text-gray-600 hover:bg-pink-100 hover:text-pink-600">
-                    <Share2 className="w-5 h-5" />
+                    <Share2 className="w-5 h-5" aria-hidden="true" />
+                    <span className="sr-only">Partager le produit</span>
                   </button>
                 </div>
               </div>
@@ -164,7 +199,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
                   <span className="text-xl text-gray-500 line-through">{product.originalPrice}</span>
                 )}
                 {product.isOnSale && <Badge variant="destructive">Promotion</Badge>}
-                {product.isNew && <Badge className="bg-green-100 text-green-800">Nouveau</Badge>}
+                {product.isNew && <Badge className="bg-[#FFDAFC] text-[#F792CC]">Nouveau</Badge>}
               </div>
 
               <p className="text-gray-700 mb-6">{product.shortDescription}</p>
@@ -172,7 +207,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
               {/* Stock Status */}
               <div className="mb-6">
                 {product.inStock ? (
-                  <span className="text-green-600 font-medium">✓ En stock</span>
+                  <span className="text-[#F792CC] font-medium">✓ En stock</span>
                 ) : (
                   <span className="text-red-600 font-medium">✗ Rupture de stock</span>
                 )}
@@ -183,17 +218,25 @@ export default function ProductDetail({ product }: ProductDetailProps) {
                 <label className="text-sm font-medium text-gray-700">Quantité:</label>
                 <div className="flex items-center border border-gray-300 rounded-lg">
                   <button
+                    type="button"
+                    title="Diminuer la quantité"
+                    aria-label="Diminuer la quantité"
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
                     className="px-3 py-2 text-gray-600 hover:bg-gray-100"
                   >
                     -
+                    <span className="sr-only">Diminuer la quantité</span>
                   </button>
                   <span className="px-4 py-2 border-x border-gray-300">{quantity}</span>
                   <button
+                    type="button"
+                    title="Augmenter la quantité"
+                    aria-label="Augmenter la quantité"
                     onClick={() => setQuantity(quantity + 1)}
                     className="px-3 py-2 text-gray-600 hover:bg-gray-100"
                   >
                     +
+                    <span className="sr-only">Augmenter la quantité</span>
                   </button>
                 </div>
               </div>

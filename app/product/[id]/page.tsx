@@ -74,7 +74,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
           </div>
           <div className="mb-4">
             {product.stock > 0 ? (
-              <span className="text-sm text-green-700">En stock: {product.stock}</span>
+              <span className="text-sm text-[#F792CC]">En stock: {product.stock}</span>
             ) : (
               <span className="text-sm text-red-600">Rupture de stock</span>
             )}

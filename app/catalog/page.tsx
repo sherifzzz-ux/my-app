@@ -204,7 +204,7 @@ export default async function CatalogPage({ searchParams }: { searchParams: Prom
             <div className="font-semibold mb-1 line-clamp-2 min-h-[2.5rem]">{p.name}</div>
             <div className="text-xs mb-1">
               {p.stock > 0 ? (
-                <span className="text-green-700">En stock: {p.stock}</span>
+                <span className="text-[#F792CC]">En stock: {p.stock}</span>
               ) : (
                 <span className="text-red-600">Rupture de stock</span>
               )}

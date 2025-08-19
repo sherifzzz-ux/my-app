@@ -6,6 +6,8 @@ import { Header } from "@/components/flawless/header";
 import MobileFooterNav from "@/components/flawless/mobile-footer-nav";
 import { Inter, Playfair_Display } from "next/font/google";
 
+export const dynamic = "force-dynamic";
+
 const inter = Inter({
   subsets: ["latin"],
   display: "swap",

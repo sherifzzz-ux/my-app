@@ -596,7 +596,7 @@ export function Header() {
   return (
     <div className="w-full">
       {/* Top banner */}
-      <div className="bg-green-500 text-white text-center py-2 text-sm">
+      <div className="bg-[#F792CC] text-white text-center py-2 text-sm">
         LIVRAISON EN MOINS DE 24H À DAKAR (HORS DIMANCHES/JOURS FÉRIÉS)
       </div>
 
@@ -616,7 +616,7 @@ export function Header() {
 
             {/* Logo - centered on mobile, left on desktop */}
             <div className="text-center md:text-left">
-              <div className="text-xl md:text-2xl font-bold text-green-600">FlawlessBeauty</div>
+              <div className="text-xl md:text-2xl font-bold text-[#F792CC]">FlawlessBeauty</div>
               <div className="text-xs text-gray-500 hidden md:block">Parapharmacie en ligne & Cosmétiques</div>
             </div>
 
@@ -779,22 +779,22 @@ export default function MobileFooterNav() {
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-[9999] shadow-lg">
       <div className="flex items-center justify-around py-2">
-        <Link href="/" className="flex flex-col items-center py-2 px-4 text-gray-600 hover:text-green-600">
+        <Link href="/" className="flex flex-col items-center py-2 px-4 text-gray-600 hover:text-[#F792CC]">
           <Home className="h-6 w-6 mb-1" />
           <span className="text-xs font-medium">ACCUEIL</span>
         </Link>
         
-        <Link href="/marques" className="flex flex-col items-center py-2 px-4 text-gray-600 hover:text-green-600">
+        <Link href="/marques" className="flex flex-col items-center py-2 px-4 text-gray-600 hover:text-[#F792CC]">
           <Grid3X3 className="h-6 w-6 mb-1" />
           <span className="text-xs font-medium">MARQUES</span>
         </Link>
         
-        <Link href="/panier" className="flex flex-col items-center py-2 px-4 text-gray-600 hover:text-green-600">
+        <Link href="/panier" className="flex flex-col items-center py-2 px-4 text-gray-600 hover:text-[#F792CC]">
           <ShoppingCart className="h-6 w-6 mb-1" />
           <span className="text-xs font-medium">PANIER</span>
         </Link>
         
-        <Link href="/compte" className="flex flex-col items-center py-2 px-4 text-gray-600 hover:text-green-600">
+        <Link href="/compte" className="flex flex-col items-center py-2 px-4 text-gray-600 hover:text-[#F792CC]">
           <User className="h-6 w-6 mb-1" />
           <span className="text-xs font-medium">COMPTE</span>
         </Link>

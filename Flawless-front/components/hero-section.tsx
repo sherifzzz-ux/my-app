@@ -158,6 +158,9 @@ export function HeroSection() {
         {heroSlides.map((_, index) => (
           <button
             key={index}
+            title={`Aller à la diapositive ${index + 1}`}
+            aria-label={`Aller à la diapositive ${index + 1}`}
+            type="button"
             className={`w-3 h-3 rounded-full transition-colors ${
               index === currentSlide ? "bg-pink-600" : "bg-white/50"
             }`}

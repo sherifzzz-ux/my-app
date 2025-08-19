@@ -333,7 +333,7 @@ export default function CategoryPage({ categorySlug, categoryName, products, sea
                         />
                       </Link>
                       {product.isNew && (
-                        <Badge className="absolute top-2 left-2 bg-green-100 text-green-800">Nouveau</Badge>
+                        <Badge className="absolute top-2 left-2 bg-[#FFDAFC] text-[#F792CC]">Nouveau</Badge>
                       )}
                       {product.isOnSale && (
                         <Badge className="absolute top-2 right-2" variant="destructive">

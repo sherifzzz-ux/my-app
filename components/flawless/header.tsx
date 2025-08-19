@@ -3,82 +3,164 @@
 import { Search, Heart, Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
 
+  // Délais d'ouverture/fermeture pour menus déroulants (hover-intent desktop)
+  const openTimeoutRef = useRef<number | null>(null);
+  const closeTimeoutRef = useRef<number | null>(null);
+  const desktopNavRef = useRef<HTMLDivElement | null>(null);
+
+  const handleItemEnter = (key: string) => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+    if (openTimeoutRef.current) clearTimeout(openTimeoutRef.current);
+    openTimeoutRef.current = window.setTimeout(() => {
+      setActiveDropdown(key);
+    }, 80);
+  };
+
+  const handleItemLeave = () => {
+    if (openTimeoutRef.current) {
+      clearTimeout(openTimeoutRef.current);
+      openTimeoutRef.current = null;
+    }
+    if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
+    closeTimeoutRef.current = window.setTimeout(() => {
+      setActiveDropdown(null);
+    }, 150);
+  };
+
+  const cancelCloseAndKeepOpen = () => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+  };
+
+  useEffect(() => {
+    const handleDocumentClick = (e: MouseEvent) => {
+      if (desktopNavRef.current && !desktopNavRef.current.contains(e.target as Node)) {
+        setActiveDropdown(null);
+      }
+    };
+
+    document.addEventListener("mousedown", handleDocumentClick);
+
+    // Fermer le dropdown lors du scroll horizontal de la barre de menu
+    const navEl = desktopNavRef.current;
+    const handleScroll = () => setActiveDropdown(null);
+    if (navEl) navEl.addEventListener("scroll", handleScroll, { passive: true } as AddEventListenerOptions);
+
+    return () => {
+      document.removeEventListener("mousedown", handleDocumentClick);
+      if (navEl) navEl.removeEventListener("scroll", handleScroll as EventListener);
+      if (openTimeoutRef.current) clearTimeout(openTimeoutRef.current);
+      if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
+    };
+  }, []);
+
   const menuItems: Record<
     string,
     { href: string; subcategories: { name: string; href: string }[] }
   > = {
+    PROMOTION: {
+      href: "/promotion",
+      subcategories: [],
+    },
     "SOIN DU VISAGE": {
       href: "/soin-du-visage",
       subcategories: [
-        { name: "Nettoyants", href: "/soin-du-visage/nettoyants" },
-        { name: "Sérums", href: "/soin-du-visage/serums" },
-        { name: "Crèmes hydratantes", href: "/soin-du-visage/cremes-hydratantes" },
-        { name: "Masques", href: "/soin-du-visage/masques" },
-        { name: "Contour des yeux", href: "/soin-du-visage/contour-yeux" },
         { name: "Protection solaire", href: "/soin-du-visage/protection-solaire" },
+        { name: "Soins du visage par produit", href: "/soin-du-visage/soins-par-produit" },
+        { name: "Soins ciblés", href: "/soin-du-visage/soins-cibles" },
+        { name: "Baumes hydratants lèvres", href: "/soin-du-visage/baumes-levres" },
+        { name: "Démaquillants & Nettoyants", href: "/soin-du-visage/demaquillants-nettoyants" },
+        { name: "Accessoires & Appareils visage", href: "/soin-du-visage/accessoires-appareils" },
       ],
     },
     "CORPS & BAIN": {
       href: "/corps-bain",
       subcategories: [
-        { name: "Gels douche", href: "/corps-bain/gels-douche" },
-        { name: "Crèmes corps", href: "/corps-bain/cremes-corps" },
-        { name: "Huiles corps", href: "/corps-bain/huiles-corps" },
-        { name: "Gommages", href: "/corps-bain/gommages" },
-        { name: "Déodorants", href: "/corps-bain/deodorants" },
+        { name: "Soins Corps", href: "/corps-bain/soins-corps" },
+        { name: "Bain & Douche", href: "/corps-bain/bain-douche" },
+        { name: "Épilation", href: "/corps-bain/epilation" },
+        { name: "Hygiène intime", href: "/corps-bain/hygiene-intime" },
+        { name: "Mains & Pieds", href: "/corps-bain/mains-pieds" },
+        { name: "L'hygiène Bucco-Dentaire", href: "/corps-bain/hygiene-bucco-dentaire" },
       ],
     },
     MAQUILLAGE: {
       href: "/maquillage",
       subcategories: [
         { name: "Teint", href: "/maquillage/teint" },
-        { name: "Yeux", href: "/maquillage/yeux" },
+        { name: "Maquillage Yeux", href: "/maquillage/yeux" },
         { name: "Lèvres", href: "/maquillage/levres" },
         { name: "Ongles", href: "/maquillage/ongles" },
-        { name: "Pinceaux", href: "/maquillage/pinceaux" },
+        { name: "Accessoires Maquillage", href: "/maquillage/accessoires" },
+        { name: "Sourcils", href: "/maquillage/sourcils" },
       ],
     },
     PARAPHARMACIE: {
       href: "/parapharmacie",
       subcategories: [
-        { name: "Compléments alimentaires", href: "/parapharmacie/complements" },
-        { name: "Hygiène intime", href: "/parapharmacie/hygiene-intime" },
-        { name: "Premiers secours", href: "/parapharmacie/premiers-secours" },
-        { name: "Bien-être", href: "/parapharmacie/bien-etre" },
+        { name: "Complément Alimentaire", href: "/parapharmacie/complements" },
+        { name: "Soins du visage", href: "/parapharmacie/soins-visage" },
+        { name: "Soins du corps", href: "/parapharmacie/soins-corps" },
+        { name: "Homme", href: "/parapharmacie/homme" },
       ],
+    },
+    "IDÉES CADEAUX": {
+      href: "/idees-cadeaux",
+      subcategories: [],
     },
     CHEVEUX: {
       href: "/cheveux",
       subcategories: [
-        { name: "Shampooings", href: "/cheveux/shampooings" },
-        { name: "Après-shampooings", href: "/cheveux/apres-shampooings" },
-        { name: "Masques capillaires", href: "/cheveux/masques" },
-        { name: "Huiles capillaires", href: "/cheveux/huiles" },
-        { name: "Coiffage", href: "/cheveux/coiffage" },
+        { name: "Compléments alimentaires", href: "/cheveux/complements-alimentaires" },
+        { name: "Routine capillaire", href: "/cheveux/routine-capillaire" },
+        { name: "Soins cheveux", href: "/cheveux/soins-cheveux" },
+        { name: "Accessoires & Brosses", href: "/cheveux/accessoires-brosses" },
       ],
     },
-    "KOREAN BEAUTY": {
-      href: "/korean-beauty",
+    PARFUMERIE: {
+      href: "/parfumerie",
       subcategories: [
-        { name: "K-Beauty Skincare", href: "/korean-beauty/skincare" },
-        { name: "Masques coréens", href: "/korean-beauty/masques" },
-        { name: "Essences & Toners", href: "/korean-beauty/essences" },
-        { name: "BB & CC Crèmes", href: "/korean-beauty/bb-cc-cremes" },
+        { name: "Parfumerie Femmes", href: "/parfumerie/femmes" },
+        { name: "Parfumerie Hommes", href: "/parfumerie/hommes" },
+        { name: "Huiles parfumées", href: "/parfumerie/huiles-parfumees" },
       ],
+    },
+    "BÉBÉ & ENFANT": {
+      href: "/bebe-enfant",
+      subcategories: [
+        { name: "Appareils Bébé", href: "/bebe-enfant/appareils-bebe" },
+        { name: "Sécurité Enfants", href: "/bebe-enfant/securite-enfants" },
+        { name: "Alimentation Bébé", href: "/bebe-enfant/alimentation-bebe" },
+        { name: "Hygiène Bébé", href: "/bebe-enfant/hygiene-bebe" },
+        { name: "Maman & Grossesse", href: "/bebe-enfant/maman-grossesse" },
+      ],
+    },
+    MARQUES: {
+      href: "/marques",
+      subcategories: [],
+    },
+    "KOREAN SKINCARE": {
+      href: "/korean-skincare",
+      subcategories: [],
     },
   };
 
   return (
     <div className="w-full">
       {/* Top banner */}
-      <div className="bg-green-500 text-white text-center py-2 text-sm">
+      <div className="bg-[#F792CC] text-white text-center py-2 text-sm">
         LIVRAISON EN MOINS DE 24H À DAKAR (HORS DIMANCHES/JOURS FÉRIÉS)
       </div>
 
@@ -98,7 +180,7 @@ export function Header() {
 
             {/* Logo - centered on mobile, left on desktop */}
             <div className="text-center md:text-left">
-              <div className="text-xl md:text-2xl font-bold text-green-600">FlawlessBeauty</div>
+              <div className="text-xl md:text-2xl font-bold text-[#F792CC]">FlawlessBeauty</div>
               <div className="text-xs text-gray-500 hidden md:block">
                 Parapharmacie en ligne & Cosmétiques
               </div>
@@ -128,7 +210,7 @@ export function Header() {
           </div>
 
           <nav className="hidden md:block border-t py-3 relative">
-            <div className="flex items-center space-x-6 overflow-x-auto">
+            <div ref={desktopNavRef} className="flex items-center space-x-6 overflow-x-auto overflow-y-visible whitespace-nowrap">
               <Link href="/nouveautes">
                 <Button variant="ghost" className="whitespace-nowrap">
                   NOUVEAUTÉS
@@ -138,53 +220,66 @@ export function Header() {
               {Object.entries(menuItems).map(([key, item]) => (
                 <div
                   key={key}
-                  className="relative group"
-                  onMouseEnter={() => setActiveDropdown(key)}
-                  onMouseLeave={() => setActiveDropdown(null)}
+                  className="relative"
+                  onMouseEnter={() => handleItemEnter(key)}
+                  onMouseLeave={handleItemLeave}
                 >
                   <Link href={item.href}>
-                    <Button variant="ghost" className="whitespace-nowrap flex items-center">
+                    <Button
+                      variant="ghost"
+                      className={`whitespace-nowrap flex items-center hover:text-[#F792CC] ${activeDropdown === key ? "text-[#F792CC]" : ""}`}
+                      onClick={() => setActiveDropdown(key)}
+                      onFocus={() => setActiveDropdown(key)}
+                    >
                       {key}
-                      <ChevronDown className="ml-1 h-3 w-3" />
+                      {item.subcategories.length > 0 && (
+                        <ChevronDown className="ml-1 h-3 w-3" />
+                      )}
                     </Button>
                   </Link>
 
+                  {/* Dropdown desktop rendu globalement en overlay (fixed) */}
+
+                  {/* Dropdowns */}
                   {activeDropdown === key && (
-                    <div className="absolute top-full left-0 mt-1 w-64 bg-white border border-gray-200 rounded-md shadow-lg z-50">
-                      <div className="py-2">
-                        {item.subcategories.map((subcat) => (
-                          <Link key={subcat.name} href={subcat.href}>
-                            <div className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
-                              {subcat.name}
-                            </div>
-                          </Link>
-                        ))}
+                    <>
+                      {/* Mobile: ouverture au clic via état */}
+                      <div className="md:hidden mt-1 w-full bg-white border border-gray-200 rounded-md shadow-lg z-50">
+                        <div className="py-2">
+                          {item.subcategories.map((subcat) => (
+                            <Link key={subcat.name} href={subcat.href}>
+                              <div className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
+                                {subcat.name}
+                              </div>
+                            </Link>
+                          ))}
+                        </div>
                       </div>
-                    </div>
+                      {/* Desktop: dropdown positionné sous l'item parent (sans styles inline) */}
+                      <div
+                        className="hidden md:block absolute left-0 top-full z-[10000]"
+                        onMouseEnter={cancelCloseAndKeepOpen}
+                        onMouseLeave={handleItemLeave}
+                      >
+                        <div className="w-80 bg-white rounded-xl shadow-xl border border-[#F792CC]/30 ring-1 ring-[#F792CC]/15 overflow-hidden">
+                          <div className="h-1 w-full bg-[#F792CC]" />
+                          <div className="py-1">
+                            {menuItems[activeDropdown]?.subcategories?.map((subcat) => (
+                              <Link key={subcat.name} href={subcat.href}>
+                                <div className="px-4 py-2.5 text-sm text-gray-700 hover:bg-[#FFDAFC] hover:text-[#F792CC] cursor-pointer transition-colors">
+                                  {subcat.name}
+                                </div>
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </>
                   )}
                 </div>
               ))}
 
-              <Link href="/parfums">
-                <Button variant="ghost" className="whitespace-nowrap">
-                  PARFUMS
-                </Button>
-              </Link>
-              <Link href="/bebe-enfant">
-                <Button variant="ghost" className="whitespace-nowrap">
-                  BÉBÉ & ENFANT
-                </Button>
-              </Link>
-              <Link href="/sexualite">
-                <Button variant="ghost" className="whitespace-nowrap">
-                  SEXUALITÉ
-                </Button>
-              </Link>
-              <Link href="/idees-cadeaux">
-                <Button variant="ghost" className="whitespace-nowrap">
-                  IDÉES CADEAUX
-                </Button>
-              </Link>
+              {/* Liens statiques retirés pour éviter les doublons avec menuItems */}
             </div>
           </nav>
 
@@ -224,26 +319,7 @@ export function Header() {
                     )}
                   </div>
                 ))}
-                <Link href="/parfums">
-                  <Button variant="ghost" className="justify-start">
-                    PARFUMS
-                  </Button>
-                </Link>
-                <Link href="/bebe-enfant">
-                  <Button variant="ghost" className="justify-start">
-                    BÉBÉ & ENFANT
-                  </Button>
-                </Link>
-                <Link href="/sexualite">
-                  <Button variant="ghost" className="justify-start">
-                    SEXUALITÉ
-                  </Button>
-                </Link>
-                <Link href="/idees-cadeaux">
-                  <Button variant="ghost" className="justify-start">
-                    IDÉES CADEAUX
-                  </Button>
-                </Link>
+                {/* Liens statiques retirés pour éviter les doublons avec menuItems */}
               </div>
             </nav>
           )}
