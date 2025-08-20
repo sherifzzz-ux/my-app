@@ -1,8 +1,8 @@
-"use client"
+'use client'
 
-import { X, Plus, Minus } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { useCart } from "@/contexts/cart-context"
+import { X, Plus, Minus } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { useCart } from '@/contexts/cart-context'
 
 export function CartSidebar() {
   const { state, dispatch } = useCart()
@@ -10,23 +10,26 @@ export function CartSidebar() {
   if (!state.isOpen) return null
 
   const updateQuantity = (id: number, quantity: number) => {
-    dispatch({ type: "UPDATE_QUANTITY", payload: { id, quantity } })
+    dispatch({ type: 'UPDATE_QUANTITY', payload: { id, quantity } })
   }
 
   const removeItem = (id: number) => {
-    dispatch({ type: "REMOVE_ITEM", payload: id })
+    dispatch({ type: 'REMOVE_ITEM', payload: id })
   }
 
   return (
     <>
       {/* Overlay */}
-      <div className="fixed inset-0 bg-black/50 z-50" onClick={() => dispatch({ type: "CLOSE_CART" })} />
+      <div
+        className="fixed inset-0 bg-black/50 z-50"
+        onClick={() => dispatch({ type: 'CLOSE_CART' })}
+      />
 
       {/* Sidebar */}
       <div className="fixed right-0 top-0 h-full w-full max-w-md bg-white z-50 shadow-xl overflow-y-auto">
         <div className="p-4 border-b flex items-center justify-between">
           <h2 className="text-lg font-semibold">PANIER ({state.items.length})</h2>
-          <Button variant="ghost" size="sm" onClick={() => dispatch({ type: "CLOSE_CART" })}>
+          <Button variant="ghost" size="sm" onClick={() => dispatch({ type: 'CLOSE_CART' })}>
             <X className="h-5 w-5" />
           </Button>
         </div>
@@ -39,7 +42,7 @@ export function CartSidebar() {
               {state.items.map((item) => (
                 <div key={item.id} className="flex items-center space-x-3 p-3 border rounded-lg">
                   <img
-                    src={item.image || "/placeholder.svg"}
+                    src={item.image || '/placeholder.svg'}
                     alt={item.name}
                     className="w-16 h-16 object-cover rounded"
                   />
@@ -48,7 +51,9 @@ export function CartSidebar() {
                     <div className="flex items-center space-x-2 mt-1">
                       <span className="text-sm font-bold text-pink-600">{item.price}</span>
                       {item.originalPrice && (
-                        <span className="text-xs text-gray-500 line-through">{item.originalPrice}</span>
+                        <span className="text-xs text-gray-500 line-through">
+                          {item.originalPrice}
+                        </span>
                       )}
                     </div>
                   </div>
@@ -90,7 +95,9 @@ export function CartSidebar() {
 
             <div className="space-y-2">
               <Button className="w-full bg-pink-600 hover:bg-pink-700 text-white">PANIER</Button>
-              <Button className="w-full bg-pink-600 hover:bg-pink-700 text-white">VALIDER LA COMMANDE</Button>
+              <Button className="w-full bg-pink-600 hover:bg-pink-700 text-white">
+                VALIDER LA COMMANDE
+              </Button>
               <Button variant="outline" className="w-full bg-transparent">
                 CONTINUER LES ACHATS
               </Button>

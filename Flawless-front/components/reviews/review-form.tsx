@@ -1,15 +1,15 @@
-"use client"
+'use client'
 
-import type React from "react"
+import type React from 'react'
 
-import { useState } from "react"
-import { Star } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { useReviews } from "@/contexts/reviews-context"
-import { useAuth } from "@/contexts/auth-context"
+import { useState } from 'react'
+import { Star } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import { useReviews } from '@/contexts/reviews-context'
+import { useAuth } from '@/contexts/auth-context'
 
 interface ReviewFormProps {
   productId: string
@@ -21,8 +21,8 @@ export function ReviewForm({ productId, onClose }: ReviewFormProps) {
   const { user } = useAuth()
   const [rating, setRating] = useState(0)
   const [hoveredRating, setHoveredRating] = useState(0)
-  const [title, setTitle] = useState("")
-  const [comment, setComment] = useState("")
+  const [title, setTitle] = useState('')
+  const [comment, setComment] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -44,11 +44,11 @@ export function ReviewForm({ productId, onClose }: ReviewFormProps) {
 
       // Reset form
       setRating(0)
-      setTitle("")
-      setComment("")
+      setTitle('')
+      setComment('')
       onClose()
     } catch (error) {
-      console.error("Error submitting review:", error)
+      console.error('Error submitting review:', error)
     } finally {
       setIsSubmitting(false)
     }
@@ -90,8 +90,8 @@ export function ReviewForm({ productId, onClose }: ReviewFormProps) {
                   <Star
                     className={`h-6 w-6 ${
                       star <= (hoveredRating || rating)
-                        ? "fill-pink-500 text-pink-500"
-                        : "text-gray-300 hover:text-pink-300"
+                        ? 'fill-pink-500 text-pink-500'
+                        : 'text-gray-300 hover:text-pink-300'
                     }`}
                   />
                 </button>
@@ -135,7 +135,7 @@ export function ReviewForm({ productId, onClose }: ReviewFormProps) {
               disabled={isSubmitting || rating === 0 || !title.trim() || !comment.trim()}
               className="bg-pink-600 hover:bg-pink-700"
             >
-              {isSubmitting ? "Publication..." : "Publier l'avis"}
+              {isSubmitting ? 'Publication...' : "Publier l'avis"}
             </Button>
             <Button type="button" variant="outline" onClick={onClose} disabled={isSubmitting}>
               Annuler

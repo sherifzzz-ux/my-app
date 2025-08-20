@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import type React from "react"
-import { createContext, useContext, useState, useEffect } from "react"
+import type React from 'react'
+import { createContext, useContext, useState, useEffect } from 'react'
 
 export interface User {
   id: string
@@ -13,7 +13,7 @@ export interface User {
 
 export interface Address {
   id: string
-  type: "billing" | "shipping"
+  type: 'billing' | 'shipping'
   firstName: string
   lastName: string
   company?: string
@@ -31,7 +31,7 @@ interface AuthContextType {
   register: (userData: RegisterData) => Promise<void>
   logout: () => void
   updateProfile: (userData: Partial<User>) => Promise<void>
-  addAddress: (address: Omit<Address, "id">) => void
+  addAddress: (address: Omit<Address, 'id'>) => void
   updateAddress: (addressId: string, address: Partial<Address>) => void
   removeAddress: (addressId: string) => void
 }
@@ -51,7 +51,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   // Load user from localStorage on mount
   useEffect(() => {
-    const savedUser = localStorage.getItem("flawless-beauty-user")
+    const savedUser = localStorage.getItem('flawless-beauty-user')
     if (savedUser) {
       setUser(JSON.parse(savedUser))
     }
@@ -61,9 +61,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   // Save user to localStorage whenever user changes
   useEffect(() => {
     if (user) {
-      localStorage.setItem("flawless-beauty-user", JSON.stringify(user))
+      localStorage.setItem('flawless-beauty-user', JSON.stringify(user))
     } else {
-      localStorage.removeItem("flawless-beauty-user")
+      localStorage.removeItem('flawless-beauty-user')
     }
   }, [user])
 
@@ -75,20 +75,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       // Mock user data
       const mockUser: User = {
-        id: "user_" + Date.now(),
-        name: "Marie Dupont",
+        id: 'user_' + Date.now(),
+        name: 'Marie Dupont',
         email,
-        phone: "+33 6 12 34 56 78",
+        phone: '+33 6 12 34 56 78',
         addresses: [
           {
-            id: "addr_1",
-            type: "billing",
-            firstName: "Marie",
-            lastName: "Dupont",
-            address: "123 Rue de la Paix",
-            city: "Paris",
-            postalCode: "75001",
-            country: "France",
+            id: 'addr_1',
+            type: 'billing',
+            firstName: 'Marie',
+            lastName: 'Dupont',
+            address: '123 Rue de la Paix',
+            city: 'Paris',
+            postalCode: '75001',
+            country: 'France',
             isDefault: true,
           },
         ],
@@ -96,7 +96,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       setUser(mockUser)
     } catch (error) {
-      throw new Error("Échec de la connexion")
+      throw new Error('Échec de la connexion')
     } finally {
       setIsLoading(false)
     }
@@ -109,7 +109,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       await new Promise((resolve) => setTimeout(resolve, 1000))
 
       const newUser: User = {
-        id: "user_" + Date.now(),
+        id: 'user_' + Date.now(),
         name: userData.name,
         email: userData.email,
         phone: userData.phone,
@@ -138,18 +138,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       setUser({ ...user, ...userData })
     } catch (error) {
-      throw new Error("Échec de la mise à jour du profil")
+      throw new Error('Échec de la mise à jour du profil')
     } finally {
       setIsLoading(false)
     }
   }
 
-  const addAddress = (addressData: Omit<Address, "id">) => {
+  const addAddress = (addressData: Omit<Address, 'id'>) => {
     if (!user) return
 
     const newAddress: Address = {
       ...addressData,
-      id: "addr_" + Date.now(),
+      id: 'addr_' + Date.now(),
     }
 
     setUser({
@@ -163,7 +163,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     setUser({
       ...user,
-      addresses: user.addresses.map((addr) => (addr.id === addressId ? { ...addr, ...addressData } : addr)),
+      addresses: user.addresses.map((addr) =>
+        addr.id === addressId ? { ...addr, ...addressData } : addr,
+      ),
     })
   }
 
@@ -198,7 +200,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 export function useAuth() {
   const context = useContext(AuthContext)
   if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider")
+    throw new Error('useAuth must be used within an AuthProvider')
   }
   return context
 }

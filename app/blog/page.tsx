@@ -1,4 +1,4 @@
-export const dynamic = "force-static";
+export const dynamic = 'force-static'
 
 export default function BlogPage() {
   return (
@@ -6,7 +6,5 @@ export default function BlogPage() {
       <h1 className="text-2xl font-semibold mb-4">Blog</h1>
       <p className="text-muted-foreground">Bientôt: articles, conseils beauté et promos.</p>
     </main>
-  );
+  )
 }
-
-

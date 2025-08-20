@@ -4,7 +4,5 @@ export default function Page() {
       <h1 className="text-2xl font-bold mb-2">Soin du visage</h1>
       <p className="text-muted-foreground">Contenu catégorie à venir.</p>
     </div>
-  );
+  )
 }
-
-

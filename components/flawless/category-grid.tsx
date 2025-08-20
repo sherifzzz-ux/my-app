@@ -1,13 +1,13 @@
-import Link from "next/link";
-import Image from "next/image";
-import { prisma } from "@/lib/prisma";
+import Link from 'next/link'
+import Image from 'next/image'
+import { prisma } from '@/lib/prisma'
 
 export async function CategoryGrid() {
   const categories = await prisma.category.findMany({
-    orderBy: { name: "asc" },
+    orderBy: { name: 'asc' },
     take: 6,
     select: { id: true, name: true, slug: true, imageUrl: true },
-  });
+  })
   return (
     <section className="py-12 bg-white">
       <div className="container mx-auto px-4">
@@ -20,9 +20,11 @@ export async function CategoryGrid() {
           {categories.map((category) => (
             <Link key={category.id} href={`/catalog?cat=${category.slug}`}>
               <div className="group relative overflow-hidden rounded-lg aspect-square hover-scale cursor-pointer">
-                <div className={`absolute inset-0 bg-gradient-to-br from-pink-200 to-pink-300 opacity-80`} />
+                <div
+                  className={`absolute inset-0 bg-gradient-to-br from-pink-200 to-pink-300 opacity-80`}
+                />
                 <Image
-                  src={category.imageUrl || "/placeholder.svg"}
+                  src={category.imageUrl || '/placeholder.svg'}
                   alt={category.name}
                   fill
                   className="object-cover group-hover:scale-110 transition-transform duration-300"
@@ -32,7 +34,9 @@ export async function CategoryGrid() {
                     <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mb-3 mx-auto">
                       <div className="w-6 h-6 bg-white rounded-full" />
                     </div>
-                    <h3 className={`text-lg md:text-xl font-bold text-white drop-shadow-lg`}>{category.name}</h3>
+                    <h3 className={`text-lg md:text-xl font-bold text-white drop-shadow-lg`}>
+                      {category.name}
+                    </h3>
                   </div>
                 </div>
               </div>
@@ -41,9 +45,7 @@ export async function CategoryGrid() {
         </div>
       </div>
     </section>
-  );
+  )
 }
 
-export default CategoryGrid;
-
-
+export default CategoryGrid

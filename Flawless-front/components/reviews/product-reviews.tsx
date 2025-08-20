@@ -1,12 +1,12 @@
-"use client"
+'use client'
 
-import { useState } from "react"
-import { Star, ThumbsUp, User } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { useReviews } from "@/contexts/reviews-context"
-import { ReviewForm } from "./review-form"
+import { useState } from 'react'
+import { Star, ThumbsUp, User } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { useReviews } from '@/contexts/reviews-context'
+import { ReviewForm } from './review-form'
 
 interface ProductReviewsProps {
   productId: string
@@ -19,14 +19,14 @@ export function ProductReviews({ productId }: ProductReviewsProps) {
   const reviews = getProductReviews(productId)
   const averageRating = getAverageRating(productId)
 
-  const renderStars = (rating: number, size: "sm" | "md" = "sm") => {
-    const sizeClass = size === "sm" ? "h-4 w-4" : "h-5 w-5"
+  const renderStars = (rating: number, size: 'sm' | 'md' = 'sm') => {
+    const sizeClass = size === 'sm' ? 'h-4 w-4' : 'h-5 w-5'
     return (
       <div className="flex items-center gap-1">
         {[1, 2, 3, 4, 5].map((star) => (
           <Star
             key={star}
-            className={`${sizeClass} ${star <= rating ? "fill-pink-500 text-pink-500" : "text-gray-300"}`}
+            className={`${sizeClass} ${star <= rating ? 'fill-pink-500 text-pink-500' : 'text-gray-300'}`}
           />
         ))}
       </div>
@@ -54,8 +54,10 @@ export function ProductReviews({ productId }: ProductReviewsProps) {
           <div className="grid md:grid-cols-2 gap-6">
             {/* Average Rating */}
             <div className="text-center">
-              <div className="text-4xl font-bold text-pink-600 mb-2">{averageRating.toFixed(1)}</div>
-              {renderStars(averageRating, "md")}
+              <div className="text-4xl font-bold text-pink-600 mb-2">
+                {averageRating.toFixed(1)}
+              </div>
+              {renderStars(averageRating, 'md')}
               <p className="text-sm text-gray-600 mt-2">Basé sur {reviews.length} avis</p>
             </div>
 
@@ -71,18 +73,23 @@ export function ProductReviews({ productId }: ProductReviewsProps) {
                         width:
                           reviews.length > 0
                             ? `${(distribution[rating as keyof typeof distribution] / reviews.length) * 100}%`
-                            : "0%",
+                            : '0%',
                       }}
                     />
                   </div>
-                  <span className="text-sm text-gray-600 w-8">{distribution[rating as keyof typeof distribution]}</span>
+                  <span className="text-sm text-gray-600 w-8">
+                    {distribution[rating as keyof typeof distribution]}
+                  </span>
                 </div>
               ))}
             </div>
           </div>
 
           <div className="mt-6 text-center">
-            <Button onClick={() => setShowReviewForm(!showReviewForm)} className="bg-pink-600 hover:bg-pink-700">
+            <Button
+              onClick={() => setShowReviewForm(!showReviewForm)}
+              className="bg-pink-600 hover:bg-pink-700"
+            >
               Écrire un avis
             </Button>
           </div>
@@ -90,7 +97,9 @@ export function ProductReviews({ productId }: ProductReviewsProps) {
       </Card>
 
       {/* Review Form */}
-      {showReviewForm && <ReviewForm productId={productId} onClose={() => setShowReviewForm(false)} />}
+      {showReviewForm && (
+        <ReviewForm productId={productId} onClose={() => setShowReviewForm(false)} />
+      )}
 
       {/* Individual Reviews */}
       <div className="space-y-4">

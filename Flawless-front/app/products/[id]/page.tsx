@@ -1,6 +1,6 @@
-import { notFound } from "next/navigation"
-import { getProductById } from "@/lib/products-data"
-import ProductDetail from "@/components/product-detail"
+import { notFound } from 'next/navigation'
+import { getProductById } from '@/lib/products-data'
+import ProductDetail from '@/components/product-detail'
 
 interface ProductPageProps {
   params: {
@@ -20,5 +20,5 @@ export default function ProductPage({ params }: ProductPageProps) {
 
 export async function generateStaticParams() {
   // In a real app, this would fetch from your API/database
-  return [{ id: "cerave-gel-moussant-236ml" }, { id: "the-ordinary-niacinamide-10-zinc-1" }]
+  return [{ id: 'cerave-gel-moussant-236ml' }, { id: 'the-ordinary-niacinamide-10-zinc-1' }]
 }

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from 'next/link'
 
 export function FlawlessFooter() {
   return (
@@ -8,7 +8,8 @@ export function FlawlessFooter() {
           <div className="md:col-span-1">
             <div className="text-2xl font-serif text-pink-400 italic mb-4">Flawless Beauty</div>
             <p className="text-gray-400 text-sm">
-              Votre parapharmacie en ligne de confiance pour tous vos besoins en cosmétiques et soins de beauté.
+              Votre parapharmacie en ligne de confiance pour tous vos besoins en cosmétiques et
+              soins de beauté.
             </p>
           </div>
 
@@ -73,7 +74,9 @@ export function FlawlessFooter() {
                 </Link>
               </li>
               <li>
-                <Link href="/cgv" className="text-gray-400 hover:text-white">CGV</Link>
+                <Link href="/cgv" className="text-gray-400 hover:text-white">
+                  CGV
+                </Link>
               </li>
               <li>
                 <Link href="/confidentialite" className="text-gray-400 hover:text-white">
@@ -81,7 +84,9 @@ export function FlawlessFooter() {
                 </Link>
               </li>
               <li>
-                <Link href="/cookies" className="text-gray-400 hover:text-white">Cookies</Link>
+                <Link href="/cookies" className="text-gray-400 hover:text-white">
+                  Cookies
+                </Link>
               </li>
             </ul>
           </div>
@@ -92,9 +97,7 @@ export function FlawlessFooter() {
         </div>
       </div>
     </footer>
-  );
+  )
 }
 
-export default FlawlessFooter;
-
-
+export default FlawlessFooter

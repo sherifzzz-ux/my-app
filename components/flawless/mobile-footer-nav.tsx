@@ -1,7 +1,7 @@
-"use client";
+'use client'
 
-import { Home, Grid3X3, ShoppingCart, User } from "lucide-react";
-import Link from "next/link";
+import { Home, Grid3X3, ShoppingCart, User } from 'lucide-react'
+import Link from 'next/link'
 
 export default function MobileFooterNav() {
   return (
@@ -40,9 +40,7 @@ export default function MobileFooterNav() {
         </Link>
       </div>
     </div>
-  );
+  )
 }
 
-export { MobileFooterNav };
-
-
+export { MobileFooterNav }

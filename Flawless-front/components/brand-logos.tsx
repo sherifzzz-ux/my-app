@@ -1,12 +1,12 @@
 const brands = [
-  { name: "ACM", logo: "/placeholder.svg?height=60&width=120" },
-  { name: "KLORANE", logo: "/placeholder.svg?height=60&width=120" },
-  { name: "NIVEA", logo: "/placeholder.svg?height=60&width=120" },
-  { name: "Caudalie", logo: "/placeholder.svg?height=60&width=120" },
-  { name: "The Ordinary", logo: "/placeholder.svg?height=60&width=120" },
-  { name: "La Roche Posay", logo: "/placeholder.svg?height=60&width=120" },
-  { name: "Vichy", logo: "/placeholder.svg?height=60&width=120" },
-  { name: "Eucerin", logo: "/placeholder.svg?height=60&width=120" },
+  { name: 'ACM', logo: '/placeholder.svg?height=60&width=120' },
+  { name: 'KLORANE', logo: '/placeholder.svg?height=60&width=120' },
+  { name: 'NIVEA', logo: '/placeholder.svg?height=60&width=120' },
+  { name: 'Caudalie', logo: '/placeholder.svg?height=60&width=120' },
+  { name: 'The Ordinary', logo: '/placeholder.svg?height=60&width=120' },
+  { name: 'La Roche Posay', logo: '/placeholder.svg?height=60&width=120' },
+  { name: 'Vichy', logo: '/placeholder.svg?height=60&width=120' },
+  { name: 'Eucerin', logo: '/placeholder.svg?height=60&width=120' },
 ]
 
 export function BrandLogos() {
@@ -23,7 +23,7 @@ export function BrandLogos() {
             {brands.map((brand, index) => (
               <div key={`first-${index}`} className="flex-shrink-0 mx-8">
                 <img
-                  src={brand.logo || "/placeholder.svg"}
+                  src={brand.logo || '/placeholder.svg'}
                   alt={brand.name}
                   className="h-12 md:h-16 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300"
                 />
@@ -33,7 +33,7 @@ export function BrandLogos() {
             {brands.map((brand, index) => (
               <div key={`second-${index}`} className="flex-shrink-0 mx-8">
                 <img
-                  src={brand.logo || "/placeholder.svg"}
+                  src={brand.logo || '/placeholder.svg'}
                   alt={brand.name}
                   className="h-12 md:h-16 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300"
                 />

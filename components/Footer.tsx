@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from 'next/link'
 
 export default function Footer() {
   return (
@@ -7,10 +7,26 @@ export default function Footer() {
         <div>
           <div className="font-semibold mb-3">Informations</div>
           <ul className="space-y-2 text-muted-foreground">
-            <li><Link href="/livraison" className="hover:underline">Livraison</Link></li>
-            <li><Link href="/conditions" className="hover:underline">Conditions d’utilisations</Link></li>
-            <li><a href="#" className="hover:underline">Politique de cookies</a></li>
-            <li><Link href="/blog" className="hover:underline">Blog</Link></li>
+            <li>
+              <Link href="/livraison" className="hover:underline">
+                Livraison
+              </Link>
+            </li>
+            <li>
+              <Link href="/conditions" className="hover:underline">
+                Conditions d’utilisations
+              </Link>
+            </li>
+            <li>
+              <a href="#" className="hover:underline">
+                Politique de cookies
+              </a>
+            </li>
+            <li>
+              <Link href="/blog" className="hover:underline">
+                Blog
+              </Link>
+            </li>
           </ul>
         </div>
         <div>
@@ -31,17 +47,27 @@ export default function Footer() {
         <div>
           <div className="font-semibold mb-3">Paiement sécurisé</div>
           <div className="text-muted-foreground">Orange Money, Wave, Visa, MasterCard…</div>
-          <div className="mt-3 text-muted-foreground text-xs">Site par <a className="underline" href="https://example-agency.com" target="_blank" rel="noopener noreferrer">Votre Agence</a></div>
+          <div className="mt-3 text-muted-foreground text-xs">
+            Site par{' '}
+            <a
+              className="underline"
+              href="https://example-agency.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Votre Agence
+            </a>
+          </div>
         </div>
       </div>
       <div className="text-xs text-muted-foreground py-4 border-t">
         <div className="mx-auto max-w-7xl px-4 md:px-6 flex items-center justify-between">
           <span>© {new Date().getFullYear()} Mami Shop</span>
-          <a href="#top" className="underline">Retour en haut</a>
+          <a href="#top" className="underline">
+            Retour en haut
+          </a>
         </div>
       </div>
     </footer>
-  );
+  )
 }
-
-

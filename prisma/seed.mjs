@@ -74,20 +74,74 @@ async function main() {
 
   const [tshirts, jeans, shoes, soinVisage, corpsBain, maquillage, parapharmacie, cheveux, koreanBeauty] = categories;
 
-  // Marques de base
+  // Marques de parapharmacie et cosmétiques
   const brands = await prisma.$transaction([
+    prisma.brand.upsert({ where: { slug: 'avene' }, update: {}, create: { name: 'Avène', slug: 'avene', imageUrl: '/placeholder-logo.svg' } }),
+    prisma.brand.upsert({ where: { slug: 'acm-laboratoire' }, update: {}, create: { name: 'ACM Laboratoire', slug: 'acm-laboratoire', imageUrl: '/placeholder-logo.svg' } }),
+    prisma.brand.upsert({ where: { slug: 'anua' }, update: {}, create: { name: 'Anua', slug: 'anua', imageUrl: '/placeholder-logo.svg' } }),
+    prisma.brand.upsert({ where: { slug: 'beauty-of-joseon' }, update: {}, create: { name: 'Beauty of Joseon', slug: 'beauty-of-joseon', imageUrl: '/placeholder-logo.svg' } }),
+    prisma.brand.upsert({ where: { slug: 'bi-oil' }, update: {}, create: { name: 'Bi-Oil', slug: 'bi-oil', imageUrl: '/placeholder-logo.svg' } }),
+    prisma.brand.upsert({ where: { slug: 'biocyte' }, update: {}, create: { name: 'Biocyte', slug: 'biocyte', imageUrl: '/placeholder-logo.svg' } }),
+    prisma.brand.upsert({ where: { slug: 'biolane' }, update: {}, create: { name: 'Biolane', slug: 'biolane', imageUrl: '/placeholder-logo.svg' } }),
+    prisma.brand.upsert({ where: { slug: 'bio-recherche' }, update: {}, create: { name: 'Bio Recherche', slug: 'bio-recherche', imageUrl: '/placeholder-logo.svg' } }),
+    prisma.brand.upsert({ where: { slug: 'chateau-rouge' }, update: {}, create: { name: 'Château Rouge', slug: 'chateau-rouge', imageUrl: '/placeholder-logo.svg' } }),
+    prisma.brand.upsert({ where: { slug: 'cerave' }, update: {}, create: { name: 'CeraVe', slug: 'cerave', imageUrl: '/placeholder-logo.svg' } }),
+    prisma.brand.upsert({ where: { slug: 'ducray' }, update: {}, create: { name: 'Ducray', slug: 'ducray', imageUrl: '/placeholder-logo.svg' } }),
+    prisma.brand.upsert({ where: { slug: 'eafit' }, update: {}, create: { name: 'Eafit', slug: 'eafit', imageUrl: '/placeholder-logo.svg' } }),
+    prisma.brand.upsert({ where: { slug: 'eucerin' }, update: {}, create: { name: 'Eucerin', slug: 'eucerin', imageUrl: '/placeholder-logo.svg' } }),
+    prisma.brand.upsert({ where: { slug: 'granions' }, update: {}, create: { name: 'Granions', slug: 'granions', imageUrl: '/placeholder-logo.svg' } }),
+    prisma.brand.upsert({ where: { slug: 'laneige' }, update: {}, create: { name: 'Laneige', slug: 'laneige', imageUrl: '/placeholder-logo.svg' } }),
+    prisma.brand.upsert({ where: { slug: 'klorane' }, update: {}, create: { name: 'Klorane', slug: 'klorane', imageUrl: '/placeholder-logo.svg' } }),
+    prisma.brand.upsert({ where: { slug: 'la-roche-posay' }, update: {}, create: { name: 'La Roche-Posay', slug: 'la-roche-posay', imageUrl: '/placeholder-logo.svg' } }),
+    prisma.brand.upsert({ where: { slug: 'nuhanciam' }, update: {}, create: { name: 'Nuhanciam', slug: 'nuhanciam', imageUrl: '/placeholder-logo.svg' } }),
+    prisma.brand.upsert({ where: { slug: 'caudalie' }, update: {}, create: { name: 'Caudalie', slug: 'caudalie', imageUrl: '/placeholder-logo.svg' } }),
+    prisma.brand.upsert({ where: { slug: 'mixa' }, update: {}, create: { name: 'Mixa', slug: 'mixa', imageUrl: '/placeholder-logo.svg' } }),
+    prisma.brand.upsert({ where: { slug: 'nivea' }, update: {}, create: { name: 'NIVEA', slug: 'nivea', imageUrl: '/placeholder-logo.svg' } }),
+    prisma.brand.upsert({ where: { slug: 'nova' }, update: {}, create: { name: 'Nova', slug: 'nova', imageUrl: '/placeholder-logo.svg' } }),
+    prisma.brand.upsert({ where: { slug: 'dove' }, update: {}, create: { name: 'Dove', slug: 'dove', imageUrl: '/placeholder-logo.svg' } }),
+    prisma.brand.upsert({ where: { slug: 'topicrem' }, update: {}, create: { name: 'Topicrem', slug: 'topicrem', imageUrl: '/placeholder-logo.svg' } }),
+    prisma.brand.upsert({ where: { slug: 'uriage' }, update: {}, create: { name: 'Uriage', slug: 'uriage', imageUrl: '/placeholder-logo.svg' } }),
+    prisma.brand.upsert({ where: { slug: 'vaseline' }, update: {}, create: { name: 'Vaseline', slug: 'vaseline', imageUrl: '/placeholder-logo.svg' } }),
+    prisma.brand.upsert({ where: { slug: 'oxyprolane' }, update: {}, create: { name: 'OXYPROLANE', slug: 'oxyprolane', imageUrl: '/placeholder-logo.svg' } }),
+    // Marques génériques pour compatibility
     prisma.brand.upsert({ where: { slug: 'brand-a' }, update: {}, create: { name: 'Brand A', slug: 'brand-a', imageUrl: '/placeholder-logo.svg' } }),
     prisma.brand.upsert({ where: { slug: 'brand-b' }, update: {}, create: { name: 'Brand B', slug: 'brand-b', imageUrl: '/placeholder-logo.svg' } }),
-    prisma.brand.upsert({ where: { slug: 'nivea' }, update: {}, create: { name: 'NIVEA', slug: 'nivea', imageUrl: '/placeholder-logo.svg' } }),
     prisma.brand.upsert({ where: { slug: 'the-ordinary' }, update: {}, create: { name: 'The Ordinary', slug: 'the-ordinary', imageUrl: '/placeholder-logo.svg' } }),
-    prisma.brand.upsert({ where: { slug: 'eucerin' }, update: {}, create: { name: 'Eucerin', slug: 'eucerin', imageUrl: '/placeholder-logo.svg' } }),
-    prisma.brand.upsert({ where: { slug: 'vichy' }, update: {}, create: { name: 'Vichy', slug: 'vichy', imageUrl: '/placeholder-logo.svg' } }),
-    prisma.brand.upsert({ where: { slug: 'la-roche-posay' }, update: {}, create: { name: 'La Roche-Posay', slug: 'la-roche-posay', imageUrl: '/placeholder-logo.svg' } }),
-    prisma.brand.upsert({ where: { slug: 'acm' }, update: {}, create: { name: 'ACM', slug: 'acm', imageUrl: '/placeholder-logo.svg' } }),
-    prisma.brand.upsert({ where: { slug: 'klorane' }, update: {}, create: { name: 'Klorane', slug: 'klorane', imageUrl: '/placeholder-logo.svg' } }),
-    prisma.brand.upsert({ where: { slug: 'revolution' }, update: {}, create: { name: 'Revolution', slug: 'revolution', imageUrl: '/placeholder-logo.svg' } }),
   ]);
-  const [brandA, brandB, brandNivea, brandOrdinary, brandEucerin, brandVichy, brandLRP, brandACM, brandKlorane, brandRevolution] = brands;
+  
+  // Références aux marques pour les produits (garder la compatibilité)
+  const brandAvene = brands.find(b => b.slug === 'avene');
+  const brandACM = brands.find(b => b.slug === 'acm-laboratoire');
+  const brandAnua = brands.find(b => b.slug === 'anua');
+  const brandBeautyOfJoseon = brands.find(b => b.slug === 'beauty-of-joseon');
+  const brandBiOil = brands.find(b => b.slug === 'bi-oil');
+  const brandBiocyte = brands.find(b => b.slug === 'biocyte');
+  const brandBiolane = brands.find(b => b.slug === 'biolane');
+  const brandBioRecherche = brands.find(b => b.slug === 'bio-recherche');
+  const brandChateauRouge = brands.find(b => b.slug === 'chateau-rouge');
+  const brandCerave = brands.find(b => b.slug === 'cerave');
+  const brandDucray = brands.find(b => b.slug === 'ducray');
+  const brandEafit = brands.find(b => b.slug === 'eafit');
+  const brandEucerin = brands.find(b => b.slug === 'eucerin');
+  const brandGranions = brands.find(b => b.slug === 'granions');
+  const brandLaneige = brands.find(b => b.slug === 'laneige');
+  const brandKlorane = brands.find(b => b.slug === 'klorane');
+  const brandLRP = brands.find(b => b.slug === 'la-roche-posay');
+  const brandNuhanciam = brands.find(b => b.slug === 'nuhanciam');
+  const brandCaudalie = brands.find(b => b.slug === 'caudalie');
+  const brandMixa = brands.find(b => b.slug === 'mixa');
+  const brandNivea = brands.find(b => b.slug === 'nivea');
+  const brandNova = brands.find(b => b.slug === 'nova');
+  const brandDove = brands.find(b => b.slug === 'dove');
+  const brandTopicrem = brands.find(b => b.slug === 'topicrem');
+  const brandUriage = brands.find(b => b.slug === 'uriage');
+  const brandVaseline = brands.find(b => b.slug === 'vaseline');
+  const brandOxyprolane = brands.find(b => b.slug === 'oxyprolane');
+  
+  // Marques pour compatibilité
+  const brandA = brands.find(b => b.slug === 'brand-a');
+  const brandB = brands.find(b => b.slug === 'brand-b');
+  const brandOrdinary = brands.find(b => b.slug === 'the-ordinary');
 
   // Sous-catégories de base
   const subcategories = await prisma.$transaction([
@@ -193,8 +247,8 @@ async function main() {
       },
       // Flawless demo products
       {
-        name: 'Sérum Vitamine C Éclat',
-        description: 'Boost d’éclat et anti-oxydant pour un teint lumineux.',
+        name: 'Serum Vitamine C Eclat',
+        description: 'Boost d eclat et anti-oxydant pour un teint lumineux.',
         priceCents: 15500,
         oldPriceCents: 18000,
         isFeatured: true,
@@ -202,11 +256,11 @@ async function main() {
         stock: 40,
         imageUrl: '/vitamin-c-serum.png',
         categoryId: soinVisage.id,
-        brandId: brandOrdinary.id,
+        brandId: brandCerave.id,
       },
       {
-        name: 'Masque Purifiant à l’Argile',
-        description: 'Élimine les impuretés et affine le grain de peau.',
+        name: 'Masque Purifiant a l Argile',
+        description: 'Elimine les impuretes et affine le grain de peau.',
         priceCents: 8500,
         oldPriceCents: 10000,
         isFeatured: false,
@@ -214,11 +268,11 @@ async function main() {
         stock: 70,
         imageUrl: '/clay-mask-tube.png',
         categoryId: soinVisage.id,
-        brandId: brandEucerin.id,
+        brandId: brandAvene.id,
       },
       {
-        name: 'Crème Corps Nourrissante',
-        description: 'Hydrate intensément pour une peau douce toute la journée.',
+        name: 'Creme Corps Nourrissante',
+        description: 'Hydrate intensement pour une peau douce toute la journee.',
         priceCents: 12000,
         isFeatured: true,
         rating: 4.6,
@@ -228,8 +282,8 @@ async function main() {
         brandId: brandNivea.id,
       },
       {
-        name: 'Eau de Parfum Élégance',
-        description: 'Sillage floral délicat et raffiné.',
+        name: 'Eau de Parfum Elegance',
+        description: 'Sillage floral delicat et raffine.',
         priceCents: 35900,
         isFeatured: false,
         rating: 4.5,
@@ -240,7 +294,7 @@ async function main() {
       },
       {
         name: 'Niacinamide 10% + Zinc 1%',
-        description: 'Sérum anti-imperfections, affine le grain de peau.',
+        description: 'Serum anti-imperfections, affine le grain de peau.',
         priceCents: 14900,
         oldPriceCents: 16900,
         isFeatured: true,
@@ -259,7 +313,7 @@ async function main() {
         stock: 30,
         imageUrl: '/laneige-water-mask.png',
         categoryId: koreanBeauty.id,
-        brandId: brandB.id,
+        brandId: brandLaneige.id,
       },
       {
         name: 'Gel Nettoyant Doux',
@@ -282,7 +336,7 @@ async function main() {
         stock: 45,
         imageUrl: '/placeholder-9culf.png',
         categoryId: maquillage.id,
-        brandId: brandRevolution.id,
+        brandId: brandB.id,
       }
     ]
   });

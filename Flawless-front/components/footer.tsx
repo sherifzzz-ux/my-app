@@ -1,4 +1,4 @@
-import Link from "next/link"
+import Link from 'next/link'
 
 export function Footer() {
   return (
@@ -9,7 +9,8 @@ export function Footer() {
           <div className="md:col-span-1">
             <div className="text-2xl font-serif text-pink-400 italic mb-4">Flawless Beauty</div>
             <p className="text-gray-400 text-sm">
-              Votre parapharmacie en ligne de confiance pour tous vos besoins en cosmétiques et soins de beauté.
+              Votre parapharmacie en ligne de confiance pour tous vos besoins en cosmétiques et
+              soins de beauté.
             </p>
           </div>
 

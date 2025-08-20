@@ -1,8 +1,8 @@
-"use client"
+'use client'
 
-import type React from "react"
-import { createContext, useContext, useState, useEffect } from "react"
-import type { Product } from "@/types/product"
+import type React from 'react'
+import { createContext, useContext, useState, useEffect } from 'react'
+import type { Product } from '@/types/product'
 
 interface WishlistContextType {
   wishlistItems: Product[]
@@ -19,7 +19,7 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
 
   // Load wishlist from localStorage on mount
   useEffect(() => {
-    const savedWishlist = localStorage.getItem("flawless-beauty-wishlist")
+    const savedWishlist = localStorage.getItem('flawless-beauty-wishlist')
     if (savedWishlist) {
       setWishlistItems(JSON.parse(savedWishlist))
     }
@@ -27,7 +27,7 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
 
   // Save to localStorage whenever wishlist changes
   useEffect(() => {
-    localStorage.setItem("flawless-beauty-wishlist", JSON.stringify(wishlistItems))
+    localStorage.setItem('flawless-beauty-wishlist', JSON.stringify(wishlistItems))
   }, [wishlistItems])
 
   const addToWishlist = (product: Product) => {
@@ -69,7 +69,7 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
 export function useWishlist() {
   const context = useContext(WishlistContext)
   if (context === undefined) {
-    throw new Error("useWishlist must be used within a WishlistProvider")
+    throw new Error('useWishlist must be used within a WishlistProvider')
   }
   return context
 }

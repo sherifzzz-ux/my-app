@@ -1,50 +1,50 @@
-"use client"
+'use client'
 
-import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { useCart } from "@/contexts/cart-context"
+import { useState, useEffect } from 'react'
+import { Button } from '@/components/ui/button'
+import { useCart } from '@/contexts/cart-context'
 
 const recommendedProducts = [
   {
     id: 1,
-    name: "Sérum Vitamine C Éclat",
-    brand: "Flawless Beauty",
-    price: "15.500 CFA",
-    originalPrice: "18.000 CFA",
-    image: "/vitamin-c-serum.png",
+    name: 'Sérum Vitamine C Éclat',
+    brand: 'Flawless Beauty',
+    price: '15.500 CFA',
+    originalPrice: '18.000 CFA',
+    image: '/vitamin-c-serum.png',
     rating: 4.8,
   },
   {
     id: 2,
-    name: "Crème Hydratante 24h",
-    brand: "Pure Glow",
-    price: "12.000 CFA",
-    image: "/placeholder-rr5r7.png",
+    name: 'Crème Hydratante 24h',
+    brand: 'Pure Glow',
+    price: '12.000 CFA',
+    image: '/placeholder-rr5r7.png',
     rating: 4.9,
   },
   {
     id: 3,
-    name: "Masque Purifiant Argile",
-    brand: "Natural Care",
-    price: "8.500 CFA",
-    originalPrice: "10.000 CFA",
-    image: "/clay-mask-tube.png",
+    name: 'Masque Purifiant Argile',
+    brand: 'Natural Care',
+    price: '8.500 CFA',
+    originalPrice: '10.000 CFA',
+    image: '/clay-mask-tube.png',
     rating: 4.7,
   },
   {
     id: 4,
-    name: "Huile Démaquillante Douce",
-    brand: "Gentle Touch",
-    price: "14.200 CFA",
-    image: "/placeholder.svg?height=300&width=250",
+    name: 'Huile Démaquillante Douce',
+    brand: 'Gentle Touch',
+    price: '14.200 CFA',
+    image: '/placeholder.svg?height=300&width=250',
     rating: 4.6,
   },
   {
     id: 5,
-    name: "Contour des Yeux Anti-Âge",
-    brand: "Youth Restore",
-    price: "22.000 CFA",
-    image: "/placeholder.svg?height=300&width=250",
+    name: 'Contour des Yeux Anti-Âge',
+    brand: 'Youth Restore',
+    price: '22.000 CFA',
+    image: '/placeholder.svg?height=300&width=250',
     rating: 4.8,
   },
 ]
@@ -81,7 +81,7 @@ export function RecommendationsSection() {
             >
               <div className="aspect-square overflow-hidden">
                 <img
-                  src={product.image || "/placeholder.svg"}
+                  src={product.image || '/placeholder.svg'}
                   alt={product.name}
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                 />
@@ -90,18 +90,25 @@ export function RecommendationsSection() {
                 <div className="text-sm text-gray-500 mb-1">{product.brand}</div>
                 <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">{product.name}</h3>
                 <div className="flex items-center mb-2">
-                  <div className="flex text-yellow-400 text-sm">{"★".repeat(Math.floor(product.rating))}</div>
+                  <div className="flex text-yellow-400 text-sm">
+                    {'★'.repeat(Math.floor(product.rating))}
+                  </div>
                   <span className="text-sm text-gray-500 ml-1">({product.rating})</span>
                 </div>
                 <div className="flex items-center justify-between mb-3">
                   <div>
                     <span className="text-lg font-bold text-gray-900">{product.price}</span>
                     {product.originalPrice && (
-                      <span className="text-sm text-gray-500 line-through ml-2">{product.originalPrice}</span>
+                      <span className="text-sm text-gray-500 line-through ml-2">
+                        {product.originalPrice}
+                      </span>
                     )}
                   </div>
                 </div>
-                <Button onClick={() => addToCart(product)} className="w-full bg-pink-600 hover:bg-pink-700 text-white">
+                <Button
+                  onClick={() => addToCart(product)}
+                  className="w-full bg-pink-600 hover:bg-pink-700 text-white"
+                >
                   Ajouter au panier
                 </Button>
               </div>

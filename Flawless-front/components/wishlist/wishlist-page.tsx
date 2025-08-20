@@ -1,12 +1,12 @@
-"use client"
+'use client'
 
-import { Heart, ShoppingCart, Trash2 } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { useWishlist } from "@/contexts/wishlist-context"
-import { useCart } from "@/contexts/cart-context"
-import Link from "next/link"
-import Image from "next/image"
+import { Heart, ShoppingCart, Trash2 } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
+import { useWishlist } from '@/contexts/wishlist-context'
+import { useCart } from '@/contexts/cart-context'
+import Link from 'next/link'
+import Image from 'next/image'
 
 export function WishlistPage() {
   const { wishlistItems, removeFromWishlist } = useWishlist()
@@ -27,8 +27,12 @@ export function WishlistPage() {
       <div className="container mx-auto px-4 py-8">
         <div className="text-center py-16">
           <Heart className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Votre liste de souhaits est vide</h1>
-          <p className="text-gray-600 mb-6">Découvrez nos produits et ajoutez vos favoris à votre liste de souhaits</p>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">
+            Votre liste de souhaits est vide
+          </h1>
+          <p className="text-gray-600 mb-6">
+            Découvrez nos produits et ajoutez vos favoris à votre liste de souhaits
+          </p>
           <Link href="/">
             <Button className="bg-pink-600 hover:bg-pink-700">Découvrir nos produits</Button>
           </Link>
@@ -42,7 +46,7 @@ export function WishlistPage() {
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Ma liste de souhaits</h1>
         <p className="text-gray-600">
-          {wishlistItems.length} produit{wishlistItems.length > 1 ? "s" : ""}
+          {wishlistItems.length} produit{wishlistItems.length > 1 ? 's' : ''}
         </p>
       </div>
 
@@ -53,7 +57,7 @@ export function WishlistPage() {
               <div className="relative mb-4">
                 <Link href={`/products/${product.id}`}>
                   <Image
-                    src={product.image || "/placeholder.svg"}
+                    src={product.image || '/placeholder.svg'}
                     alt={product.name}
                     width={300}
                     height={300}
@@ -72,7 +76,9 @@ export function WishlistPage() {
 
               <div className="space-y-2">
                 <Link href={`/products/${product.id}`}>
-                  <h3 className="font-medium text-gray-900 hover:text-pink-600 transition-colors">{product.name}</h3>
+                  <h3 className="font-medium text-gray-900 hover:text-pink-600 transition-colors">
+                    {product.name}
+                  </h3>
                 </Link>
 
                 <p className="text-sm text-gray-600">{product.brand}</p>
@@ -80,13 +86,18 @@ export function WishlistPage() {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     {product.originalPrice && (
-                      <span className="text-sm text-gray-500 line-through">{product.originalPrice} CFA</span>
+                      <span className="text-sm text-gray-500 line-through">
+                        {product.originalPrice} CFA
+                      </span>
                     )}
                     <span className="font-bold text-pink-600">{product.price} CFA</span>
                   </div>
                 </div>
 
-                <Button onClick={() => handleAddToCart(product)} className="w-full bg-pink-600 hover:bg-pink-700 mt-3">
+                <Button
+                  onClick={() => handleAddToCart(product)}
+                  className="w-full bg-pink-600 hover:bg-pink-700 mt-3"
+                >
                   <ShoppingCart className="h-4 w-4 mr-2" />
                   Ajouter au panier
                 </Button>

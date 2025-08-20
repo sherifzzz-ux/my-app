@@ -1,10 +1,10 @@
-import HeroSection from "@/components/flawless/hero-section";
-import CategoryGrid from "@/components/flawless/category-grid";
-import FeaturedProducts from "@/components/flawless/featured-products";
-import BrandLogos from "@/components/flawless/brand-logos";
-import ProductShowcase from "@/components/flawless/product-showcase";
-import RecommendationsSection from "@/components/flawless/recommendations-section";
-import NouveautesSection from "@/components/flawless/nouveautes-section";
+import HeroSection from '@/components/flawless/hero-section'
+import CategoryGrid from '@/components/flawless/category-grid'
+import FeaturedProducts from '@/components/flawless/featured-products'
+import BrandLogos from '@/components/flawless/brand-logos'
+import ProductShowcase from '@/components/flawless/product-showcase'
+import RecommendationsSection from '@/components/flawless/recommendations-section'
+import NouveautesSection from '@/components/flawless/nouveautes-section'
 
 export default function HomePage() {
   return (
@@ -17,5 +17,5 @@ export default function HomePage() {
       <RecommendationsSection />
       <NouveautesSection />
     </div>
-  );
+  )
 }

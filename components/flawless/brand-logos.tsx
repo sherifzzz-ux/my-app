@@ -1,13 +1,13 @@
-import { prisma } from "@/lib/prisma";
-import Link from "next/link";
-import Image from "next/image";
+import { prisma } from '@/lib/prisma'
+import Link from 'next/link'
+import Image from 'next/image'
 
 export async function BrandLogos() {
   const brands = await prisma.brand.findMany({
-    orderBy: { name: "asc" },
+    orderBy: { name: 'asc' },
     take: 16,
     select: { id: true, name: true, slug: true, imageUrl: true },
-  });
+  })
   return (
     <section className="py-12 bg-white">
       <div className="container mx-auto px-4">
@@ -18,9 +18,13 @@ export async function BrandLogos() {
         <div className="relative overflow-hidden">
           <div className="flex animate-scroll">
             {brands.map((brand, index) => (
-              <Link key={`first-${index}`} href={`/brand/${brand.slug}`} className="flex-shrink-0 mx-8">
+              <Link
+                key={`first-${index}`}
+                href={`/brand/${brand.slug}`}
+                className="flex-shrink-0 mx-8"
+              >
                 <Image
-                  src={brand.imageUrl || "/placeholder.svg"}
+                  src={brand.imageUrl || '/placeholder.svg'}
                   alt={brand.name}
                   width={160}
                   height={64}
@@ -29,9 +33,13 @@ export async function BrandLogos() {
               </Link>
             ))}
             {brands.map((brand, index) => (
-              <Link key={`second-${index}`} href={`/brand/${brand.slug}`} className="flex-shrink-0 mx-8">
+              <Link
+                key={`second-${index}`}
+                href={`/brand/${brand.slug}`}
+                className="flex-shrink-0 mx-8"
+              >
                 <Image
-                  src={brand.imageUrl || "/placeholder.svg"}
+                  src={brand.imageUrl || '/placeholder.svg'}
                   alt={brand.name}
                   width={160}
                   height={64}
@@ -43,9 +51,7 @@ export async function BrandLogos() {
         </div>
       </div>
     </section>
-  );
+  )
 }
 
-export default BrandLogos;
-
-
+export default BrandLogos

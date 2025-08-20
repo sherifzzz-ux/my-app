@@ -1,52 +1,52 @@
-"use client"
+'use client'
 
-import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { useCart } from "@/contexts/cart-context"
+import { useState, useEffect } from 'react'
+import { Button } from '@/components/ui/button'
+import { useCart } from '@/contexts/cart-context'
 
 const newProducts = [
   {
     id: 11,
-    name: "Essence Hydratante Acide Hyaluronique",
-    brand: "Hydra Plus",
-    price: "16.800 CFA",
-    image: "/placeholder.svg?height=300&width=250",
+    name: 'Essence Hydratante Acide Hyaluronique',
+    brand: 'Hydra Plus',
+    price: '16.800 CFA',
+    image: '/placeholder.svg?height=300&width=250',
     isNew: true,
     rating: 4.9,
   },
   {
     id: 12,
-    name: "Baume Nettoyant Huile de Jojoba",
-    brand: "Clean Beauty",
-    price: "13.500 CFA",
-    image: "/placeholder.svg?height=300&width=250",
+    name: 'Baume Nettoyant Huile de Jojoba',
+    brand: 'Clean Beauty',
+    price: '13.500 CFA',
+    image: '/placeholder.svg?height=300&width=250',
     isNew: true,
     rating: 4.7,
   },
   {
     id: 13,
-    name: "Sérum Niacinamide 10%",
-    brand: "Active Care",
-    price: "11.200 CFA",
-    image: "/placeholder.svg?height=300&width=250",
+    name: 'Sérum Niacinamide 10%',
+    brand: 'Active Care',
+    price: '11.200 CFA',
+    image: '/placeholder.svg?height=300&width=250',
     isNew: true,
     rating: 4.8,
   },
   {
     id: 14,
-    name: "Crème de Nuit Rétinol",
-    brand: "Night Repair",
-    price: "24.000 CFA",
-    image: "/placeholder.svg?height=300&width=250",
+    name: 'Crème de Nuit Rétinol',
+    brand: 'Night Repair',
+    price: '24.000 CFA',
+    image: '/placeholder.svg?height=300&width=250',
     isNew: true,
     rating: 4.6,
   },
   {
     id: 15,
-    name: "Brume Fixatrice Maquillage",
-    brand: "Makeup Pro",
-    price: "9.800 CFA",
-    image: "/placeholder.svg?height=300&width=250",
+    name: 'Brume Fixatrice Maquillage',
+    brand: 'Makeup Pro',
+    price: '9.800 CFA',
+    image: '/placeholder.svg?height=300&width=250',
     isNew: true,
     rating: 4.5,
   },
@@ -63,7 +63,10 @@ export function NouveautesSection() {
     return () => clearInterval(timer)
   }, [])
 
-  const visibleProducts = [...newProducts.slice(currentIndex), ...newProducts.slice(0, currentIndex)].slice(0, 4)
+  const visibleProducts = [
+    ...newProducts.slice(currentIndex),
+    ...newProducts.slice(0, currentIndex),
+  ].slice(0, 4)
 
   return (
     <section className="py-12 bg-gradient-to-br from-pink-50 to-purple-50">
@@ -86,7 +89,7 @@ export function NouveautesSection() {
               )}
               <div className="aspect-square overflow-hidden">
                 <img
-                  src={product.image || "/placeholder.svg"}
+                  src={product.image || '/placeholder.svg'}
                   alt={product.name}
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                 />
@@ -95,13 +98,18 @@ export function NouveautesSection() {
                 <div className="text-sm text-gray-500 mb-1">{product.brand}</div>
                 <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">{product.name}</h3>
                 <div className="flex items-center mb-2">
-                  <div className="flex text-yellow-400 text-sm">{"★".repeat(Math.floor(product.rating))}</div>
+                  <div className="flex text-yellow-400 text-sm">
+                    {'★'.repeat(Math.floor(product.rating))}
+                  </div>
                   <span className="text-sm text-gray-500 ml-1">({product.rating})</span>
                 </div>
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-lg font-bold text-gray-900">{product.price}</span>
                 </div>
-                <Button onClick={() => addToCart(product)} className="w-full bg-pink-600 hover:bg-pink-700 text-white">
+                <Button
+                  onClick={() => addToCart(product)}
+                  className="w-full bg-pink-600 hover:bg-pink-700 text-white"
+                >
                   Ajouter au panier
                 </Button>
               </div>

@@ -1,48 +1,46 @@
-import Image from "next/image";
-import Link from "next/link";
-import { prisma } from "@/lib/prisma";
-import { notFound } from "next/navigation";
-import { Breadcrumb } from "@/components/ui/breadcrumb";
-import AddToCartButton from "@/components/product/AddToCartButton";
-import AddToWishlistButton from "@/components/product/AddToWishlistButton";
-import { Badge } from "@/components/ui/badge";
-import { formatCFA } from "@/lib/utils";
-import type { Prisma } from "@prisma/client";
-import { Button } from "@/components/ui/button";
+import Image from 'next/image'
+import Link from 'next/link'
+import { prisma } from '@/lib/prisma'
+import { notFound } from 'next/navigation'
+import { Breadcrumb } from '@/components/ui/breadcrumb'
+import AddToCartButton from '@/components/product/AddToCartButton'
+import AddToWishlistButton from '@/components/product/AddToWishlistButton'
+import { Badge } from '@/components/ui/badge'
+import { formatCFA } from '@/lib/utils'
+import type { Prisma } from '@prisma/client'
+import { Button } from '@/components/ui/button'
 
-type ReviewWithUser = Prisma.ReviewGetPayload<{ include: { user: true } }>;
+type ReviewWithUser = Prisma.ReviewGetPayload<{ include: { user: true } }>
 
 export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
+  const { id } = await params
   const product = await prisma.product.findUnique({
     where: { id },
     include: {
       category: true,
       reviews: {
         include: { user: true },
-        orderBy: { createdAt: "desc" },
+        orderBy: { createdAt: 'desc' },
       },
     },
-  });
-  if (!product) return notFound();
+  })
+  if (!product) return notFound()
   const similar = await prisma.product.findMany({
     where: { categoryId: product.categoryId, NOT: { id: product.id } },
-    orderBy: { createdAt: "desc" },
+    orderBy: { createdAt: 'desc' },
     take: 8,
     include: { category: true },
-  });
+  })
   const avgRating = product.reviews.length
-    ? product.reviews.reduce(
-        (sum: number, r: ReviewWithUser) => sum + r.rating,
-        0,
-      ) / product.reviews.length
-    : null;
+    ? product.reviews.reduce((sum: number, r: ReviewWithUser) => sum + r.rating, 0) /
+      product.reviews.length
+    : null
   return (
     <div className="mx-auto max-w-7xl px-4 md:px-6 py-8">
       <Breadcrumb
         items={[
-          { label: "Accueil", href: "/" },
-          { label: "Catalogue", href: "/catalog" },
+          { label: 'Accueil', href: '/' },
+          { label: 'Catalogue', href: '/catalog' },
           { label: product.name },
         ]}
         className="mb-6"
@@ -51,7 +49,13 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div>
           {product.imageUrl ? (
-            <Image src={product.imageUrl} alt={product.name} width={800} height={800} className="w-full h-auto rounded-xl" />
+            <Image
+              src={product.imageUrl}
+              alt={product.name}
+              width={800}
+              height={800}
+              className="w-full h-auto rounded-xl"
+            />
           ) : null}
         </div>
         <div>
@@ -65,7 +69,9 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
           <div className="text-xl font-semibold mb-6">
             {product.oldPriceCents ? (
               <>
-                <span className="text-muted-foreground line-through mr-2">{formatCFA(product.oldPriceCents)}</span>
+                <span className="text-muted-foreground line-through mr-2">
+                  {formatCFA(product.oldPriceCents)}
+                </span>
                 <span>{formatCFA(product.priceCents)}</span>
               </>
             ) : (
@@ -79,13 +85,15 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
               <span className="text-sm text-red-600">Rupture de stock</span>
             )}
           </div>
-          {product.description ? <p className="text-sm leading-6 mb-6 whitespace-pre-line">{product.description}</p> : null}
+          {product.description ? (
+            <p className="text-sm leading-6 mb-6 whitespace-pre-line">{product.description}</p>
+          ) : null}
           {avgRating !== null ? (
             <div className="mb-6 text-sm">
               Note moyenne: {avgRating.toFixed(1)} / 5
               <span className="ml-2 text-yellow-600" aria-hidden>
-                {"★".repeat(Math.round(avgRating))}
-                {"☆".repeat(5 - Math.round(avgRating))}
+                {'★'.repeat(Math.round(avgRating))}
+                {'☆'.repeat(5 - Math.round(avgRating))}
               </span>
               <span className="ml-2 text-muted-foreground">({product.reviews.length} avis)</span>
             </div>
@@ -124,8 +132,8 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
                 <div className="flex items-center gap-2 text-sm mb-1">
                   <span className="font-medium">{r.user.name ?? r.user.email}</span>
                   <span className="text-yellow-600" aria-hidden>
-                    {"★".repeat(r.rating)}
-                    {"☆".repeat(5 - r.rating)}
+                    {'★'.repeat(r.rating)}
+                    {'☆'.repeat(5 - r.rating)}
                   </span>
                 </div>
                 {r.comment ? <p className="text-sm text-muted-foreground">{r.comment}</p> : null}
@@ -142,7 +150,13 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
             {similar.map((p) => (
               <li key={p.id} className="rounded-xl border p-4">
                 {p.imageUrl ? (
-                  <Image src={p.imageUrl} alt={p.name} width={500} height={400} className="w-full h-auto mb-3 rounded-md" />
+                  <Image
+                    src={p.imageUrl}
+                    alt={p.name}
+                    width={500}
+                    height={400}
+                    className="w-full h-auto mb-3 rounded-md"
+                  />
                 ) : null}
                 <div className="text-xs text-muted-foreground mb-1">{p.category.name}</div>
                 <div className="font-semibold line-clamp-2 min-h-[2.5rem]">{p.name}</div>
@@ -158,7 +172,5 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
         </section>
       ) : null}
     </div>
-  );
+  )
 }
-
-

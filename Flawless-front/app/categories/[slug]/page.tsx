@@ -1,6 +1,6 @@
-import { notFound } from "next/navigation"
-import { getProductsByCategory } from "@/lib/products-data"
-import CategoryPage from "@/components/category-page"
+import { notFound } from 'next/navigation'
+import { getProductsByCategory } from '@/lib/products-data'
+import CategoryPage from '@/components/category-page'
 
 interface CategoryPageProps {
   params: {
@@ -16,16 +16,16 @@ interface CategoryPageProps {
 }
 
 const categoryNames: Record<string, string> = {
-  "soin-du-visage": "Soin du Visage",
-  "corps-bain": "Corps & Bain",
-  maquillage: "Maquillage",
-  cheveux: "Cheveux",
-  "korean-beauty": "Korean Beauty",
-  "bien-etre-intime": "Bien-être Intime",
-  "soins-bebe": "Soins Bébé",
-  parfums: "Parfums",
-  nouveautes: "Nouveautés",
-  promotion: "Promotions",
+  'soin-du-visage': 'Soin du Visage',
+  'corps-bain': 'Corps & Bain',
+  maquillage: 'Maquillage',
+  cheveux: 'Cheveux',
+  'korean-beauty': 'Korean Beauty',
+  'bien-etre-intime': 'Bien-être Intime',
+  'soins-bebe': 'Soins Bébé',
+  parfums: 'Parfums',
+  nouveautes: 'Nouveautés',
+  promotion: 'Promotions',
 }
 
 export default function CategoryCollectionPage({ params, searchParams }: CategoryPageProps) {
