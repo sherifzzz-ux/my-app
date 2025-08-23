@@ -1,24 +1,37 @@
 import { createClient } from '@supabase/supabase-js';
 import type { Database } from './supabase-types';
 
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+const getSupabaseEnv = () => {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  return { url, anon };
+};
 
-// Client pour le côté navigateur
-export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_ANON_KEY, {
-  auth: {
-    storage: typeof window !== 'undefined' ? localStorage : undefined,
-    persistSession: true,
-    autoRefreshToken: true,
+// Client pour le côté navigateur (créé à la demande pour éviter les erreurs au build)
+export const createBrowserSupabaseClient = () => {
+  const { url, anon } = getSupabaseEnv();
+  if (!url || !anon) {
+    throw new Error('Supabase env vars are missing');
   }
-});
+  return createClient<Database>(url, anon, {
+    auth: {
+      storage: typeof window !== 'undefined' ? localStorage : undefined,
+      persistSession: true,
+      autoRefreshToken: true,
+    },
+  });
+};
 
-// Client pour le côté serveur (sans localStorage)
+// Client pour le côté serveur (créé à la demande, sans localStorage)
 export const createServerSupabaseClient = () => {
-  return createClient<Database>(SUPABASE_URL, SUPABASE_ANON_KEY, {
+  const { url, anon } = getSupabaseEnv();
+  if (!url || !anon) {
+    throw new Error('Supabase env vars are missing');
+  }
+  return createClient<Database>(url, anon, {
     auth: {
       persistSession: false,
       autoRefreshToken: false,
-    }
+    },
   });
 };

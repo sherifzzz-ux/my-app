@@ -25,6 +25,12 @@ type RawProductRow = {
 
 export async function GET() {
   try {
+    // Skip querying if env vars are missing during build-time page data collection
+    const hasEnv = !!process.env.NEXT_PUBLIC_SUPABASE_URL && !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    if (!hasEnv) {
+      return NextResponse.json({ products: [] }, { status: 200 })
+    }
+
     const supabase = createServerSupabaseClient()
     // Use an untyped interface to access a possibly non-typed table name like "products"
     const supabaseUntyped = supabase as unknown as {
