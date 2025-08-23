@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { auth, signIn, signOut } from '@/auth'
+import { auth, signIn, signOut } from '@/lib/auth'
 
 export default async function AccountPage() {
   const session = await auth()

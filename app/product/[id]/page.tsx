@@ -1,3 +1,4 @@
+import { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { prisma } from '@/lib/prisma'
@@ -6,11 +7,40 @@ import { Breadcrumb } from '@/components/ui/breadcrumb'
 import AddToCartButton from '@/components/product/AddToCartButton'
 import AddToWishlistButton from '@/components/product/AddToWishlistButton'
 import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 import { formatCFA } from '@/lib/utils'
 import type { Prisma } from '@prisma/client'
-import { Button } from '@/components/ui/button'
 
 type ReviewWithUser = Prisma.ReviewGetPayload<{ include: { user: true } }>
+
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const { id } = await params
+  const product = await prisma.product.findUnique({
+    where: { id },
+    include: { category: true, brand: true }
+  })
+  
+  if (!product) {
+    return {
+      title: 'Produit non trouvé - FlawlessBeauty',
+    }
+  }
+
+  return {
+    title: `${product.name} - FlawlessBeauty`,
+    description: `${product.name} ${product.brand?.name ? `par ${product.brand.name}` : ''}. Prix : ${formatCFA(product.priceCents)}. ${product.description || 'Produit de beauté premium.'} Livraison gratuite dès 25,000 CFA.`,
+    keywords: `${product.name}, ${product.brand?.name || ''}, ${product.category.name}, cosmétiques, beauté`,
+    openGraph: {
+      title: `${product.name} - FlawlessBeauty`,
+      description: `${product.name} ${product.brand?.name ? `par ${product.brand.name}` : ''}. Prix : ${formatCFA(product.priceCents)}`,
+      images: product.imageUrl ? [{ url: product.imageUrl, alt: product.name }] : undefined,
+      type: 'website',
+    },
+    alternates: {
+      canonical: `/product/${product.id}`,
+    },
+  }
+}
 
 export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params

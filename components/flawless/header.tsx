@@ -72,7 +72,7 @@ export function Header() {
     { href: string; subcategories: { name: string; href: string }[] }
   > = {
     PROMOTION: {
-      href: '/promotion',
+      href: '/promotions',
       subcategories: [],
     },
     'SOIN DU VISAGE': {

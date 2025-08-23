@@ -1,14 +1,16 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { prisma } from '@/lib/prisma'
+import { fallbackBrands } from '@/lib/fallback-data'
 
 export default async function Page() {
   const brands = await prisma.brand.findMany({ orderBy: { name: 'asc' } })
+  const items = brands.length > 0 ? brands : fallbackBrands
   return (
     <div className="mx-auto max-w-7xl px-4 md:px-6 py-10">
       <h1 className="text-2xl font-bold mb-6">Marques</h1>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
-        {brands.map((b) => (
+        {items.map((b) => (
           <Link
             key={b.id}
             href={`/brand/${b.slug}`}

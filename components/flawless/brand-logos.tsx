@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/prisma'
+import { fallbackBrands } from '@/lib/fallback-data'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -8,6 +9,7 @@ export async function BrandLogos() {
     take: 16,
     select: { id: true, name: true, slug: true, imageUrl: true },
   })
+  const items = brands.length > 0 ? brands : fallbackBrands
   return (
     <section className="py-12 bg-white">
       <div className="container mx-auto px-4">
@@ -17,7 +19,7 @@ export async function BrandLogos() {
 
         <div className="relative overflow-hidden">
           <div className="flex animate-scroll">
-            {brands.map((brand, index) => (
+            {items.map((brand, index) => (
               <Link
                 key={`first-${index}`}
                 href={`/brand/${brand.slug}`}
@@ -32,7 +34,7 @@ export async function BrandLogos() {
                 />
               </Link>
             ))}
-            {brands.map((brand, index) => (
+            {items.map((brand, index) => (
               <Link
                 key={`second-${index}`}
                 href={`/brand/${brand.slug}`}

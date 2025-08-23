@@ -1,0 +1,254 @@
+@import "tailwindcss/preflight";
+@import "tailwindcss/utilities";
+
+/* Mami-Shop Cosmetics Design System - Premium Beauty E-commerce */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@layer base {
+  :root {
+    /* Core Brand Colors */
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    /* Mami-Shop Brand Colors */
+    --primary: 330 67% 76%; /* Rose principal #F792CC */
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 330 67% 85%;
+    
+    /* Secondary Palette */
+    --secondary: 330 25% 95%;
+    --secondary-foreground: 330 67% 30%;
+    
+    /* Accent Colors */
+    --accent: 15 86% 65%; /* Coral accent */
+    --accent-foreground: 0 0% 100%;
+    
+    /* Urgency Colors */
+    --urgent: 0 85% 60%; /* Rouge pour urgence */
+    --urgent-foreground: 0 0% 100%;
+    
+    /* Success & Savings */
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+    
+    /* Premium Gold */
+    --gold: 43 96% 56%;
+    --gold-foreground: 0 0% 0%;
+
+    /* Neutral Palette */
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    
+    --muted: 330 25% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 330 25% 92%;
+    --input: 330 25% 94%;
+    --ring: 330 67% 76%;
+
+    --radius: 0.75rem;
+    
+    /* Premium Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
+    --gradient-urgent: linear-gradient(135deg, hsl(var(--urgent)) 0%, hsl(15 86% 65%) 100%);
+    --gradient-gold: linear-gradient(135deg, hsl(var(--gold)) 0%, hsl(45 96% 70%) 100%);
+    
+    /* Premium Shadows */
+    --shadow-soft: 0 2px 20px -2px hsl(var(--primary) / 0.1);
+    --shadow-medium: 0 8px 30px -4px hsl(var(--primary) / 0.15);
+    --shadow-strong: 0 16px 40px -8px hsl(var(--primary) / 0.2);
+    --shadow-glow: 0 0 30px hsl(var(--primary-glow) / 0.4);
+    
+    /* Animation Timings */
+    --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-['Inter'];
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-['Playfair_Display'];
+  }
+}
+
+@layer components {
+  /* Promotional Badge Components */
+  .promo-badge {
+    @apply inline-flex items-center justify-center px-2 py-1 text-xs font-bold rounded-full;
+    background: var(--gradient-urgent);
+    color: hsl(var(--urgent-foreground));
+    box-shadow: var(--shadow-soft);
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+  
+  .discount-badge {
+    @apply inline-flex items-center justify-center px-3 py-1 text-sm font-bold rounded-lg;
+    background: var(--gradient-gold);
+    color: hsl(var(--gold-foreground));
+    box-shadow: var(--shadow-medium);
+  }
+  
+  .flash-sale-badge {
+    @apply inline-flex items-center justify-center px-2 py-1 text-xs font-bold rounded-full animate-bounce;
+    background: var(--gradient-urgent);
+    color: hsl(var(--urgent-foreground));
+  }
+  
+  /* Card Enhancements */
+  .promo-card {
+    @apply relative overflow-hidden rounded-2xl bg-card border transition-all duration-300 hover:scale-105;
+    box-shadow: var(--shadow-soft);
+    transition: var(--transition-smooth);
+  }
+  
+  .promo-card:hover {
+    box-shadow: var(--shadow-strong);
+  }
+  
+  /* Hero Gradients */
+  .hero-gradient {
+    background: var(--gradient-hero);
+  }
+  
+  .urgent-gradient {
+    background: var(--gradient-urgent);
+  }
+  
+  .primary-gradient {
+    background: var(--gradient-primary);
+  }
+  
+  /* Countdown Timer Styling */
+  .countdown-item {
+    @apply flex flex-col items-center justify-center p-3 rounded-lg;
+    background: hsl(var(--card));
+    box-shadow: var(--shadow-soft);
+    border: 1px solid hsl(var(--border));
+  }
+}
+
+@layer utilities {
+  /* Custom Animations */
+  @keyframes pulse-glow {
+    0%, 100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.8;
+      transform: scale(1.05);
+    }
+  }
+  
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+  
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  .animate-shimmer {
+    background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.1), transparent);
+    background-size: 200% 100%;
+    animation: shimmer 2s ease-in-out infinite;
+  }
+  
+  .animate-scroll {
+    animation: scroll 20s linear infinite;
+  }
+}

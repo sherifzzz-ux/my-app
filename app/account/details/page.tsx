@@ -1,4 +1,4 @@
-import { auth } from '@/auth'
+import { auth } from '@/lib/auth'
 import ClientDetailsForm from './partials/ClientDetailsForm'
 
 export default async function AccountDetailsPage() {

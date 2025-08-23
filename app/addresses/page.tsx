@@ -1,4 +1,4 @@
-import { auth } from '@/auth'
+import { auth } from '@/lib/auth'
 import ClientAddresses from './partials/ClientAddresses'
 
 export default async function AddressesPage() {

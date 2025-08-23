@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 import { formatCFA } from '@/lib/utils'
 
 export default function CartPage() {
-  const { items, removeItem, setQuantity, clear } = useCart()
+  const { items, removeItem, updateQuantity, clear } = useCart()
   const totalCents = items.reduce((sum, i) => sum + i.priceCents * i.quantity, 0)
   return (
     <div className="mx-auto max-w-7xl px-4 md:px-6 py-8">
@@ -52,7 +52,7 @@ export default function CartPage() {
                     title={`Quantité pour ${i.name}`}
                     aria-label={`Quantité pour ${i.name}`}
                     value={i.quantity}
-                    onChange={(e) => setQuantity(i.productId, Number(e.target.value) || 1)}
+                    onChange={(e) => updateQuantity(i.productId, Number(e.target.value) || 1)}
                     className="h-10 w-20 rounded-md border border-input bg-background px-3 text-sm"
                   />
                   <Button variant="outline" onClick={() => removeItem(i.productId)}>

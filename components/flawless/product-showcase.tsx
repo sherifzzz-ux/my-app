@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { prisma } from '@/lib/prisma'
 import { formatCFA } from '@/lib/utils'
+import { fallbackProducts } from '@/lib/fallback-data'
 
 export async function ProductShowcase() {
   const [hero] = await prisma.product.findMany({
@@ -30,46 +31,49 @@ export async function ProductShowcase() {
     },
   })
 
+  const heroItem = hero || fallbackProducts[0]
+  const gridItems = grid.length > 0 ? grid : fallbackProducts.slice(1, 9)
+
   return (
     <section className="py-12 bg-gray-50">
       <div className="container mx-auto px-4">
-        {hero ? (
+        {heroItem ? (
           <div className="bg-gradient-to-r from-pink-100 to-orange-100 rounded-lg p-8 mb-12">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
               <div className="order-2 lg:order-1">
                 <Image
-                  src={hero.imageUrl || '/placeholder.svg'}
-                  alt={hero.name}
+                  src={heroItem.imageUrl || '/placeholder.svg'}
+                  alt={heroItem.name}
                   width={800}
                   height={600}
                   className="w-full h-auto object-contain"
                 />
               </div>
               <div className="order-1 lg:order-2 text-center lg:text-left">
-                {hero.brand?.name ? (
+                {heroItem.brand?.name ? (
                   <div className="bg-black text-white px-4 py-2 inline-block rounded mb-4">
-                    {hero.brand.name}
+                    {heroItem.brand.name}
                   </div>
                 ) : null}
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">{hero.name}</h2>
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">{heroItem.name}</h2>
                 <div className="flex items-center justify-center lg:justify-start space-x-4 mb-6">
-                  {hero.oldPriceCents ? (
+                  {heroItem.oldPriceCents ? (
                     <>
                       <span className="text-lg text-gray-500 line-through">
-                        {formatCFA(hero.oldPriceCents)}
+                        {formatCFA(heroItem.oldPriceCents)}
                       </span>
                       <span className="text-2xl font-bold text-pink-600">
-                        {formatCFA(hero.priceCents)}
+                        {formatCFA(heroItem.priceCents)}
                       </span>
                     </>
                   ) : (
                     <span className="text-2xl font-bold text-pink-600">
-                      {formatCFA(hero.priceCents)}
+                      {formatCFA(heroItem.priceCents)}
                     </span>
                   )}
                 </div>
                 <Button asChild className="bg-pink-600 hover:bg-pink-700 text-white px-8 py-3">
-                  <Link href={`/product/${hero.id}`}>Voir le produit</Link>
+                  <Link href={`/product/${heroItem.id}`}>Voir le produit</Link>
                 </Button>
               </div>
             </div>
@@ -77,7 +81,7 @@ export async function ProductShowcase() {
         ) : null}
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-          {grid.map((product) => (
+          {gridItems.map((product) => (
             <div
               key={product.id}
               className="bg-white rounded-lg overflow-hidden shadow-md hover-scale"

@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { prisma } from '@/lib/prisma'
 import { formatCFA } from '@/lib/utils'
+import { getNewestFallback } from '@/lib/fallback-data'
 
 export async function NouveautesSection() {
   const products = await prisma.product.findMany({
@@ -16,8 +17,7 @@ export async function NouveautesSection() {
       brand: { select: { name: true } },
     },
   })
-
-  const visibleProducts = products.slice(0, 4)
+  const visibleProducts = (products.length > 0 ? products : getNewestFallback()).slice(0, 4)
 
   return (
     <section className="py-12 bg-gradient-to-br from-pink-50 to-purple-50">

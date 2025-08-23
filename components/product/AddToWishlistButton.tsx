@@ -1,28 +1,55 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
-import { useWishlist } from '@/hooks/use-wishlist'
+import { WishlistButton } from '@/components/wishlist/WishlistButton'
+
+interface AddToWishlistButtonProps {
+  productId: string
+  name: string
+  brand?: string
+  priceCents: number
+  originalPriceCents?: number
+  imageUrl?: string | null
+  rating?: number
+  inStock?: boolean
+  category?: string
+  variant?: 'default' | 'ghost' | 'outline'
+  size?: 'default' | 'sm' | 'lg' | 'icon'
+  className?: string
+  showText?: boolean
+}
 
 export default function AddToWishlistButton({
   productId,
   name,
+  brand,
   priceCents,
+  originalPriceCents,
   imageUrl,
-}: {
-  productId: string
-  name: string
-  priceCents: number
-  imageUrl?: string | null
-}) {
-  const toggle = useWishlist((s) => s.toggle)
-  const has = useWishlist((s) => s.has(productId))
+  rating,
+  inStock = true,
+  category,
+  variant = 'outline',
+  size = 'default',
+  className,
+  showText = true,
+}: AddToWishlistButtonProps) {
   return (
-    <Button
-      variant={has ? 'ghost' : 'outline'}
-      onClick={() => toggle({ productId, name, priceCents, imageUrl })}
-      className="h-11 px-4"
-    >
-      {has ? 'Retirer des favoris' : 'Ajouter aux favoris'}
-    </Button>
+    <WishlistButton
+      product={{
+        productId,
+        name,
+        brand,
+        priceCents,
+        originalPriceCents,
+        imageUrl,
+        rating,
+        inStock,
+        category,
+      }}
+      variant={variant}
+      size={size}
+      className={className}
+      showText={showText}
+    />
   )
 }

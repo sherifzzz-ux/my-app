@@ -5,6 +5,16 @@ const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
 const prismaClient = () =>
   new PrismaClient({
     log: ["warn", "error"],
+    datasources: {
+      db: {
+        url: process.env.DATABASE_URL,
+      },
+    },
+    // Configuration pour Neon (base auto-suspend)
+    transactionOptions: {
+      maxWait: 5000, // 5 secondes max d'attente
+      timeout: 10000, // 10 secondes timeout
+    },
   });
 
 export const prisma =

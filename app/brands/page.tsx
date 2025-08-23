@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { prisma } from '@/lib/prisma'
 import { Breadcrumb } from '@/components/ui/breadcrumb'
+import { fallbackBrands } from '@/lib/fallback-data'
 
 type tSearchParams = { [key: string]: string | string[] | undefined }
 
@@ -34,6 +35,7 @@ export default async function BrandsPage({
     skip: (page - 1) * PAGE_SIZE,
     take: PAGE_SIZE,
   })
+  const items = brands.length > 0 ? brands : fallbackBrands
   return (
     <div className="mx-auto max-w-7xl px-4 md:px-6 py-8">
       <Breadcrumb
@@ -63,7 +65,7 @@ export default async function BrandsPage({
         </button>
       </form>
       <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {brands.map((b) => (
+        {items.map((b) => (
           <li key={b.id} className="rounded-xl border p-4">
             <Link href={`/catalog?brand=${b.slug}`} className="font-medium hover:underline">
               {b.name}

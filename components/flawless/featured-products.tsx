@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { prisma } from '@/lib/prisma'
 import { formatCFA } from '@/lib/utils'
+import { getFeaturedFallback } from '@/lib/fallback-data'
 
 export async function FeaturedProducts() {
   const products = await prisma.product.findMany({
@@ -17,6 +18,7 @@ export async function FeaturedProducts() {
       oldPriceCents: true,
     },
   })
+  const items = products.length > 0 ? products : getFeaturedFallback()
 
   return (
     <section className="py-12 bg-gray-50">
@@ -28,12 +30,7 @@ export async function FeaturedProducts() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {products.length === 0 ? (
-            <div className="col-span-full text-center text-muted-foreground">
-              Aucun produit en vedette pour le moment.
-            </div>
-          ) : (
-            products.map((p) => (
+          {items.map((p) => (
               <div key={p.id} className="bg-white rounded-lg overflow-hidden shadow-md hover-scale">
                 <Link href={`/product/${p.id}`}>
                   <div className="relative aspect-[4/3] overflow-hidden">
@@ -64,8 +61,7 @@ export async function FeaturedProducts() {
                   </Button>
                 </div>
               </div>
-            ))
-          )}
+            ))}
         </div>
       </div>
     </section>
