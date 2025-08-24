@@ -35,9 +35,9 @@ export function CartSidebar({ open, onClose }: CartSidebarProps) {
             <p className="text-muted-foreground mb-6">
               Découvrez nos produits et ajoutez-les à votre panier
             </p>
-            <Button asChild onClick={onClose}>
-              <Link href="/">Découvrir nos produits</Link>
-            </Button>
+            <Link href="/" onClick={onClose} className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-white h-10 px-4 py-2">
+              Découvrir nos produits
+            </Link>
           </div>
         </SheetContent>
       </Sheet>
@@ -142,12 +142,10 @@ export function CartSidebar({ open, onClose }: CartSidebarProps) {
           </div>
           
           <div className="space-y-2">
-            <Button asChild className="w-full" size="lg">
-              <Link href="/panier" onClick={onClose}>
-                <ArrowRight className="w-4 h-4 mr-2" />
-                Voir le panier
-              </Link>
-            </Button>
+            <Link href="/panier" onClick={onClose} className="w-full inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-white h-11 px-8">
+              <ArrowRight className="w-4 h-4 mr-2" />
+              Voir le panier
+            </Link>
             
             <Button 
               variant="outline" 

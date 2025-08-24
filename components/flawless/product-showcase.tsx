@@ -72,9 +72,9 @@ export async function ProductShowcase() {
                     </span>
                   )}
                 </div>
-                <Button asChild className="bg-pink-600 hover:bg-pink-700 text-white px-8 py-3">
-                  <Link href={`/product/${heroItem.id}`}>Voir le produit</Link>
-                </Button>
+                <Link href={`/product/${heroItem.id}`} className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-pink-600 hover:bg-pink-700 text-white px-8 py-3">
+                  Voir le produit
+                </Link>
               </div>
             </div>
           </div>
@@ -117,12 +117,12 @@ export async function ProductShowcase() {
                     </span>
                   )}
                 </div>
-                <Button
-                  asChild
-                  className="w-full mt-3 bg-pink-600 hover:bg-pink-700 text-white text-sm"
+                <Link
+                  href={`/product/${product.id}`}
+                  className="w-full mt-3 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-pink-600 hover:bg-pink-700 text-white"
                 >
-                  <Link href={`/product/${product.id}`}>Voir le produit</Link>
-                </Button>
+                  Voir le produit
+                </Link>
               </div>
             </div>
           ))}

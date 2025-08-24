@@ -56,9 +56,9 @@ export async function FeaturedProducts() {
                       <span className="font-semibold">{formatCFA(p.priceCents)}</span>
                     )}
                   </div>
-                  <Button asChild className="w-full bg-pink-600 hover:bg-pink-700 text-white">
-                    <Link href={`/product/${p.id}`}>Voir le produit</Link>
-                  </Button>
+                  <Link href={`/product/${p.id}`} className="w-full inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-pink-600 hover:bg-pink-700 text-white h-10 px-4 py-2">
+                    Voir le produit
+                  </Link>
                 </div>
               </div>
             ))}

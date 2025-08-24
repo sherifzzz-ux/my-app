@@ -94,9 +94,9 @@ export default async function Header() {
                 <Input name="q" placeholder="Rechercher..." className="w-64 pr-9" />
                 <Search className="h-4 w-4 absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground" />
               </form>
-              <Button asChild variant="outline" className="hidden lg:inline-flex">
-                <Link href="/catalog">Catalogue</Link>
-              </Button>
+              <Link href="/catalog" className="hidden lg:inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-zinc-200 bg-white hover:bg-zinc-100 text-zinc-900 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-100 dark:hover:bg-zinc-900 h-10 px-4 py-2">
+                Catalogue
+              </Link>
             </div>
             <Link href="/account" className="p-2" aria-label="Compte">
               <User className="h-5 w-5" />

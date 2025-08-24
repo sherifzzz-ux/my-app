@@ -67,9 +67,9 @@ export default function CartPage() {
               <div className="text-sm text-muted-foreground">Sous-total</div>
               <div className="font-medium">{formatCFA(totalCents)}</div>
             </div>
-            <Button asChild className="w-full mt-4">
-              <Link href="/checkout">Passer au paiement</Link>
-            </Button>
+            <Link href="/checkout" className="w-full mt-4 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-white h-10 px-4 py-2">
+              Passer au paiement
+            </Link>
             <Button variant="outline" className="w-full mt-2" onClick={() => clear()}>
               Vider le panier
             </Button>
