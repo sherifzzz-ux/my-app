@@ -6,7 +6,7 @@ import { AdminDashboard } from '@/components/admin/AdminDashboard'
 export default async function AdminPage() {
 	const session = await auth()
 	if (!session?.user?.id) {
-		redirect('/auth')
+		redirect('/api/auth/signin')
 	}
 
 	const supabase = createServerSupabaseClient()
