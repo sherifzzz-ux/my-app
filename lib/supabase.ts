@@ -35,3 +35,18 @@ export const createServerSupabaseClient = () => {
     },
   });
 };
+
+// Client pour le côté serveur avec clé service role (désactive RLS). À utiliser uniquement côté serveur.
+export const createServiceSupabaseClient = () => {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !serviceKey) {
+    throw new Error('Supabase service role env vars are missing');
+  }
+  return createClient<Database>(url, serviceKey, {
+    auth: {
+      persistSession: false,
+      autoRefreshToken: false,
+    },
+  });
+};

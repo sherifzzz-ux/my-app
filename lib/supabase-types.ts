@@ -232,6 +232,81 @@ export type Database = {
         }
         Relationships: []
       }
+      audit_logs: {
+        Row: {
+          id: string
+          action: string
+          entity: string | null
+          entity_id: string | null
+          actor_id: string | null
+          details: Json | null
+          created_at: string | null
+        }
+        Insert: {
+          id?: string
+          action: string
+          entity?: string | null
+          entity_id?: string | null
+          actor_id?: string | null
+          details?: Json | null
+          created_at?: string | null
+        }
+        Update: {
+          id?: string
+          action?: string
+          entity?: string | null
+          entity_id?: string | null
+          actor_id?: string | null
+          details?: Json | null
+          created_at?: string | null
+        }
+        Relationships: []
+      }
+      site_settings: {
+        Row: {
+          id: string
+          site_name: string | null
+          currency: string | null
+          email: string | null
+          phone: string | null
+          address: string | null
+          city: string | null
+          country: string | null
+          free_shipping_threshold: number | null
+          maintenance_mode: boolean | null
+          created_at: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          id?: string
+          site_name?: string | null
+          currency?: string | null
+          email?: string | null
+          phone?: string | null
+          address?: string | null
+          city?: string | null
+          country?: string | null
+          free_shipping_threshold?: number | null
+          maintenance_mode?: boolean | null
+          created_at?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          id?: string
+          site_name?: string | null
+          currency?: string | null
+          email?: string | null
+          phone?: string | null
+          address?: string | null
+          city?: string | null
+          country?: string | null
+          free_shipping_threshold?: number | null
+          maintenance_mode?: boolean | null
+          created_at?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string

@@ -1,10 +1,9 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { Toaster } from '@/components/ui/sonner'
-import FlawlessFooter from '@/components/flawless/footer'
-import { Header } from '@/components/flawless/header'
-import MobileFooterNav from '@/components/flawless/mobile-footer-nav'
+import { LayoutShell } from '@/components/LayoutShell'
 import { Inter, Playfair_Display } from 'next/font/google'
+import { SessionProviderWrapper } from '@/components/providers/session-provider'
 
 export const dynamic = 'force-dynamic'
 
@@ -35,11 +34,12 @@ export default function RootLayout({
   return (
     <html lang="fr" className={`${inter.variable} ${playfair.variable} antialiased`}>
       <body id="top" className="antialiased pb-16">
-        <Header />
-        {children}
-        <FlawlessFooter />
-        <MobileFooterNav />
-        <Toaster />
+        <SessionProviderWrapper>
+          <LayoutShell>
+            {children}
+            <Toaster />
+          </LayoutShell>
+        </SessionProviderWrapper>
       </body>
     </html>
   )

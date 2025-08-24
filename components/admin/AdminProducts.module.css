@@ -1,0 +1,9 @@
+.imageWrapper {
+	@apply h-12 w-12 bg-muted rounded overflow-hidden;
+}
+
+.image {
+	@apply h-full w-full object-cover;
+}
+
+
