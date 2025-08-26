@@ -98,7 +98,7 @@ export function AdminProducts() {
 			const res = await fetch(
 				editingProduct?.id ? `/api/admin/products/${editingProduct.id}` : '/api/admin/products', 
 				{
-					method: editingProduct?.id ? 'PATCH' : 'POST',
+					method: editingProduct?.id ? 'PUT' : 'POST', // CORRIGÉ : PATCH → PUT
 					headers: { 'Content-Type': 'application/json' },
 					credentials: 'include',
 					body: JSON.stringify(apiData),

@@ -217,3 +217,198 @@ export async function POST(request: Request) {
 		}, { status: 500 })
 	}
 }
+
+export async function PUT(request: Request) {
+	const session = await auth()
+	if (!session?.user?.id) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+	
+	// TODO: Adapter la logique de vérification admin selon votre système
+	// const supabase = createServiceSupabaseClient()
+	// const { data: role } = await supabase.rpc('get_user_role', { _user_id: session.user.id })
+	// if (role !== 'admin') return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+
+	try {
+		const body = await request.json()
+		const { id, ...updateData } = body
+
+		if (!id) {
+			return NextResponse.json({ error: 'ID du produit requis' }, { status: 400 })
+		}
+
+		// Valider les données avec Zod
+		const validatedData = ProductSchema.parse(updateData)
+
+		// Vérifier que le produit existe
+		const existingProduct = await prisma.product.findUnique({
+			where: { id }
+		})
+
+		if (!existingProduct) {
+			return NextResponse.json({ error: 'Produit non trouvé' }, { status: 404 })
+		}
+
+		// Vérifier que la catégorie existe
+		const categoryExists = await prisma.category.findUnique({
+			where: { id: validatedData.categoryId }
+		})
+
+		if (!categoryExists) {
+			return NextResponse.json({ error: 'Catégorie invalide' }, { status: 400 })
+		}
+
+		// Vérifier que la sous-catégorie existe si fournie
+		if (validatedData.subcategoryId) {
+			const subcategoryExists = await prisma.subcategory.findFirst({
+				where: { 
+					id: validatedData.subcategoryId,
+					categoryId: validatedData.categoryId
+				}
+			})
+
+			if (!subcategoryExists) {
+				return NextResponse.json({ error: 'Sous-catégorie invalide pour cette catégorie' }, { status: 400 })
+			}
+		}
+
+		// Vérifier que la marque existe si fournie
+		if (validatedData.brandId) {
+			const brandExists = await prisma.brand.findUnique({
+				where: { id: validatedData.brandId }
+			})
+
+			if (!brandExists) {
+				return NextResponse.json({ error: 'Marque invalide' }, { status: 400 })
+			}
+		}
+
+		// Mettre à jour le produit
+		const updatedProduct = await prisma.product.update({
+			where: { id },
+			data: {
+				name: validatedData.name,
+				description: validatedData.description || null,
+				priceCents: validatedData.priceCents,
+				oldPriceCents: validatedData.oldPriceCents || null,
+				imageUrl: validatedData.imageUrl || null,
+				isFeatured: validatedData.isFeatured,
+				stock: validatedData.stock,
+				categoryId: validatedData.categoryId,
+				subcategoryId: validatedData.subcategoryId || null,
+				brandId: validatedData.brandId || null,
+				rating: validatedData.rating || 0,
+				updatedAt: new Date(),
+			},
+			include: {
+				category: {
+					select: { name: true, slug: true }
+				},
+				subcategory: {
+					select: { name: true, slug: true }
+				},
+				brand: {
+					select: { name: true, slug: true }
+				}
+			}
+		})
+
+		// Audit log (si la table existe)
+		try {
+			await prisma.$executeRaw`
+				INSERT INTO "audit_logs" (
+					action, entity, entity_id, actor_id, details
+				) VALUES (
+					${'product.update'}, 
+					${'Product'}, 
+					${id}, 
+					${session.user.id}, 
+					${JSON.stringify({ 
+						name: validatedData.name, 
+						priceCents: validatedData.priceCents,
+						categoryId: validatedData.categoryId 
+					})}
+				)
+			`
+		} catch (auditError) {
+			console.warn('Erreur lors de l\'audit log:', auditError)
+		}
+
+		return NextResponse.json(updatedProduct)
+
+	} catch (error) {
+		if (error instanceof z.ZodError) {
+			return NextResponse.json({ 
+				error: 'Données invalides', 
+				details: error.issues 
+			}, { status: 400 })
+		}
+
+		console.error('Erreur lors de la modification du produit:', error)
+		return NextResponse.json({ 
+			error: 'Erreur interne du serveur',
+			details: error instanceof Error ? error.message : 'Erreur inconnue'
+		}, { status: 500 })
+	}
+}
+
+export async function DELETE(request: Request) {
+	const session = await auth()
+	if (!session?.user?.id) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+	
+	// TODO: Adapter la logique de vérification admin selon votre système
+	// const supabase = createServiceSupabaseClient()
+	// const { data: role } = await supabase.rpc('get_user_role', { _user_id: session.user.id })
+	// if (role !== 'admin') return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+
+	try {
+		const url = new URL(request.url)
+		const id = url.searchParams.get('id')
+
+		if (!id) {
+			return NextResponse.json({ error: 'ID du produit requis' }, { status: 400 })
+		}
+
+		// Vérifier que le produit existe
+		const existingProduct = await prisma.product.findUnique({
+			where: { id }
+		})
+
+		if (!existingProduct) {
+			return NextResponse.json({ error: 'Produit non trouvé' }, { status: 404 })
+		}
+
+		// Supprimer le produit
+		await prisma.product.delete({
+			where: { id }
+		})
+
+		// Audit log (si la table existe)
+		try {
+			await prisma.$executeRaw`
+				INSERT INTO "audit_logs" (
+					action, entity, entity_id, actor_id, details
+				) VALUES (
+					${'product.delete'}, 
+					${'Product'}, 
+					${id}, 
+					${session.user.id}, 
+					${JSON.stringify({ 
+						name: existingProduct.name,
+						priceCents: existingProduct.priceCents,
+						categoryId: existingProduct.categoryId 
+					})}
+				)
+			`
+		} catch (auditError) {
+			console.warn('Erreur lors de l\'audit log:', auditError)
+		}
+
+		return NextResponse.json({ message: 'Produit supprimé avec succès' })
+
+	} catch (error) {
+		console.error('Erreur lors de la suppression du produit:', error)
+		return NextResponse.json({ 
+			error: 'Erreur interne du serveur',
+			details: error instanceof Error ? error.message : 'Erreur inconnue'
+		}, { status: 500 })
+	}
+}
