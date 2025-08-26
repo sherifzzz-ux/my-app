@@ -10,6 +10,9 @@ import {
 	Settings,
 	Package,
 	BarChart3,
+	Tags,
+	CreditCard,
+	TrendingDown,
 } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import { AdminSidebar } from "./AdminSidebar";
@@ -21,14 +24,20 @@ import { AdminNewsletter } from "./AdminNewsletter";
 import { AdminProducts } from "./AdminProducts";
 import { AdminAnalytics } from "./AdminAnalytics";
 import { AdminSettings } from "./AdminSettings";
+import { CategoriesPage } from "./CategoriesPage";
+import { BrandsPage } from "./BrandsPage";
+import { StockFaiblePage } from "./StockFaiblePage";
 
-type AdminPage = 'overview' | 'orders' | 'users' | 'messages' | 'newsletter' | 'products' | 'analytics' | 'settings';
+type AdminPage = 'overview' | 'orders' | 'users' | 'messages' | 'newsletter' | 'products' | 'categories' | 'brands' | 'stock' | 'analytics' | 'settings';
 
 const menuItems = [
 	{ id: 'overview', label: "Vue d'ensemble", icon: LayoutDashboard },
 	{ id: 'orders', label: 'Commandes', icon: ShoppingCart },
 	{ id: 'users', label: 'Utilisateurs', icon: Users },
 	{ id: 'products', label: 'Produits', icon: Package },
+	{ id: 'categories', label: 'Catégories', icon: Tags },
+	{ id: 'brands', label: 'Marques', icon: CreditCard },
+	{ id: 'stock', label: 'Stock Faible', icon: TrendingDown },
 	{ id: 'messages', label: 'Messages', icon: MessageSquare },
 	{ id: 'newsletter', label: 'Newsletter', icon: Mail },
 	{ id: 'analytics', label: 'Analyses', icon: BarChart3 },
@@ -46,7 +55,7 @@ export function AdminDashboard() {
 	const renderCurrentPage = () => {
 		switch (currentPage) {
 			case 'overview':
-				return <AdminOverview />;
+				return <AdminOverview onPageChange={setCurrentPage} />;
 			case 'orders':
 				return <AdminOrders />;
 			case 'users':
@@ -57,12 +66,18 @@ export function AdminDashboard() {
 				return <AdminNewsletter />;
 			case 'products':
 				return <AdminProducts />;
+			case 'categories':
+				return <CategoriesPage />;
+			case 'brands':
+				return <BrandsPage />;
+			case 'stock':
+				return <StockFaiblePage />;
 			case 'analytics':
 				return <AdminAnalytics />;
 			case 'settings':
 				return <AdminSettings />;
 			default:
-				return <AdminOverview />;
+				return <AdminOverview onPageChange={setCurrentPage} />;
 		}
 	};
 

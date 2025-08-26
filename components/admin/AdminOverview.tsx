@@ -72,9 +72,13 @@ interface OverviewData {
 	revenueLastMonth: number;
 }
 
+interface AdminOverviewProps {
+	onPageChange?: (page: 'overview' | 'orders' | 'users' | 'messages' | 'newsletter' | 'products' | 'categories' | 'brands' | 'stock' | 'analytics' | 'settings') => void;
+}
+
 type ActiveTab = 'overview' | 'products' | 'categories' | 'brands' | 'stock';
 
-export function AdminOverview() {
+export function AdminOverview({ onPageChange }: AdminOverviewProps) {
 	const [data, setData] = useState<OverviewData | null>(null);
 	const [loading, setLoading] = useState(true);
 	const [activeTab, setActiveTab] = useState<ActiveTab>('overview');
@@ -367,7 +371,7 @@ export function AdminOverview() {
 							<Button 
 								variant="outline" 
 								className="h-auto p-4 flex flex-col items-center gap-2"
-								onClick={() => setActiveTab('products')}
+								onClick={() => onPageChange ? onPageChange('products') : setActiveTab('products')}
 							>
 								<Package className="h-8 w-8 text-primary" />
 								<span className="text-sm font-medium">Gérer Produits</span>
@@ -377,7 +381,7 @@ export function AdminOverview() {
 							<Button 
 								variant="outline" 
 								className="h-auto p-4 flex flex-col items-center gap-2"
-								onClick={() => setActiveTab('categories')}
+								onClick={() => onPageChange ? onPageChange('categories') : setActiveTab('categories')}
 							>
 								<ShoppingCart className="h-8 w-8 text-secondary" />
 								<span className="text-sm font-medium">Gérer Catégories</span>
@@ -387,7 +391,7 @@ export function AdminOverview() {
 							<Button 
 								variant="outline" 
 								className="h-auto p-4 flex flex-col items-center gap-2"
-								onClick={() => setActiveTab('brands')}
+								onClick={() => onPageChange ? onPageChange('brands') : setActiveTab('brands')}
 							>
 								<CreditCard className="h-8 w-8 text-accent" />
 								<span className="text-sm font-medium">Gérer Marques</span>
@@ -397,7 +401,7 @@ export function AdminOverview() {
 							<Button 
 								variant="outline" 
 								className="h-auto p-4 flex flex-col items-center gap-2"
-								onClick={() => setActiveTab('stock')}
+								onClick={() => onPageChange ? onPageChange('stock') : setActiveTab('stock')}
 							>
 								<TrendingUp className="h-8 w-8 text-destructive" />
 								<span className="text-sm font-medium">Stock Faible</span>
