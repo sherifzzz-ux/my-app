@@ -1,6 +1,6 @@
 "use client";
 
-import { useSession } from 'next-auth/react';
+import { useSession, signOut as nextAuthSignOut } from 'next-auth/react';
 import { create } from 'zustand';
 
 interface AuthState {
@@ -36,8 +36,61 @@ export function useAuth() {
   };
 
   const signOut = async () => {
-    // This would be handled by NextAuth signOut
-    setUserRole(null);
+    try {
+      console.log('🔄 Tentative de déconnexion...');
+      
+      // Essayer d'abord NextAuth si disponible
+      try {
+        await nextAuthSignOut({ 
+          callbackUrl: '/', 
+          redirect: true 
+        });
+        console.log('✅ Déconnexion réussie via NextAuth');
+      } catch (nextAuthError) {
+        console.log('⚠️ NextAuth signOut échoué, utilisation de la méthode alternative');
+        throw nextAuthError; // Continuer vers la méthode alternative
+      }
+      
+      // Effacer le rôle local
+      setUserRole(null);
+      
+    } catch (error) {
+      console.log('🔄 Utilisation de la méthode alternative de déconnexion...');
+      
+      try {
+        // Méthode alternative 1 : API de déconnexion côté serveur
+        console.log('🔄 Appel de l\'API de déconnexion...');
+        const response = await fetch('/api/auth/logout', {
+          method: 'POST',
+          credentials: 'include'
+        });
+        
+        if (response.ok) {
+          console.log('✅ API de déconnexion réussie');
+        } else {
+          console.log('⚠️ API de déconnexion échouée, utilisation de la méthode locale');
+        }
+        
+        // Méthode alternative 2 : effacer les données locales et rediriger
+        setUserRole(null);
+        
+        // Effacer les données de session du localStorage si elles existent
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem('userRole');
+          localStorage.removeItem('adminSession');
+          sessionStorage.clear();
+        }
+        
+        // Rediriger vers la page d'accueil
+        window.location.href = '/';
+        console.log('✅ Déconnexion réussie via méthode alternative');
+        
+      } catch (fallbackError) {
+        console.error('❌ Erreur lors de la déconnexion alternative:', fallbackError);
+        // Dernière tentative : recharger la page
+        window.location.reload();
+      }
+    }
   };
 
   return {

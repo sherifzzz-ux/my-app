@@ -29,6 +29,17 @@ export async function GET() {
 		idToBannedUntil.set(u.id, (u as any).banned_until)
 	}
 
+	// Récupérer les suspensions depuis notre table personnalisée
+	const { data: suspensions } = await supabase
+		.from('user_suspensions')
+		.select('user_id, suspended_until')
+		.gt('suspended_until', new Date().toISOString())
+
+	const userIdToSuspended = new Map<string, boolean>()
+	for (const s of suspensions ?? []) {
+		userIdToSuspended.set(s.user_id, true)
+	}
+
 	const userIdToRoles = new Map<string, string[]>()
 	for (const r of roles ?? []) {
 		const arr = userIdToRoles.get(r.user_id as string) ?? []
@@ -36,12 +47,19 @@ export async function GET() {
 		userIdToRoles.set(r.user_id as string, arr)
 	}
 
-	const merged = (profiles ?? []).map((p: any) => ({
+	const merged = (profiles ?? []).map((p: any) => {
+		// Vérifier si l'utilisateur est suspendu via l'API Supabase OU notre table personnalisée
+		const isBannedViaSupabase = !!(idToBannedUntil.get(p.id) ?? null)
+		const isBannedViaCustom = userIdToSuspended.get(p.id) ?? false
+		const isBanned = isBannedViaSupabase || isBannedViaCustom
+
+		return {
 		...p,
 		email: idToEmail.get(p.id) ?? null,
-		is_banned: !!(idToBannedUntil.get(p.id) ?? null),
+			is_banned: isBanned,
 		user_roles: (userIdToRoles.get(p.id) ?? []).map((role) => ({ role })),
-	}))
+		}
+	})
 
 	return NextResponse.json(merged)
 }

@@ -473,20 +473,50 @@ export type Database = {
         Row: {
           created_at: string
           id: string
-          role: Database["public"]["Enums"]["app_role"]
+          role: string
           user_id: string
         }
         Insert: {
           created_at?: string
           id?: string
-          role: Database["public"]["Enums"]["app_role"]
+          role: string
           user_id: string
         }
         Update: {
           created_at?: string
           id?: string
-          role?: Database["public"]["Enums"]["app_role"]
+          role?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      user_suspensions: {
+        Row: {
+          id: string
+          user_id: string
+          suspended_until: string
+          suspended_by: string
+          reason: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          suspended_until: string
+          suspended_by: string
+          reason?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          suspended_until?: string
+          suspended_by?: string
+          reason?: string | null
+          created_at?: string
+          updated_at?: string
         }
         Relationships: []
       }
@@ -500,15 +530,21 @@ export type Database = {
         Returns: string
       }
       get_user_role: {
-        Args: { _user_id: string }
-        Returns: Database["public"]["Enums"]["app_role"]
+        Args: {
+          _user_id: string
+        }
+        Returns: string
       }
       has_role: {
         Args: {
-          _role: Database["public"]["Enums"]["app_role"]
-          _user_id: string
+          _uid: string
+          _role: string
         }
         Returns: boolean
+      }
+      create_user_suspensions_table: {
+        Args: Record<PropertyKey, never>
+        Returns: void
       }
     }
     Enums: {

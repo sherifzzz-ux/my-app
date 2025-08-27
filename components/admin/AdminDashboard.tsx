@@ -49,7 +49,15 @@ export function AdminDashboard() {
 	const { signOut, user } = useAuth();
 
 	const handleSignOut = async () => {
-		await signOut();
+		try {
+			console.log('🔄 Déconnexion demandée depuis AdminDashboard...');
+			await signOut();
+			console.log('✅ Déconnexion réussie depuis AdminDashboard');
+		} catch (error) {
+			console.error('❌ Erreur lors de la déconnexion depuis AdminDashboard:', error);
+			// En cas d'erreur, essayer de rediriger manuellement
+			window.location.href = '/';
+		}
 	};
 
 	const renderCurrentPage = () => {
