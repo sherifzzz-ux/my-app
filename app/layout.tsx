@@ -4,6 +4,7 @@ import { Toaster } from '@/components/ui/sonner'
 import { LayoutShell } from '@/components/LayoutShell'
 import { Inter, Playfair_Display } from 'next/font/google'
 import { SessionProviderWrapper } from '@/components/providers/session-provider'
+import QueryProvider from '@/providers/QueryProvider'
 
 export const dynamic = 'force-dynamic'
 
@@ -34,12 +35,14 @@ export default function RootLayout({
   return (
     <html lang="fr" className={`${inter.variable} ${playfair.variable} antialiased`}>
       <body id="top" className="antialiased pb-16">
-        <SessionProviderWrapper>
-          <LayoutShell>
-            {children}
-            <Toaster />
-          </LayoutShell>
-        </SessionProviderWrapper>
+        <QueryProvider>
+          <SessionProviderWrapper>
+            <LayoutShell>
+              {children}
+              <Toaster />
+            </LayoutShell>
+          </SessionProviderWrapper>
+        </QueryProvider>
       </body>
     </html>
   )

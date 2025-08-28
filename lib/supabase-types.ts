@@ -469,26 +469,166 @@ export type Database = {
           }
         ]
       }
-      user_roles: {
+      Order: {
         Row: {
-          created_at: string
           id: string
-          role: string
-          user_id: string
+          userId: string
+          status: string
+          totalAmount: number
+          createdAt: string
+          updatedAt: string
+          shippingAddress: string | null
+          billingAddress: string | null
+          paymentMethod: string | null
+          trackingNumber: string | null
         }
         Insert: {
-          created_at?: string
           id?: string
-          role: string
-          user_id: string
+          userId: string
+          status?: string
+          totalAmount: number
+          createdAt?: string
+          updatedAt?: string
+          shippingAddress?: string | null
+          billingAddress?: string | null
+          paymentMethod?: string | null
+          trackingNumber?: string | null
         }
         Update: {
-          created_at?: string
           id?: string
-          role?: string
-          user_id?: string
+          userId?: string
+          status?: string
+          totalAmount?: number
+          createdAt?: string
+          updatedAt?: string
+          shippingAddress?: string | null
+          billingAddress?: string | null
+          paymentMethod?: string | null
+          trackingNumber?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "Order_userId_fkey"
+            columns: ["userId"]
+            isOneToOne: false
+            referencedRelation: "User"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      OrderItem: {
+        Row: {
+          id: string
+          orderId: string
+          productId: string
+          quantity: number
+          unitPrice: number
+          totalPrice: number
+          createdAt: string
+        }
+        Insert: {
+          id?: string
+          orderId: string
+          productId: string
+          quantity: number
+          unitPrice: number
+          totalPrice: number
+          createdAt?: string
+        }
+        Update: {
+          id?: string
+          orderId?: string
+          productId?: string
+          quantity?: number
+          unitPrice?: number
+          totalPrice?: number
+          createdAt?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "OrderItem_orderId_fkey"
+            columns: ["orderId"]
+            isOneToOne: false
+            referencedRelation: "Order"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "OrderItem_productId_fkey"
+            columns: ["productId"]
+            isOneToOne: false
+            referencedRelation: "Product"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      User: {
+        Row: {
+          id: string
+          email: string
+          firstName: string | null
+          lastName: string | null
+          phone: string | null
+          createdAt: string
+          updatedAt: string
+          isActive: boolean
+        }
+        Insert: {
+          id?: string
+          email: string
+          firstName?: string | null
+          lastName?: string | null
+          phone?: string | null
+          createdAt?: string
+          updatedAt?: string
+          isActive?: boolean
+        }
+        Update: {
+          id?: string
+          email?: string
+          firstName?: string | null
+          lastName?: string | null
+          phone?: string | null
+          createdAt?: string
+          updatedAt?: string
+          isActive?: boolean
         }
         Relationships: []
+      }
+      user_favorites: {
+        Row: {
+          id: string
+          "userId": string
+          "productId": string
+          "createdAt": string
+        }
+        Insert: {
+          id?: string
+          "userId": string
+          "productId": string
+          "createdAt"?: string
+        }
+        Update: {
+          id?: string
+          "userId"?: string
+          "productId"?: string
+          "createdAt"?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_favorites_userId_fkey"
+            columns: ["userId"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_favorites_productId_fkey"
+            columns: ["productId"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       user_suspensions: {
         Row: {
@@ -519,6 +659,108 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          "user_id": string
+          "role": string
+          "created_at": string
+        }
+        Insert: {
+          id?: string
+          "user_id": string
+          "role": string
+          "created_at"?: string
+        }
+        Update: {
+          id?: string
+          "user_id"?: string
+          "role"?: string
+          "created_at"?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_roles_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      Product: {
+        Row: {
+          id: string
+          name: string
+          description: string | null
+          priceCents: number
+          imageUrl: string | null
+          createdAt: string
+          updatedAt: string
+          categoryId: string
+          brandId: string | null
+          isFeatured: boolean
+          oldPriceCents: number | null
+          rating: number | null
+          stock: number
+          subcategoryId: string | null
+        }
+        Insert: {
+          id?: string
+          name: string
+          description?: string | null
+          priceCents: number
+          imageUrl?: string | null
+          createdAt?: string
+          updatedAt?: string
+          categoryId: string
+          brandId?: string | null
+          isFeatured?: boolean
+          oldPriceCents?: number | null
+          rating?: number | null
+          stock: number
+          subcategoryId?: string | null
+        }
+        Update: {
+          id?: string
+          name?: string
+          description?: string | null
+          priceCents?: number
+          imageUrl?: string | null
+          createdAt?: string
+          updatedAt?: string
+          categoryId?: string
+          brandId?: string | null
+          isFeatured?: boolean
+          oldPriceCents?: number | null
+          rating?: number | null
+          stock?: number
+          subcategoryId?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "Product_brandId_fkey"
+            columns: ["brandId"]
+            isOneToOne: false
+            referencedRelation: "Brand"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "Product_categoryId_fkey"
+            columns: ["categoryId"]
+            isOneToOne: false
+            referencedRelation: "Category"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "Product_subcategoryId_fkey"
+            columns: ["subcategoryId"]
+            isOneToOne: false
+            referencedRelation: "Subcategory"
+            referencedColumns: ["id"]
+          }
+        ]
       }
     }
     Views: {

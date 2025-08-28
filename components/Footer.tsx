@@ -1,71 +1,194 @@
+'use client'
+
 import Link from 'next/link'
+import { useSession } from 'next-auth/react'
+import { 
+  Home, 
+  User, 
+  ShoppingBag, 
+  Heart, 
+  Search,
+  Phone,
+  Mail,
+  MapPin,
+  Facebook,
+  Instagram,
+  Twitter,
+  Youtube
+} from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Separator } from '@/components/ui/separator'
 
 export default function Footer() {
+  const { data: session } = useSession()
+
+  const handleAccountClick = (e: React.MouseEvent) => {
+    if (!session?.user) {
+      e.preventDefault()
+      // Rediriger vers la page d'authentification
+      window.location.href = '/auth'
+    }
+  }
+
   return (
-    <footer className="border-t mt-16">
-      <div className="mx-auto max-w-7xl px-4 md:px-6 py-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 text-sm">
-        <div>
-          <div className="font-semibold mb-3">Informations</div>
-          <ul className="space-y-2 text-muted-foreground">
-            <li>
-              <Link href="/livraison" className="hover:underline">
-                Livraison
-              </Link>
-            </li>
-            <li>
-              <Link href="/conditions" className="hover:underline">
-                Conditions d’utilisations
-              </Link>
-            </li>
-            <li>
-              <a href="#" className="hover:underline">
-                Politique de cookies
-              </a>
-            </li>
-            <li>
-              <Link href="/blog" className="hover:underline">
-                Blog
-              </Link>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <div className="font-semibold mb-3">Catégories</div>
-          <ul className="space-y-2 text-muted-foreground">
-            <li>Cheveux</li>
-            <li>Corps & Bain</li>
-            <li>Maquillage</li>
-          </ul>
-        </div>
-        <div>
-          <div className="font-semibold mb-3">Contact</div>
-          <ul className="space-y-2 text-muted-foreground">
-            <li>contact@example.com</li>
-            <li>+221 00 000 00 00</li>
-          </ul>
-        </div>
-        <div>
-          <div className="font-semibold mb-3">Paiement sécurisé</div>
-          <div className="text-muted-foreground">Orange Money, Wave, Visa, MasterCard…</div>
-          <div className="mt-3 text-muted-foreground text-xs">
-            Site par{' '}
-            <a
-              className="underline"
-              href="https://example-agency.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Votre Agence
-            </a>
+    <footer className="bg-background border-t">
+      <div className="container mx-auto px-4 py-12">
+        {/* Navigation principale */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+          {/* À propos */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-foreground">Flawless Beauty</h3>
+            <p className="text-sm text-muted-foreground">
+              Votre destination beauté de confiance pour des produits cosmétiques de qualité et des conseils experts.
+            </p>
+            <div className="flex space-x-4">
+              <Button variant="ghost" size="sm" className="p-2">
+                <Facebook className="w-4 h-4" />
+              </Button>
+              <Button variant="ghost" size="sm" className="p-2">
+                <Instagram className="w-4 h-4" />
+              </Button>
+              <Button variant="ghost" size="sm" className="p-2">
+                <Twitter className="w-4 h-4" />
+              </Button>
+              <Button variant="ghost" size="sm" className="p-2">
+                <Youtube className="w-4 h-4" />
+              </Button>
+            </div>
+          </div>
+
+          {/* Navigation rapide */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-foreground">Navigation</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  Accueil
+                </Link>
+              </li>
+              <li>
+                <Link href="/products" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  Produits
+                </Link>
+              </li>
+              <li>
+                <Link href="/categories" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  Catégories
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  À propos
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  Contact
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Services */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-foreground">Services</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link href="/delivery" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  Livraison
+                </Link>
+              </li>
+              <li>
+                <Link href="/returns" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  Retours
+                </Link>
+              </li>
+              <li>
+                <Link href="/support" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  Support client
+                </Link>
+              </li>
+              <li>
+                <Link href="/loyalty" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  Programme de fidélité
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Contact */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-foreground">Contact</h3>
+            <div className="space-y-2">
+              <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                <Phone className="w-4 h-4" />
+                <span>01 23 45 67 89</span>
+              </div>
+              <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                <Mail className="w-4 h-4" />
+                <span>contact@flawlessbeauty.fr</span>
+              </div>
+              <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                <MapPin className="w-4 h-4" />
+                <span>Paris, France</span>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="text-xs text-muted-foreground py-4 border-t">
-        <div className="mx-auto max-w-7xl px-4 md:px-6 flex items-center justify-between">
-          <span>© {new Date().getFullYear()} Mami Shop</span>
-          <a href="#top" className="underline">
-            Retour en haut
-          </a>
+
+        {/* Navigation mobile avec icônes */}
+        <div className="md:hidden border-t pt-6">
+          <div className="grid grid-cols-5 gap-4">
+            <Link href="/" className="flex flex-col items-center space-y-1 text-xs">
+              <Home className="w-5 h-5" />
+              <span>Accueil</span>
+            </Link>
+            
+            <Link href="/search" className="flex flex-col items-center space-y-1 text-xs">
+              <Search className="w-5 h-5" />
+              <span>Recherche</span>
+            </Link>
+            
+            <Link href="/products" className="flex flex-col items-center space-y-1 text-xs">
+              <ShoppingBag className="w-5 h-5" />
+              <span>Produits</span>
+            </Link>
+            
+            <Link href="/favorites" className="flex flex-col items-center space-y-1 text-xs">
+              <Heart className="w-5 h-5" />
+              <span>Favoris</span>
+            </Link>
+            
+            <Link 
+              href={session?.user ? "/account" : "/auth"} 
+              onClick={handleAccountClick}
+              className="flex flex-col items-center space-y-1 text-xs"
+            >
+              <User className="w-5 h-5" />
+              <span>Compte</span>
+            </Link>
+          </div>
+        </div>
+
+        {/* Ligne de séparation */}
+        <Separator className="my-8" />
+
+        {/* Bas de page */}
+        <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+          <div className="text-sm text-muted-foreground">
+            © 2024 Flawless Beauty. Tous droits &apos;réservés&apos;.
+          </div>
+          <div className="flex space-x-6 text-sm text-muted-foreground">
+            <Link href="/privacy" className="hover:text-foreground transition-colors">
+              Politique de confidentialité
+            </Link>
+            <Link href="/terms" className="hover:text-foreground transition-colors">
+              Conditions d'utilisation
+            </Link>
+            <Link href="/cookies" className="hover:text-foreground transition-colors">
+              Cookies
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

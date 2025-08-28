@@ -1,96 +1,265 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { auth } from '@/lib/auth'
-import { prisma } from '@/lib/prisma'
-
-export const runtime = 'nodejs'
+import { createServiceSupabaseClient } from '@/lib/supabase'
 
 export async function GET() {
-  const session = await auth()
-  if (!session?.user?.id) return NextResponse.json([], { status: 200 })
-  const addresses = await prisma.address.findMany({
-    where: { userId: session.user.id },
-    orderBy: [{ isDefault: 'desc' }, { createdAt: 'desc' }],
-  })
-  return NextResponse.json(addresses)
-}
-
-export async function POST(req: NextRequest) {
   try {
     const session = await auth()
-    if (!session?.user?.id) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
-    const body = await req.json()
-    const { name, phone, city, addressLine1, addressLine2, isDefault } = body ?? {}
-    if (!name || !phone || !city || !addressLine1)
-      return NextResponse.json({ error: 'Champs requis manquants' }, { status: 400 })
-    if (isDefault) {
-      await prisma.address.updateMany({
-        where: { userId: session.user.id, isDefault: true },
-        data: { isDefault: false },
-      })
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
     }
-    const created = await prisma.address.create({
-      data: {
+
+    const supabase = createServiceSupabaseClient()
+    
+    // Récupérer toutes les adresses de l'utilisateur
+    const { data: addresses, error } = await supabase
+      .from('user_addresses' as any)
+      .select('*')
+      .eq('userId', session.user.id)
+      .order('isDefault', { ascending: false })
+      .order('createdAt', { ascending: false })
+
+    if (error) {
+      console.error('Erreur lors de la récupération des adresses:', error)
+      return NextResponse.json({ 
+        error: 'Erreur lors de la récupération des adresses' 
+      }, { status: 500 })
+    }
+
+    return NextResponse.json(addresses || [])
+  } catch (error) {
+    console.error('Erreur inattendue:', error)
+    return NextResponse.json({ 
+      error: 'Erreur inattendue' 
+    }, { status: 500 })
+  }
+}
+
+export async function POST(request: NextRequest) {
+  try {
+    const session = await auth()
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
+    }
+
+    const body = await request.json()
+    const { 
+      type, 
+      first_name, 
+      last_name, 
+      company, 
+      address_line1, 
+      address_line2, 
+      city, 
+      postal_code, 
+      country, 
+      phone, 
+      is_default 
+    } = body
+
+    // Validation des données
+    if (!type || !first_name || !last_name || !address_line1 || !city || !postal_code || !country) {
+      return NextResponse.json({ 
+        error: 'Tous les champs obligatoires doivent être remplis' 
+      }, { status: 400 })
+    }
+
+    const supabase = createServiceSupabaseClient()
+    
+    // Si c'est l'adresse par défaut, désactiver les autres
+    if (is_default) {
+      await supabase
+        .from('user_addresses' as any)
+        .update({ isDefault: false })
+        .eq('userId', session.user.id)
+    }
+
+    // Créer la nouvelle adresse
+    const { data: newAddress, error } = await supabase
+      .from('user_addresses' as any)
+      .insert({
         userId: session.user.id,
-        name,
-        phone,
+        name: `${first_name} ${last_name}`,
+        phone: phone || '',
         city,
-        addressLine1,
-        addressLine2: addressLine2 || null,
-        isDefault: !!isDefault,
-      },
-    })
-    return NextResponse.json(created, { status: 201 })
-  } catch (err: unknown) {
-    console.error('address create error', err)
-    const message = err instanceof Error ? err.message : 'Erreur serveur'
-    return NextResponse.json({ error: message }, { status: 500 })
-  }
-}
-
-export async function PATCH(req: NextRequest) {
-  try {
-    const session = await auth()
-    if (!session?.user?.id) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
-    const body = await req.json()
-    const { id, name, phone, city, addressLine1, addressLine2, isDefault } = body ?? {}
-    if (!id) return NextResponse.json({ error: 'ID manquant' }, { status: 400 })
-    if (isDefault) {
-      await prisma.address.updateMany({
-        where: { userId: session.user.id, isDefault: true },
-        data: { isDefault: false },
+        addressLine1: address_line1,
+        addressLine2: address_line2 || '',
+        isDefault: is_default || false,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
       })
+      .select()
+      .single()
+
+    if (error) {
+      console.error('Erreur lors de la création de l\'adresse:', error)
+      return NextResponse.json({ 
+        error: 'Erreur lors de la création de l\'adresse' 
+      }, { status: 500 })
     }
-    const updated = await prisma.address.update({
-      where: { id },
-      data: {
-        name: name ?? undefined,
-        phone: phone ?? undefined,
-        city: city ?? undefined,
-        addressLine1: addressLine1 ?? undefined,
-        addressLine2: addressLine2 ?? undefined,
-        isDefault: typeof isDefault === 'boolean' ? isDefault : undefined,
-      },
-    })
-    return NextResponse.json(updated)
-  } catch (err: unknown) {
-    console.error('address update error', err)
-    const message = err instanceof Error ? err.message : 'Erreur serveur'
-    return NextResponse.json({ error: message }, { status: 500 })
+
+    return NextResponse.json(newAddress)
+  } catch (error) {
+    console.error('Erreur inattendue:', error)
+    return NextResponse.json({ 
+      error: 'Erreur inattendue' 
+    }, { status: 500 })
   }
 }
 
-export async function DELETE(req: NextRequest) {
+export async function PUT(request: NextRequest) {
   try {
     const session = await auth()
-    if (!session?.user?.id) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
-    const { searchParams } = new URL(req.url)
-    const id = searchParams.get('id')
-    if (!id) return NextResponse.json({ error: 'ID manquant' }, { status: 400 })
-    await prisma.address.delete({ where: { id } })
-    return NextResponse.json({ ok: true })
-  } catch (err: unknown) {
-    console.error('address delete error', err)
-    const message = err instanceof Error ? err.message : 'Erreur serveur'
-    return NextResponse.json({ error: message }, { status: 500 })
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
+    }
+
+    const body = await request.json()
+    const { 
+      id,
+      type, 
+      first_name, 
+      last_name, 
+      company, 
+      address_line1, 
+      address_line2, 
+      city, 
+      postal_code, 
+      country, 
+      phone, 
+      is_default 
+    } = body
+
+    if (!id) {
+      return NextResponse.json({ 
+        error: 'ID de l\'adresse requis' 
+      }, { status: 400 })
+    }
+
+    const supabase = createServiceSupabaseClient()
+    
+    // Vérifier que l'adresse appartient à l'utilisateur
+    const { data: existingAddress } = await supabase
+      .from('user_addresses' as any)
+      .select('id')
+      .eq('id', id)
+      .eq('userId', session.user.id)
+      .single()
+
+    if (!existingAddress) {
+      return NextResponse.json({ 
+        error: 'Adresse non trouvée' 
+      }, { status: 404 })
+    }
+
+    // Si c'est l'adresse par défaut, désactiver les autres
+    if (is_default) {
+      await supabase
+        .from('user_addresses' as any)
+        .update({ is_default: false })
+        .eq('userId', session.user.id)
+        .neq('id', id)
+    }
+
+    // Mettre à jour l'adresse
+    const { data: updatedAddress, error } = await supabase
+      .from('user_addresses' as any)
+      .update({
+        name: `${first_name} ${last_name}`,
+        phone: phone || '',
+        city,
+        addressLine1: address_line1,
+        addressLine2: address_line2 || '',
+        isDefault: is_default || false,
+        updatedAt: new Date().toISOString()
+      })
+      .eq('id', id)
+      .select()
+      .single()
+
+    if (error) {
+      console.error('Erreur lors de la mise à jour de l\'adresse:', error)
+      return NextResponse.json({ 
+        error: 'Erreur lors de la mise à jour de l\'adresse' 
+      }, { status: 500 })
+    }
+
+    return NextResponse.json(updatedAddress)
+  } catch (error) {
+    console.error('Erreur inattendue:', error)
+    return NextResponse.json({ 
+      error: 'Erreur inattendue' 
+    }, { status: 500 })
+  }
+}
+
+export async function DELETE(request: NextRequest) {
+  try {
+    const session = await auth()
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
+    }
+
+    const { searchParams } = new URL(request.url)
+    const addressId = searchParams.get('id')
+    
+    if (!addressId) {
+      return NextResponse.json({ 
+        error: 'ID de l\'adresse requis' 
+      }, { status: 400 })
+    }
+
+    const supabase = createServiceSupabaseClient()
+    
+    // Vérifier que l'adresse appartient à l'utilisateur
+    const { data: existingAddress } = await supabase
+      .from('user_addresses' as any)
+      .select('id, isDefault')
+      .eq('id', addressId)
+      .eq('userId', session.user.id)
+      .single()
+
+    if (!existingAddress) {
+      return NextResponse.json({ 
+        error: 'Adresse non trouvée' 
+      }, { status: 404 })
+    }
+
+    // Supprimer l'adresse
+    const { error } = await supabase
+      .from('user_addresses' as any)
+      .delete()
+      .eq('id', addressId)
+
+    if (error) {
+      console.error('Erreur lors de la suppression de l\'adresse:', error)
+      return NextResponse.json({ 
+        error: 'Erreur lors de la suppression de l\'adresse' 
+      }, { status: 500 })
+    }
+
+    // Si c'était l'adresse par défaut, définir une autre comme défaut
+    if (existingAddress && 'isDefault' in existingAddress && existingAddress.isDefault) {
+      const { data: newDefaultAddress } = await supabase
+        .from('user_addresses' as any)
+        .select('id')
+        .eq('userId', session.user.id)
+        .limit(1)
+        .single()
+
+      if (newDefaultAddress && 'id' in newDefaultAddress) {
+        await supabase
+          .from('user_addresses' as any)
+          .update({ isDefault: true })
+          .eq('id', newDefaultAddress.id)
+      }
+    }
+
+    return NextResponse.json({ success: true })
+  } catch (error) {
+    console.error('Erreur inattendue:', error)
+    return NextResponse.json({ 
+      error: 'Erreur inattendue' 
+    }, { status: 500 })
   }
 }

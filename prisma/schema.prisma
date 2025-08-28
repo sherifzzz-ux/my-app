@@ -27,6 +27,7 @@ model User {
   reviews  Review[]
   cart     Cart?
   addresses Address[]
+  favorites UserFavorite[]
 }
 
 model Category {
@@ -68,6 +69,7 @@ model Product {
   reviews   Review[]
   orderItems OrderItem[]
   cartItems  CartItem[]
+  favorites UserFavorite[]
 }
 
 model Subcategory {
@@ -164,6 +166,19 @@ model Address {
 
   user   User   @relation(fields: [userId], references: [id])
   userId String
+}
+
+model UserFavorite {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+  
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+  
+  @@unique([userId, productId])
 }
 
 
