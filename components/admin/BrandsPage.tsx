@@ -16,6 +16,10 @@ import {
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
+import { ImageUpload } from "@/components/ui/ImageUpload";
+import { BrandLogo } from "@/components/ui/LazyImage";
+import { SingleImageTransition } from "@/components/ui/ImageTransition";
+import { BrandLogoPlaceholder } from "@/components/ui/SmartPlaceholder";
 
 interface Brand {
 	id: string;
@@ -225,15 +229,27 @@ export function BrandsPage() {
 								/>
 							</div>
 						</div>
-						<div className="space-y-2">
-							<Label htmlFor="imageUrl">URL de l'image</Label>
-							<Input
-								id="imageUrl"
-								value={formData.imageUrl}
-								onChange={(e) => handleInputChange('imageUrl', e.target.value)}
-								placeholder="https://example.com/logo.png"
-							/>
-						</div>
+											<div className="space-y-2">
+						<Label htmlFor="imageUrl">Logo de la marque</Label>
+						<ImageUpload
+							value={formData.imageUrl}
+							onChange={(url) => handleInputChange('imageUrl', url)}
+							onRemove={() => handleInputChange('imageUrl', '')}
+							disabled={false}
+							maxFiles={1}
+							maxSize={2 * 1024 * 1024} // 2MB pour les logos
+							accept={["image/*"]}
+							minWidth={100}
+							maxWidth={800}
+							minHeight={100}
+							maxHeight={800}
+							aspectRatio={1} // Logo carré recommandé
+							showValidation={true}
+						/>
+						<p className="text-xs text-muted-foreground">
+							Recommandé : Logo carré de 200×200px à 400×400px, format PNG ou SVG
+						</p>
+					</div>
 						<div className="flex justify-end gap-3">
 							<Button variant="outline" onClick={cancelEdit}>
 								Annuler
@@ -283,11 +299,19 @@ export function BrandsPage() {
 										<div className="flex-1">
 											<h3 className="font-semibold text-lg">{brand.name}</h3>
 											<p className="text-sm text-muted-foreground mb-2">{brand.slug}</p>
-											{brand.imageUrl && (
-												<div className="w-16 h-16 bg-gray-100 rounded-lg mb-3 flex items-center justify-center">
-													<Tag className="h-8 w-8 text-gray-400" />
-												</div>
-											)}
+																{brand.imageUrl ? (
+						<div className="w-16 h-16 mb-3">
+							<BrandLogo
+								src={brand.imageUrl}
+								alt={`Logo ${brand.name}`}
+								size="md"
+								priority={false}
+								showPlaceholder={true}
+							/>
+						</div>
+					) : (
+						<BrandLogoPlaceholder size="md" />
+					)}
 											<p className="text-xs text-muted-foreground">
 												Créée le {new Date(brand.createdAt).toLocaleDateString('fr-FR')}
 											</p>

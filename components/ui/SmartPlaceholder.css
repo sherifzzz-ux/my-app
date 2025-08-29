@@ -1,0 +1,21 @@
+.bg-dot-pattern {
+  background-image: radial-gradient(circle at 25% 25%, white 2px, transparent 2px);
+  background-size: 20px 20px;
+}
+
+/* Classes pour les délais d'animation */
+.animation-delay-0 {
+  animation-delay: 0ms;
+}
+
+.animation-delay-100 {
+  animation-delay: 100ms;
+}
+
+.animation-delay-200 {
+  animation-delay: 200ms;
+}
+
+.animation-delay-300 {
+  animation-delay: 300ms;
+}

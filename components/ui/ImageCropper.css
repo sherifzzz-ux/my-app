@@ -1,0 +1,62 @@
+.crop-area {
+  position: absolute;
+  border: 2px dashed var(--primary);
+  pointer-events: none;
+  /* Variables CSS pour le positionnement dynamique */
+  --crop-x: 0px;
+  --crop-y: 0px;
+  left: var(--crop-x);
+  top: var(--crop-y);
+}
+
+.crop-area.cursor-grab {
+  cursor: grab;
+}
+
+.crop-area.cursor-grabbing {
+  cursor: grabbing;
+}
+
+/* Classes pour le positionnement dynamique de la zone de recadrage */
+.crop-area-positioned {
+  position: absolute;
+}
+
+/* Classes pour les dimensions et positions spécifiques */
+.crop-area-size-200 {
+  width: 200px;
+  height: 200px;
+}
+
+.crop-area-size-200.crop-area-positioned {
+  position: absolute;
+}
+
+/* Styles pour les poignées de redimensionnement */
+.crop-handle {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background-color: var(--primary);
+  border-radius: 50%;
+}
+
+.crop-handle.top-left {
+  top: -6px;
+  left: -6px;
+}
+
+.crop-handle.top-right {
+  top: -6px;
+  right: -6px;
+}
+
+.crop-handle.bottom-left {
+  bottom: -6px;
+  left: -6px;
+}
+
+.crop-handle.bottom-right {
+  bottom: -6px;
+  right: -6px;
+}
