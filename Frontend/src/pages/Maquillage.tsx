@@ -11,6 +11,7 @@ import { Slider } from '@/components/ui/slider';
 import { Heart, Star, Grid, List, ShoppingCart, Filter, Sparkles, Palette, Brush, Eye } from 'lucide-react';
 import { WishlistButton } from "@/components/WishlistButton";
 import { StarRating } from "@/components/StarRating";
+import { ProductCard } from "@/components/ui/ProductCard";
 
 const categories = [
   'Tous les produits',
@@ -365,100 +366,15 @@ export default function Maquillage() {
                   ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8' 
                   : 'space-y-6'
                 }>
-                  {sortedProducts.map((product, index) => {
-                    const wishlistProduct = {
-                      id: product.id,
-                      name: product.name,
-                      price: product.currentPrice,
-                      originalPrice: product.originalPrice,
-                      image: product.image,
-                      brand: product.brand,
-                      rating: product.rating,
-                      inStock: product.inStock
-                    };
-
-                    return (
-                      <Card 
-                        key={product.id} 
-                        className="group bg-white hover:shadow-xl transition-all duration-300 animate-fade-in border-0 shadow-soft hover:shadow-strong overflow-hidden"
-                        style={{ animationDelay: `${index * 0.1}s` }}
-                      >
-                        <CardContent className="p-0">
-                          <div className="relative overflow-hidden">
-                            <img
-                              src={product.image}
-                              alt={product.name}
-                              className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
-                            />
-                            
-                            {/* Badges */}
-                            <div className="absolute top-4 left-4 space-y-2">
-                              {product.isPromo && (
-                                <Badge className="bg-gradient-to-r from-pink-500 to-purple-500 text-white shadow-md">
-                                  -{product.discountPercentage}%
-                                </Badge>
-                              )}
-                              {!product.inStock && (
-                                <Badge variant="destructive" className="shadow-md">
-                                  Rupture
-                                </Badge>
-                              )}
-                            </div>
-
-                            {/* Wishlist Button */}
-                            <div className="absolute top-4 right-4">
-                              <WishlistButton product={wishlistProduct} size="sm" />
-                            </div>
-
-                            {/* Quick Actions Overlay */}
-                            <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                              <Button 
-                                className="bg-white text-gray-900 hover:bg-gray-100 shadow-lg transform scale-95 group-hover:scale-100 transition-transform duration-300"
-                                disabled={!product.inStock}
-                              >
-                                <ShoppingCart className="h-4 w-4 mr-2" />
-                                {product.inStock ? 'Ajouter' : 'Indisponible'}
-                              </Button>
-                            </div>
-                          </div>
-
-                          <div className="p-6">
-                            <div className="text-sm text-primary font-medium mb-2">
-                              {product.brand}
-                            </div>
-                            
-                            <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2 group-hover:text-primary transition-colors">
-                              {product.name}
-                            </h3>
-
-                            <p className="text-sm text-gray-600 mb-3 line-clamp-2">
-                              {product.description}
-                            </p>
-                            
-                            <div className="flex items-center gap-2 mb-3">
-                              <StarRating rating={product.rating} size="sm" showNumber={false} />
-                              <span className="text-sm text-gray-600">
-                                ({product.reviews} avis)
-                              </span>
-                            </div>
-                            
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center gap-2">
-                                <span className="text-xl font-bold text-gray-900">
-                                  {formatPrice(product.currentPrice)}
-                                </span>
-                                {product.originalPrice > product.currentPrice && (
-                                  <span className="text-sm text-gray-500 line-through">
-                                    {formatPrice(product.originalPrice)}
-                                  </span>
-                                )}
-                              </div>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    );
-                  })}
+                  {sortedProducts.map((product, index) => (
+                    <ProductCard 
+                      key={product.id} 
+                      product={product}
+                      showWishlist={true}
+                      showRating={true}
+                      showDescription={true}
+                    />
+                  ))}
                 </div>
               )}
             </main>

@@ -4,7 +4,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
-import { Heart, Star, Filter, Grid, List, ShoppingCart, Baby } from 'lucide-react';
+import { Heart, Star, Filter, Grid, List, ShoppingCart, Baby, Child } from 'lucide-react';
+import { ProductCard } from "@/components/ui/ProductCard";
 
 const categories = [
   'Tous les produits',
@@ -287,89 +288,7 @@ export default function BebeEnfant() {
               : 'space-y-4'
             }>
               {filteredProducts.map(product => (
-                <Card key={product.id} className="group hover:shadow-lg transition-all duration-300">
-                  <CardContent className="p-0">
-                    <div className="relative">
-                      <img
-                        src={product.image}
-                        alt={product.name}
-                        className="w-full h-48 object-cover rounded-t-lg"
-                      />
-                      
-                      {/* Badges */}
-                      <div className="absolute top-2 left-2 flex flex-col gap-1">
-                        {product.isNew && (
-                          <Badge className="bg-success text-success-foreground">
-                            Nouveau
-                          </Badge>
-                        )}
-                        {product.isPromo && (
-                          <Badge className="bg-urgent text-urgent-foreground">
-                            -{product.discountPercentage}%
-                          </Badge>
-                        )}
-                        <Badge variant="outline" className="bg-white/90 text-xs">
-                          {product.ageRange}
-                        </Badge>
-                      </div>
-
-                      {/* Wishlist Button */}
-                      <Button
-                        size="icon"
-                        variant="ghost"
-                        className="absolute top-2 right-2 bg-white/80 hover:bg-white"
-                      >
-                        <Heart className="w-4 h-4" />
-                      </Button>
-                    </div>
-
-                    <div className="p-4">
-                      <div className="text-sm text-muted-foreground mb-1">
-                        {product.brand}
-                      </div>
-                      
-                      <h3 className="font-semibold mb-2 line-clamp-2">
-                        {product.name}
-                      </h3>
-
-                      <div className="flex items-center gap-1 mb-2">
-                        <div className="flex">
-                          {[...Array(5)].map((_, i) => (
-                            <Star
-                              key={i}
-                              className={`w-4 h-4 ${
-                                i < Math.floor(product.rating)
-                                  ? 'fill-yellow-400 text-yellow-400'
-                                  : 'text-gray-300'
-                              }`}
-                            />
-                          ))}
-                        </div>
-                        <span className="text-sm text-muted-foreground">
-                          ({product.reviews})
-                        </span>
-                      </div>
-
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <span className="font-bold text-lg">
-                            {formatPrice(product.currentPrice)}
-                          </span>
-                          {product.originalPrice > product.currentPrice && (
-                            <span className="text-sm text-muted-foreground line-through">
-                              {formatPrice(product.originalPrice)}
-                            </span>
-                          )}
-                        </div>
-                        
-                        <Button size="sm">
-                          <ShoppingCart className="w-4 h-4 mr-1" />
-                          Ajouter
-                        </Button>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                <ProductCard key={product.id} product={product} />
               ))}
             </div>
 

@@ -5,6 +5,7 @@ import { Breadcrumb } from '@/components/ui/breadcrumb'
 import { Badge } from '@/components/ui/badge'
 import AddToCartButton from '@/components/product/AddToCartButton'
 import { formatCFA } from '@/lib/utils'
+import { ProductCard } from '@/components/ui/ProductCard'
 
 type tSearchParams = { [key: string]: string | string[] | undefined }
 
@@ -198,7 +199,7 @@ export default async function CatalogPage({
       </form>
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {(sort === 'random'
+                {(sort === 'random'
           ? [...products].sort((a, b) => {
               // deterministic pseudo-random shuffle by page to keep UX predictable
               const seed = page * 1337
@@ -208,63 +209,13 @@ export default async function CatalogPage({
             })
           : products
         ).map((p) => (
-          <div key={p.id} className="rounded-xl border p-4">
-            {p.imageUrl ? (
-              <Image
-                src={p.imageUrl}
-                alt={p.name}
-                width={500}
-                height={400}
-                className="w-full h-auto mb-3 rounded-md"
-              />
-            ) : null}
-            {p.oldPriceCents ? (
-              <div className="mb-2">
-                <Badge variant="destructive">Promo</Badge>
-              </div>
-            ) : null}
-            <div className="text-xs text-muted-foreground mb-1">{p.category.name}</div>
-            <div className="font-semibold mb-1 line-clamp-2 min-h-[2.5rem]">{p.name}</div>
-            <div className="text-xs mb-1">
-              {p.stock > 0 ? (
-                <span className="text-[#F792CC]">En stock: {p.stock}</span>
-              ) : (
-                <span className="text-red-600">Rupture de stock</span>
-              )}
-            </div>
-            <div className="text-sm">
-              {p.oldPriceCents ? (
-                <>
-                  <span className="text-muted-foreground line-through mr-2">
-                    {formatCFA(p.oldPriceCents)}
-                  </span>
-                  <span className="font-medium">{formatCFA(p.priceCents)}</span>
-                </>
-              ) : (
-                <span className="font-medium">{formatCFA(p.priceCents)}</span>
-              )}
-            </div>
-            <div className="mt-3 flex gap-2">
-              {p.stock > 0 ? (
-                <AddToCartButton
-                  productId={p.id}
-                  name={p.name}
-                  priceCents={p.priceCents}
-                  imageUrl={p.imageUrl ?? undefined}
-                />
-              ) : (
-                <button
-                  className="h-11 px-4 rounded-md border text-sm opacity-60 cursor-not-allowed"
-                  disabled
-                >
-                  Indisponible
-                </button>
-              )}
-              <Link href={`/product/${p.id}`} className="text-sm underline underline-offset-4">
-                Voir les détails
-              </Link>
-            </div>
-          </div>
+          <ProductCard 
+            key={p.id} 
+            product={p}
+            showWishlist={true}
+            showRating={false}
+            showDescription={false}
+          />
         ))}
       </div>
 

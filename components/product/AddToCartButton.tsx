@@ -3,7 +3,8 @@
 import { ShoppingCart } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useCart } from '@/hooks/use-cart'
-import { toast } from '@/hooks/use-toast'
+import { CartPopup } from '@/components/ui/cart-popup'
+import { useState } from 'react'
 
 interface AddToCartButtonProps {
   productId: string
@@ -32,34 +33,61 @@ export default function AddToCartButton({
   variant = 'default',
   className,
 }: AddToCartButtonProps) {
-  const { addItem } = useCart()
+  const { addItem, setIsOpen } = useCart()
+  const [showPopup, setShowPopup] = useState(false)
   
   const handleAddToCart = () => {
     addItem({ 
+      id: productId, // Utiliser productId comme id
       productId, 
       name, 
-      brand,
+      brand: brand || '',
+      price: priceCents / 100, // Convertir en prix décimal
       priceCents, 
+      originalPrice: originalPriceCents ? originalPriceCents / 100 : undefined,
       originalPriceCents,
+      image: imageUrl || '', // Utiliser imageUrl comme image
       imageUrl: imageUrl ?? undefined 
     }, quantity)
     
-    toast({
-      title: 'Ajouté au panier',
-      description: `${quantity}x ${name}`,
-    })
+    setShowPopup(true)
+  }
+
+  const handleViewCart = () => {
+    setShowPopup(false)
+    setIsOpen(true)
+  }
+
+  const handleContinueShopping = () => {
+    setShowPopup(false)
   }
 
   return (
-    <Button
-      onClick={handleAddToCart}
-      disabled={disabled}
-      size={size}
-      variant={variant}
-      className={className}
-    >
-      <ShoppingCart className="w-4 h-4 mr-2" />
-      Ajouter au panier
-    </Button>
+    <>
+      <Button
+        onClick={handleAddToCart}
+        disabled={disabled}
+        size={size}
+        variant={variant}
+        className={className}
+      >
+        <ShoppingCart className="w-4 h-4 mr-2" />
+        Ajouter au panier
+      </Button>
+
+      <CartPopup
+        isOpen={showPopup}
+        onClose={() => setShowPopup(false)}
+        product={{
+          name,
+          brand,
+          price: priceCents / 100,
+          imageUrl,
+          quantity
+        }}
+        onViewCart={handleViewCart}
+        onContinueShopping={handleContinueShopping}
+      />
+    </>
   )
 }

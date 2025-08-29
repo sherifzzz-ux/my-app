@@ -15,13 +15,7 @@ interface Product {
   createdAt: string
 }
 
-interface UserFavorite {
-  id: string
-  userId: string
-  productId: string
-  createdAt: string
-  Product: Product
-}
+
 
 export async function GET(request: NextRequest) {
   try {

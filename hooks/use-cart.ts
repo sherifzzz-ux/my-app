@@ -4,11 +4,15 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 export interface CartItem {
+  id: string;
   productId: string;
   name: string;
   brand?: string;
+  price: number;
   priceCents: number;
+  originalPrice?: number;
   originalPriceCents?: number;
+  image: string;
   imageUrl?: string | null;
   quantity: number;
 }
@@ -26,6 +30,7 @@ interface CartState {
   // Computed properties
   totalItems: number;
   subtotal: number;
+  total: number;
 }
 
 export const useCart = create<CartState>()(
@@ -39,7 +44,15 @@ export const useCart = create<CartState>()(
         if (idx >= 0) {
           items[idx] = { ...items[idx], quantity: items[idx].quantity + quantity };
         } else {
-          items.push({ ...item, quantity });
+          // Ensure all required fields are present
+          const newItem = {
+            ...item,
+            id: item.id || item.productId,
+            image: item.image || item.imageUrl || '',
+            price: item.price || (item.priceCents / 100),
+            quantity
+          };
+          items.push(newItem);
         }
         set({ items, isOpen: true });
       },
@@ -59,6 +72,9 @@ export const useCart = create<CartState>()(
       },
       get subtotal() {
         return get().items.reduce((sum, item) => sum + (item.priceCents * item.quantity), 0);
+      },
+      get total() {
+        return get().subtotal;
       },
     }),
     { 

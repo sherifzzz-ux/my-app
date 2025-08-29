@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { Menu, Search, User, ChevronDown } from 'lucide-react'
-import CartButton from '@/components/CartButton'
+import { CartDrawer } from '@/components/cart/CartDrawer'
 
 async function getTopCategories() {
   return prisma.category.findMany({
@@ -101,7 +101,7 @@ export default async function Header() {
             <Link href="/account" className="p-2" aria-label="Compte">
               <User className="h-5 w-5" />
             </Link>
-            <CartButton />
+            <CartDrawer />
           </div>
         </div>
       </div>
