@@ -6,20 +6,13 @@ export const { auth } = NextAuth({
   session: { strategy: 'jwt' },
   providers: [
     // Ne pas inclure Credentials ici (bcryptjs non supporté en Edge)
-    Google,
-    GitHub,
+    Google({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
+    GitHub({
+      clientId: process.env.GITHUB_CLIENT_ID!,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET!,
+    }),
   ],
-  callbacks: {
-    // Autorisation côté middleware uniquement (pas d'accès DB nécessaire)
-    authorized: async ({ auth, request }) => {
-      const isLoggedIn = !!auth?.user
-      const { pathname } = request.nextUrl
-
-      if (pathname.startsWith('/admin')) return isLoggedIn
-      if (pathname.startsWith('/api/admin')) return isLoggedIn
-      if (pathname.startsWith('/account')) return isLoggedIn
-
-      return true
-    },
-  },
 })

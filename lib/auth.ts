@@ -8,8 +8,8 @@ import { z } from 'zod'
 // Client Supabase pour les opérations serveur
 const serverSupabase = createServerSupabaseClient()
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
-  session: { strategy: 'jwt' },
+export const authOptions = {
+  session: { strategy: 'jwt' as const },
   providers: [
     Credentials({
       name: 'Credentials',
@@ -48,16 +48,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
     }),
     Google({
-      clientId: process.env.AUTH_GOOGLE_ID,
-      clientSecret: process.env.AUTH_GOOGLE_SECRET,
+      clientId: process.env.AUTH_GOOGLE_ID!,
+      clientSecret: process.env.AUTH_GOOGLE_SECRET!,
     }),
     GitHub({
-      clientId: process.env.AUTH_GITHUB_ID,
-      clientSecret: process.env.AUTH_GITHUB_SECRET,
+      clientId: process.env.AUTH_GITHUB_ID!,
+      clientSecret: process.env.AUTH_GITHUB_SECRET!,
     }),
   ],
   callbacks: {
-    async jwt({ token, user, account, trigger, session }) {
+    async jwt({ token, user, account, trigger, session }: any) {
       // Premier login: synchroniser avec Supabase Auth
       if (account && user?.email) {
         // Pour OAuth, créer/mettre à jour le profil utilisateur
@@ -129,7 +129,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       return token
     },
-    async session({ session, token }) {
+    async session({ session, token }: any) {
       // Propager les claims utiles au client sans perdre les champs AdapterUser (ex: emailVerified)
       if (session.user) {
         session.user.id = String((token.userId as string) ?? token.sub ?? '')
@@ -138,17 +138,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
       return session
     },
-    // Autorisation côté middleware
-    authorized: async ({ auth, request }) => {
-      const isLoggedIn = !!auth?.user
-      const { pathname } = request.nextUrl
-
-      // Zones protégées
-      if (pathname.startsWith('/admin')) return isLoggedIn
-      if (pathname.startsWith('/api/admin')) return isLoggedIn
-      if (pathname.startsWith('/account')) return isLoggedIn
-
-      return true
-    },
   },
-})
+}
+
+export const { handlers, signIn, signOut, auth } = NextAuth(authOptions)

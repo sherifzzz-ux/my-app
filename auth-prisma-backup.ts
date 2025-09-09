@@ -34,8 +34,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         return { id: user.id, email: user.email, name: user.name } as any
       },
     }),
-    Google,
-    GitHub,
+    Google({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
+    GitHub({
+      clientId: process.env.GITHUB_CLIENT_ID!,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET!,
+    }),
   ],
   callbacks: {
     async jwt({ token, user, account, trigger, session }) {
@@ -74,18 +80,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         name: token.name ?? null,
       }
       return session
-    },
-    // Autorisation côté middleware (utilisé par `export { auth as middleware }`)
-    authorized: async ({ auth, request }) => {
-      const isLoggedIn = !!auth?.user
-      const { pathname } = request.nextUrl
-
-      // Zones protégées
-      if (pathname.startsWith('/admin')) return isLoggedIn
-      if (pathname.startsWith('/api/admin')) return isLoggedIn
-
-      // Tout le reste est public par défaut
-      return true
     },
   },
 })

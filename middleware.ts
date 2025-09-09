@@ -7,6 +7,22 @@ export async function middleware(req: any) {
 	const url = new URL(req.nextUrl)
 	const path = url.pathname
 
+	// Handle authorization logic
+	const isLoggedIn = !!res?.user
+
+	// Check if user is trying to access protected routes
+	if (path.startsWith('/admin') || path.startsWith('/api/admin')) {
+		if (!isLoggedIn) {
+			return NextResponse.redirect(new URL('/auth', url.origin))
+		}
+	}
+
+	if (path.startsWith('/account')) {
+		if (!isLoggedIn) {
+			return NextResponse.redirect(new URL('/auth', url.origin))
+		}
+	}
+
 	// Skip maintenance for admin and admin APIs and maintenance API itself
 	if (path.startsWith('/admin') || path.startsWith('/api/admin') || path.startsWith('/api/maintenance')) {
 		return res
@@ -28,6 +44,7 @@ export async function middleware(req: any) {
 
 export const config = {
 	matcher: ["/:path*"],
+	runtime: 'nodejs',
 };
 
 
