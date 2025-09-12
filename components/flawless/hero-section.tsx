@@ -7,27 +7,27 @@ import { Button } from '@/components/ui/button'
 const heroSlides = [
   {
     id: 1,
-    title: 'SKIN1004',
-    subtitle: 'THE UNTOUCHED NATURE',
+    title: 'FLAWLESS BEAUTY',
+    subtitle: 'VOTRE BEAUTÉ, NOTRE PASSION',
     description:
-      'Ampoules ultra-concentrées à la Centella exclusive, pour une peau visiblement plus lisse et affinée.',
+      'Découvrez notre sélection premium de cosmétiques et parapharmacie. Livraison gratuite à Dakar dès 25,000 CFA.',
     image: '/skin1004-centella-products.png',
     textPosition: 'right',
   },
   {
     id: 2,
     title: 'KOREAN BEAUTY',
-    subtitle: 'K-BEAUTY ESSENTIALS',
+    subtitle: 'LES SECRETS DE LA K-BEAUTY',
     description:
-      'Découvrez les secrets de beauté coréens avec notre sélection exclusive de produits K-Beauty.',
+      'Importés directement de Corée du Sud, nos produits K-Beauty révèlent l\'éclat naturel de votre peau.',
     image: '/placeholder-e39dn.png?key=dl16e',
     textPosition: 'left',
   },
   {
     id: 3,
     title: 'NOUVEAUTÉS',
-    subtitle: 'DERNIÈRES TENDANCES',
-    description: 'Explorez nos dernières nouveautés en cosmétiques et soins de beauté.',
+    subtitle: 'DERNIÈRES TENDANCES BEAUTÉ',
+    description: 'Soyez la première à découvrir nos dernières collections et innovations cosmétiques.',
     image: '/cosmetic-beauty-trends.png',
     textPosition: 'center',
   },
@@ -36,58 +36,58 @@ const heroSlides = [
     title: 'SOIN ANTI-ÂGE',
     subtitle: 'JEUNESSE ÉTERNELLE',
     description:
-      'Redécouvrez une peau jeune et éclatante avec nos soins anti-âge révolutionnaires.',
+      'Nos soins anti-âge haut de gamme redonnent fermeté et éclat à votre peau. Résultats visibles dès 15 jours.',
     image: '/anti-aging-skincare.png',
     textPosition: 'right',
   },
   {
     id: 5,
     title: 'MAQUILLAGE',
-    subtitle: 'BEAUTÉ PARFAITE',
+    subtitle: 'L\'ART DE SE SUBLIMER',
     description:
-      'Sublimez votre beauté naturelle avec notre gamme complète de maquillage professionnel.',
+      'Gamme complète de maquillage professionnel pour tous les teints et occasions. Qualité française garantie.',
     image: '/placeholder-jnufl.png',
     textPosition: 'left',
   },
   {
     id: 6,
     title: 'HYDRATATION',
-    subtitle: 'PEAU ÉCLATANTE',
+    subtitle: 'PEAU ÉCLATANTE AU QUOTIDIEN',
     description:
-      "Offrez à votre peau l'hydratation intense qu'elle mérite avec nos formules innovantes.",
+      "Formules hydratantes avancées pour une peau souple, douce et radieuse toute la journée.",
     image: '/placeholder-gpes1.png',
     textPosition: 'center',
   },
   {
     id: 7,
     title: 'NETTOYAGE',
-    subtitle: 'PURETÉ ABSOLUE',
-    description: 'Purifiez votre peau en douceur avec nos nettoyants adaptés à tous types de peau.',
+    subtitle: 'PURETÉ ET DOUCEUR',
+    description: 'Nettoyants adaptés à tous types de peau. Éliminez impuretés et maquillage en douceur.',
     image: '/gentle-face-cleansers.png',
     textPosition: 'right',
   },
   {
     id: 8,
     title: 'PROTECTION SOLAIRE',
-    subtitle: 'DÉFENSE NATURELLE',
-    description: 'Protégez votre peau des rayons UV avec nos écrans solaires haute protection.',
+    subtitle: 'DÉFENSE OPTIMALE UV',
+    description: 'Écrans solaires haute protection SPF 50+ pour préserver votre capital jeunesse sous le soleil sénégalais.',
     image: '/placeholder-o31zj.png',
     textPosition: 'left',
   },
   {
     id: 9,
     title: 'SOINS CORPS',
-    subtitle: 'DOUCEUR TOTALE',
-    description: 'Chouchoutez votre corps avec nos soins nourrissants et apaisants.',
+    subtitle: 'DOUCEUR DE LA TÊTE AUX PIEDS',
+    description: 'Crèmes, huiles et laits corporels pour une peau de bébé. Texture non grasse, absorption rapide.',
     image: '/body-care-lotions-creams.png',
     textPosition: 'center',
   },
   {
     id: 10,
     title: 'PARFUMS',
-    subtitle: 'ÉLÉGANCE RAFFINÉE',
+    subtitle: 'SIGNATURE OLFACTIVE EXCLUSIVE',
     description:
-      'Découvrez notre collection exclusive de parfums pour une signature olfactive unique.',
+      'Collection de parfums de luxe français et internationaux. Trouvez votre fragrance signature.',
     image: '/placeholder-wo0xm.png',
     textPosition: 'right',
   },
@@ -136,7 +136,18 @@ export function HeroSection() {
                 : 'text-left'
           }`}
         >
-          <div className="text-sm text-pink-600 font-medium mb-2 italic">en exclusivité !</div>
+          <div className="text-sm text-pink-600 font-medium mb-2 italic">
+            {currentSlideData.id === 1 ? 'Livraison gratuite à Dakar' :
+             currentSlideData.id === 2 ? 'Import direct de Corée' :
+             currentSlideData.id === 3 ? 'Nouveautés exclusives' :
+             currentSlideData.id === 4 ? 'Résultats garantis' :
+             currentSlideData.id === 5 ? 'Qualité française' :
+             currentSlideData.id === 6 ? 'Formules avancées' :
+             currentSlideData.id === 7 ? 'Adapté à tous types' :
+             currentSlideData.id === 8 ? 'Protection optimale' :
+             currentSlideData.id === 9 ? 'Texture non grasse' :
+             'Collection exclusive'}
+          </div>
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-2 tracking-wider">
             {currentSlideData.title}
           </h1>

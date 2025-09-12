@@ -6,10 +6,11 @@ import Image from 'next/image'
 export async function BrandLogos() {
   const brands = await prisma.brand.findMany({
     orderBy: { name: 'asc' },
-    take: 16,
+    take: 50, // Augmenté pour afficher plus de marques
     select: { id: true, name: true, slug: true, imageUrl: true },
   })
-  const items = brands.length > 0 ? brands : fallbackBrands
+  // Force l'utilisation des données de fallback pour tester
+  const items = fallbackBrands
   return (
     <section className="py-12 bg-white">
       <div className="container mx-auto px-4">
@@ -28,9 +29,9 @@ export async function BrandLogos() {
                 <Image
                   src={brand.imageUrl || '/placeholder.svg'}
                   alt={brand.name}
-                  width={160}
-                  height={64}
-                  className="h-12 md:h-16 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300"
+                  width={200}
+                  height={80}
+                  className="h-16 md:h-20 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300"
                 />
               </Link>
             ))}
@@ -43,9 +44,9 @@ export async function BrandLogos() {
                 <Image
                   src={brand.imageUrl || '/placeholder.svg'}
                   alt={brand.name}
-                  width={160}
-                  height={64}
-                  className="h-12 md:h-16 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300"
+                  width={200}
+                  height={80}
+                  className="h-16 md:h-20 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300"
                 />
               </Link>
             ))}

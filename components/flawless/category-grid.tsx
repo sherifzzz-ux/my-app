@@ -8,37 +8,37 @@ export async function CategoryGrid() {
       id: '1',
       name: 'Soins du Visage',
       slug: 'soin-du-visage',
-      imageUrl: '/placeholder.svg'
+      imageUrl: '/images/category-soins-visage.png'
     },
     {
       id: '2',
       name: 'Corps & Bain',
       slug: 'corps-bain',
-      imageUrl: '/placeholder.svg'
+      imageUrl: '/images/category-corps-bain.png'
     },
     {
       id: '3',
       name: 'Cheveux',
       slug: 'cheveux',
-      imageUrl: '/placeholder.svg'
+      imageUrl: '/images/category-cheveux.png'
     },
     {
       id: '4',
       name: 'Maquillage',
       slug: 'maquillage',
-      imageUrl: '/placeholder.svg'
+      imageUrl: '/images/category-maquillage.png'
     },
     {
       id: '5',
       name: 'Parfums',
       slug: 'parfums',
-      imageUrl: '/placeholder.svg'
+      imageUrl: '/images/category-parfums.png'
     },
     {
       id: '6',
       name: 'Parapharmacie',
       slug: 'parapharmacie',
-      imageUrl: '/placeholder.svg'
+      imageUrl: '/images/category-parapharmacie.png'
     }
   ]
   return (

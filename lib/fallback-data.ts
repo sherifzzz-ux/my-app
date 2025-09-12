@@ -19,14 +19,22 @@ export type FallbackProductWithBrand = FallbackProductBasic & {
 }
 
 export const fallbackBrands: FallbackBrand[] = [
-  { id: 'b1', name: 'CeraVe', slug: 'cerave', imageUrl: '/placeholder-logo.svg' },
-  { id: 'b2', name: 'Avène', slug: 'avene', imageUrl: '/placeholder-logo.svg' },
-  { id: 'b3', name: 'NIVEA', slug: 'nivea', imageUrl: '/placeholder-logo.svg' },
-  { id: 'b4', name: 'La Roche-Posay', slug: 'la-roche-posay', imageUrl: '/placeholder-logo.svg' },
-  { id: 'b5', name: 'Laneige', slug: 'laneige', imageUrl: '/placeholder-logo.svg' },
-  { id: 'b6', name: 'The Ordinary', slug: 'the-ordinary', imageUrl: '/placeholder-logo.svg' },
-  { id: 'b7', name: 'Uriage', slug: 'uriage', imageUrl: '/placeholder-logo.svg' },
-  { id: 'b8', name: 'Klorane', slug: 'klorane', imageUrl: '/placeholder-logo.svg' },
+  { id: 'b1', name: 'CeraVe', slug: 'cerave', imageUrl: '/images/brands/cerave-logo.png' },
+  { id: 'b2', name: 'Avène', slug: 'avene', imageUrl: '/images/brands/avene-logo.png' },
+  { id: 'b3', name: 'NIVEA', slug: 'nivea', imageUrl: '/images/brands/nivea-logo.png' },
+  { id: 'b4', name: 'La Roche-Posay', slug: 'la-roche-posay', imageUrl: '/images/brands/la-roche-posay-logo.png' },
+  { id: 'b5', name: 'Laneige', slug: 'laneige', imageUrl: '/images/brands/laneige-logo.png' },
+  { id: 'b6', name: 'The Ordinary', slug: 'the-ordinary', imageUrl: '/images/brands/the-ordinary-logo.png' },
+  { id: 'b7', name: 'Uriage', slug: 'uriage', imageUrl: '/images/brands/uriage-logo.png' },
+  { id: 'b8', name: 'Klorane', slug: 'klorane', imageUrl: '/images/brands/klorane-logo.png' },
+  { id: 'b9', name: 'L\'Oréal', slug: 'loreal', imageUrl: '/images/brands/loreal-logo.png' },
+  { id: 'b10', name: 'Vichy', slug: 'vichy', imageUrl: '/images/brands/vichy-logo.png' },
+  { id: 'b11', name: 'Bioderma', slug: 'bioderma', imageUrl: '/images/brands/bioderma-logo.png' },
+  { id: 'b12', name: 'Eucerin', slug: 'eucerin', imageUrl: '/images/brands/eucerin-logo.png' },
+  { id: 'b13', name: 'Garnier', slug: 'garnier', imageUrl: '/images/brands/garnier-logo.png' },
+  { id: 'b14', name: 'Maybelline', slug: 'maybelline', imageUrl: '/images/brands/maybelline-logo.png' },
+  { id: 'b15', name: 'Revlon', slug: 'revlon', imageUrl: '/images/brands/revlon-logo.png' },
+  { id: 'b16', name: 'MAC', slug: 'mac', imageUrl: '/images/brands/mac-logo.png' },
 ]
 
 export const fallbackProducts: FallbackProductWithBrand[] = [

@@ -3,12 +3,9 @@
 import Image from 'next/image'
 import { Carousel, CarouselItem } from '@/components/ui/carousel'
 import { CarouselDots } from '@/components/ui/carousel'
+import { getAllCarouselImages } from '@/lib/carousel-config'
 
-const slides = [
-  { id: 1, src: '/images/banner1.jpg', alt: 'Promotion 1' },
-  { id: 2, src: '/images/banner2.jpg', alt: 'Promotion 2' },
-  { id: 3, src: '/images/banner3.jpg', alt: 'Promotion 3' },
-]
+const slides = getAllCarouselImages()
 
 export function HeroCarousel({ className }: { className?: string }) {
   return (
