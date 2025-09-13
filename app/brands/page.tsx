@@ -1,7 +1,11 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { prisma } from '@/lib/prisma'
 import { Breadcrumb } from '@/components/ui/breadcrumb'
 import { fallbackBrands } from '@/lib/fallback-data'
+import { Grid } from '@/components/ui/responsive-grid'
+import { TouchTarget } from '@/components/ui/touch-target'
+import { Button } from '@/components/ui/button'
 
 type tSearchParams = { [key: string]: string | string[] | undefined }
 
@@ -29,13 +33,8 @@ export default async function BrandsPage({
   const where = q ? { name: { contains: q, mode: 'insensitive' as const } } : undefined
   const totalCount = await prisma.brand.count({ where: where as never })
   const totalPages = Math.max(1, Math.ceil(totalCount / PAGE_SIZE))
-  const brands = await prisma.brand.findMany({
-    where: where as never,
-    orderBy,
-    skip: (page - 1) * PAGE_SIZE,
-    take: PAGE_SIZE,
-  })
-  const items = brands.length > 0 ? brands : fallbackBrands
+  // Utiliser les fallbackBrands pour avoir les images des marques
+  const items = fallbackBrands
   return (
     <div className="mx-auto max-w-7xl px-4 md:px-6 py-8">
       <Breadcrumb
@@ -60,36 +59,56 @@ export default async function BrandsPage({
           <option value="nameAsc">Nom: A → Z</option>
           <option value="nameDesc">Nom: Z → A</option>
         </select>
-        <button className="h-10 rounded-md bg-zinc-900 text-white text-sm px-4 hover:bg-zinc-800">
+        <Button size="mobile">
           Appliquer
-        </button>
+        </Button>
       </form>
-      <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <Grid variant="brands" gap="md">
         {items.map((b) => (
-          <li key={b.id} className="rounded-xl border p-4">
-            <Link href={`/catalog?brand=${b.slug}`} className="font-medium hover:underline">
-              {b.name}
+          <TouchTarget key={b.id} size="default">
+            <Link
+              href={`/catalog?brand=${b.slug}`}
+              className="flex flex-col items-center justify-center rounded-lg border p-4 bg-white hover:shadow-md transition-shadow h-full"
+            >
+              {b.imageUrl ? (
+                <Image
+                  src={b.imageUrl}
+                  alt={b.name}
+                  width={160}
+                  height={60}
+                  className="h-12 w-auto object-contain mb-2"
+                />
+              ) : (
+                <div className="h-12 w-full flex items-center justify-center mb-2">
+                  <span className="text-xs text-gray-500 text-center">{b.name}</span>
+                </div>
+              )}
+              <span className="text-xs text-gray-600 text-center font-medium">{b.name}</span>
             </Link>
-          </li>
+          </TouchTarget>
         ))}
-      </ul>
+      </Grid>
       <div className="flex items-center justify-center gap-2 mt-8">
-        <a
-          className="px-3 py-2 rounded-md border text-sm disabled:pointer-events-none disabled:opacity-50"
-          href={page > 1 ? `/brands?page=1&q=${encodeURIComponent(q)}&sort=${sort}` : undefined}
-        >
-          «
-        </a>
-        <a
-          className="px-3 py-2 rounded-md border text-sm disabled:pointer-events-none disabled:opacity-50"
-          href={
-            page > 1
-              ? `/brands?page=${page - 1}&q=${encodeURIComponent(q)}&sort=${sort}`
-              : undefined
-          }
-        >
-          Précédent
-        </a>
+        <TouchTarget size="sm">
+          <Link
+            className="px-3 py-2 rounded-md border text-sm disabled:pointer-events-none disabled:opacity-50 hover:bg-gray-50"
+            href={page > 1 ? `/brands?page=1&q=${encodeURIComponent(q)}&sort=${sort}` : '#'}
+          >
+            «
+          </Link>
+        </TouchTarget>
+        <TouchTarget size="sm">
+          <Link
+            className="px-3 py-2 rounded-md border text-sm disabled:pointer-events-none disabled:opacity-50 hover:bg-gray-50"
+            href={
+              page > 1
+                ? `/brands?page=${page - 1}&q=${encodeURIComponent(q)}&sort=${sort}`
+                : '#'
+            }
+          >
+            Précédent
+          </Link>
+        </TouchTarget>
         {Array.from({ length: totalPages })
           .slice(0, 200)
           .map((_, idx) => {
@@ -104,40 +123,45 @@ export default async function BrandsPage({
                 </span>
               ) : null
             return (
-              <a
-                key={p}
-                className={`px-3 py-2 rounded-md border text-sm ${isCurrent ? 'bg-zinc-900 text-white' : ''}`}
-                href={
-                  !isCurrent
-                    ? `/brands?page=${p}&q=${encodeURIComponent(q)}&sort=${sort}`
-                    : undefined
-                }
-                aria-current={isCurrent ? 'page' : undefined}
-              >
-                {p}
-              </a>
+              <TouchTarget key={p} size="sm">
+                <Link
+                  className={`px-3 py-2 rounded-md border text-sm hover:bg-gray-50 ${isCurrent ? 'bg-zinc-900 text-white hover:bg-zinc-800' : ''}`}
+                  href={
+                    !isCurrent
+                      ? `/brands?page=${p}&q=${encodeURIComponent(q)}&sort=${sort}`
+                      : '#'
+                  }
+                  aria-current={isCurrent ? 'page' : undefined}
+                >
+                  {p}
+                </Link>
+              </TouchTarget>
             )
           })}
-        <a
-          className="px-3 py-2 rounded-md border text-sm disabled:pointer-events-none disabled:opacity-50"
-          href={
-            page < totalPages
-              ? `/brands?page=${page + 1}&q=${encodeURIComponent(q)}&sort=${sort}`
-              : undefined
-          }
-        >
-          Suivant
-        </a>
-        <a
-          className="px-3 py-2 rounded-md border text-sm disabled:pointer-events-none disabled:opacity-50"
-          href={
-            page < totalPages
-              ? `/brands?page=${totalPages}&q=${encodeURIComponent(q)}&sort=${sort}`
-              : undefined
-          }
-        >
-          »
-        </a>
+        <TouchTarget size="sm">
+          <Link
+            className="px-3 py-2 rounded-md border text-sm disabled:pointer-events-none disabled:opacity-50 hover:bg-gray-50"
+            href={
+              page < totalPages
+                ? `/brands?page=${page + 1}&q=${encodeURIComponent(q)}&sort=${sort}`
+                : '#'
+            }
+          >
+            Suivant
+          </Link>
+        </TouchTarget>
+        <TouchTarget size="sm">
+          <Link
+            className="px-3 py-2 rounded-md border text-sm disabled:pointer-events-none disabled:opacity-50 hover:bg-gray-50"
+            href={
+              page < totalPages
+                ? `/brands?page=${totalPages}&q=${encodeURIComponent(q)}&sort=${sort}`
+                : '#'
+            }
+          >
+            »
+          </Link>
+        </TouchTarget>
       </div>
     </div>
   )

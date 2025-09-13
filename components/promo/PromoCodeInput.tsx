@@ -39,7 +39,7 @@ export function PromoCodeInput({ orderTotal, onDiscountChange }: PromoCodeInputP
         toast({
           title: "Erreur",
           description: result.message,
-          variant: "destructive",
+          variant: "error",
         });
       }
     } finally {

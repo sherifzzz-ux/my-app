@@ -1,6 +1,8 @@
 import { prisma } from '@/lib/prisma'
 import { getFeaturedFallback } from '@/lib/fallback-data'
 import { ProductCard } from '@/components/ui/product-card'
+import { Heading } from '@/components/ui/heading'
+import { Section } from '@/components/ui/section'
 
 export async function FeaturedProducts() {
   const products = await prisma.product.findMany({
@@ -18,13 +20,12 @@ export async function FeaturedProducts() {
   const items = products.length > 0 ? products : getFeaturedFallback()
 
   return (
-    <section className="py-12 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-8">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-            Découvrez notre sélection du moment
-          </h2>
-        </div>
+    <Section background="muted">
+      <div className="text-center mb-8">
+        <Heading level={2} className="mb-2">
+          Découvrez notre sélection du moment
+        </Heading>
+      </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {items.map((p) => (
@@ -42,8 +43,7 @@ export async function FeaturedProducts() {
             />
           ))}
         </div>
-      </div>
-    </section>
+      </Section>
   )
 }
 

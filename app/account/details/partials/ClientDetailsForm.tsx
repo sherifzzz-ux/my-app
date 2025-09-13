@@ -81,7 +81,7 @@ export default function ClientDetailsForm({
       toast({
         title: "Erreur",
         description: message,
-        variant: "destructive",
+        variant: "error",
       })
     } finally {
       setSaving(false)

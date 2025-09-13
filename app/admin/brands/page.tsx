@@ -54,7 +54,7 @@ export default function BrandsPage() {
 			toast({ 
 				title: 'Erreur', 
 				description: 'Impossible de charger les marques', 
-				variant: 'destructive' 
+                          variant: 'error'
 			});
 		} finally {
 			setLoading(false);
@@ -92,7 +92,7 @@ export default function BrandsPage() {
 			toast({ 
 				title: 'Erreur', 
 				description: 'Le nom de la marque est requis', 
-				variant: 'destructive' 
+                          variant: 'error'
 			});
 			return;
 		}
@@ -123,7 +123,7 @@ export default function BrandsPage() {
 			toast({ 
 				title: 'Erreur', 
 				description: 'Impossible de sauvegarder la marque', 
-				variant: 'destructive' 
+                          variant: 'error'
 			});
 		}
 	};
@@ -150,7 +150,7 @@ export default function BrandsPage() {
 			toast({ 
 				title: 'Erreur', 
 				description: 'Impossible de supprimer la marque', 
-				variant: 'destructive' 
+                          variant: 'error'
 			});
 		}
 	};

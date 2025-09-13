@@ -70,7 +70,7 @@ export function AdminOrders() {
 			toast({
 				title: "Erreur",
 				description: "Impossible de charger les commandes",
-				variant: "destructive",
+				variant: "error",
 			});
 		} finally {
 			setLoading(false);
@@ -95,7 +95,7 @@ export function AdminOrders() {
 			toast({ title: 'Succès', description: 'Commande annulée' })
 			fetchOrders()
 		} catch {
-			toast({ title: 'Erreur', description: "Impossible d'annuler la commande", variant: 'destructive' })
+                        toast({ title: 'Erreur', description: "Impossible d'annuler la commande", variant: 'error' })
 		}
 	}
 
@@ -142,7 +142,7 @@ export function AdminOrders() {
 			toast({ title: "Succès", description: "Statut de la commande mis à jour" });
 		} catch (error) {
 			console.error('Error updating order status:', error);
-			toast({ title: "Erreur", description: "Impossible de mettre à jour le statut", variant: "destructive" });
+			toast({ title: "Erreur", description: "Impossible de mettre à jour le statut", variant: "error" });
 		}
 	};
 

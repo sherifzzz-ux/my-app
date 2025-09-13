@@ -1,5 +1,8 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { Heading } from '@/components/ui/heading'
+import { Text } from '@/components/ui/text'
+import { Section } from '@/components/ui/section'
 
 export async function CategoryGrid() {
   // Données de fallback pour éviter l'erreur de base de données
@@ -42,42 +45,40 @@ export async function CategoryGrid() {
     }
   ]
   return (
-    <section className="py-12 bg-white">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-8">
-          <h2 className="text-2xl md:text-3xl font-serif text-pink-600 mb-2">Flawless Beauty</h2>
-          <p className="text-pink-600 font-medium">Parapharmacie en ligne & Cosmétiques</p>
-        </div>
+    <Section background="default" className="bg-white">
+      <div className="text-center mb-8">
+        <Heading level={2} variant="primary" className="mb-2">Flawless Beauty</Heading>
+        <Text variant="lead" className="text-primary">Parapharmacie en ligne & Cosmétiques</Text>
+      </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+        <div className="category-grid">
           {categories.map((category) => (
             <Link key={category.id} href={`/catalog?cat=${category.slug}`}>
-              <div className="group relative overflow-hidden rounded-lg aspect-square hover-scale cursor-pointer">
-                <div
-                  className={`absolute inset-0 bg-gradient-to-br from-pink-200 to-pink-300 opacity-80`}
-                />
-                <Image
-                  src={category.imageUrl || '/placeholder.svg'}
-                  alt={category.name}
-                  fill
-                  className="object-cover group-hover:scale-110 transition-transform duration-300"
-                />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mb-3 mx-auto">
-                      <div className="w-6 h-6 bg-white rounded-full" />
+                <div className="group relative overflow-hidden rounded-lg aspect-square hover-scale hover-glow cursor-pointer h-full">
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-br from-pink-200 to-pink-300 opacity-80`}
+                  />
+                  <Image
+                    src={category.imageUrl || '/placeholder.svg'}
+                    alt={category.name}
+                    fill
+                    className="object-cover group-hover:scale-110 transition-transform duration-300"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="text-center">
+                      <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mb-3 mx-auto">
+                        <div className="w-6 h-6 bg-white rounded-full" />
+                      </div>
+                      <Heading level={5} className="text-white drop-shadow-lg">
+                        {category.name}
+                      </Heading>
                     </div>
-                    <h3 className={`text-lg md:text-xl font-bold text-white drop-shadow-lg`}>
-                      {category.name}
-                    </h3>
                   </div>
                 </div>
-              </div>
             </Link>
           ))}
         </div>
-      </div>
-    </section>
+      </Section>
   )
 }
 

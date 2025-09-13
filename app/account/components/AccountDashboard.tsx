@@ -39,7 +39,7 @@ export default function AccountDashboard({ user }: { user: User }) {
       toast({
         title: "Erreur",
         description: "Impossible de charger les statistiques",
-        variant: "destructive",
+        variant: "error",
       })
     }
   }, [statsError, toast])
@@ -61,7 +61,7 @@ export default function AccountDashboard({ user }: { user: User }) {
       toast({
         title: "Erreur",
         description: "Impossible de se déconnecter",
-        variant: "destructive",
+        variant: "error",
       })
     }
   }
@@ -78,7 +78,7 @@ export default function AccountDashboard({ user }: { user: User }) {
       toast({
         title: "Erreur",
         description: "Impossible de retirer le produit des favoris",
-        variant: "destructive",
+        variant: "error",
       })
     }
   }

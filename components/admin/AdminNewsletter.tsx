@@ -48,7 +48,7 @@ export function AdminNewsletter() {
 			setSubscribers((data as unknown as NewsletterSubscriber[]) || []);
 		} catch (error) {
 			console.error('Error fetching subscribers:', error);
-			toast({ title: "Erreur", description: "Impossible de charger les abonnés", variant: "destructive" });
+			toast({ title: "Erreur", description: "Impossible de charger les abonnés", variant: "error" });
 		} finally {
 			setLoading(false);
 		}
@@ -78,7 +78,7 @@ export function AdminNewsletter() {
 			toast({ title: "Succès", description: `Abonné ${!currentStatus ? 'activé' : 'désactivé'} avec succès` });
 		} catch (error) {
 			console.error('Error toggling subscriber status:', error);
-			toast({ title: "Erreur", description: "Impossible de modifier le statut de l'abonné", variant: "destructive" });
+			toast({ title: "Erreur", description: "Impossible de modifier le statut de l'abonné", variant: "error" });
 		}
 	};
 

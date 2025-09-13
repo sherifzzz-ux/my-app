@@ -136,35 +136,35 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Navigation mobile avec icônes */}
+        {/* Navigation mobile avec icônes optimisée */}
         <div className="md:hidden border-t pt-6">
-          <div className="grid grid-cols-5 gap-4">
-            <Link href="/" className="flex flex-col items-center space-y-1 text-xs">
-              <Home className="w-5 h-5" />
+          <div className="grid grid-cols-5 gap-2">
+            <Link href="/" className="mobile-nav-item text-xs">
+              <Home className="mobile-nav-icon" />
               <span>Accueil</span>
             </Link>
             
-            <Link href="/search" className="flex flex-col items-center space-y-1 text-xs">
-              <Search className="w-5 h-5" />
+            <Link href="/search" className="mobile-nav-item text-xs">
+              <Search className="mobile-nav-icon" />
               <span>Recherche</span>
             </Link>
             
-            <Link href="/products" className="flex flex-col items-center space-y-1 text-xs">
-              <ShoppingBag className="w-5 h-5" />
+            <Link href="/products" className="mobile-nav-item text-xs">
+              <ShoppingBag className="mobile-nav-icon" />
               <span>Produits</span>
             </Link>
             
-            <Link href="/favorites" className="flex flex-col items-center space-y-1 text-xs">
-              <Heart className="w-5 h-5" />
+            <Link href="/favorites" className="mobile-nav-item text-xs">
+              <Heart className="mobile-nav-icon" />
               <span>Favoris</span>
             </Link>
             
             <Link 
               href={session?.user ? "/account" : "/auth"} 
               onClick={handleAccountClick}
-              className="flex flex-col items-center space-y-1 text-xs"
+              className="mobile-nav-item text-xs"
             >
-              <User className="w-5 h-5" />
+              <User className="mobile-nav-icon" />
               <span>Compte</span>
             </Link>
           </div>

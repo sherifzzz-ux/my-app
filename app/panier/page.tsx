@@ -132,7 +132,7 @@ export default function PanierPage() {
       toast({
         title: "Connexion requise",
         description: "Veuillez vous connecter pour passer commande.",
-        variant: "destructive"
+        variant: "error"
       });
       // Redirect to login
       window.location.href = '/auth';
@@ -147,7 +147,7 @@ export default function PanierPage() {
       toast({
         title: "Méthode de livraison requise",
         description: "Veuillez sélectionner une méthode de livraison.",
-        variant: "destructive"
+        variant: "error"
       });
       return;
     }
@@ -158,7 +158,7 @@ export default function PanierPage() {
         toast({
           title: "Adresse incomplète",
           description: "Veuillez remplir tous les champs obligatoires de l'adresse.",
-          variant: "destructive"
+          variant: "error"
         });
         return;
       }
@@ -205,7 +205,7 @@ export default function PanierPage() {
       toast({
         title: "Erreur de commande",
         description: error.message || "Une erreur s'est produite lors de la création de la commande.",
-        variant: "destructive"
+        variant: "error"
       });
       setStep('checkout');
     } finally {

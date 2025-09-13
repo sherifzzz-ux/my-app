@@ -54,7 +54,7 @@ export function CategoriesPage() {
 			toast({ 
 				title: 'Erreur', 
 				description: 'Impossible de charger les catégories', 
-				variant: 'destructive' 
+				variant: 'error' 
 			});
 		} finally {
 			setLoading(false);
@@ -92,7 +92,7 @@ export function CategoriesPage() {
 			toast({ 
 				title: 'Erreur', 
 				description: 'Le nom de la catégorie est requis', 
-				variant: 'destructive' 
+				variant: 'error' 
 			});
 			return;
 		}
@@ -123,7 +123,7 @@ export function CategoriesPage() {
 			toast({ 
 				title: 'Erreur', 
 				description: 'Impossible de sauvegarder la catégorie', 
-				variant: 'destructive' 
+				variant: 'error' 
 			});
 		}
 	};
@@ -150,7 +150,7 @@ export function CategoriesPage() {
 			toast({ 
 				title: 'Erreur', 
 				description: 'Impossible de supprimer la catégorie', 
-				variant: 'destructive' 
+				variant: 'error' 
 			});
 		}
 	};

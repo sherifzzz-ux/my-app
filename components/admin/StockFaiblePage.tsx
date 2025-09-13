@@ -52,7 +52,7 @@ export function StockFaiblePage() {
 			toast({ 
 				title: 'Erreur', 
 				description: 'Impossible de charger les produits', 
-				variant: 'destructive' 
+				variant: 'error' 
 			});
 		} finally {
 			setLoading(false);

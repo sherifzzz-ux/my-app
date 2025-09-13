@@ -74,7 +74,7 @@ export function AdminUsers() {
 			setUsers((data as UserProfile[]) || [])
 		} catch (error) {
 			console.error('Error fetching users:', error);
-			toast({ title: "Erreur", description: "Impossible de charger les utilisateurs", variant: "destructive" });
+			toast({ title: "Erreur", description: "Impossible de charger les utilisateurs", variant: "error" });
 		} finally {
 			setLoading(false);
 		}
@@ -118,7 +118,7 @@ export function AdminUsers() {
 			fetchUsers()
 		} catch (error) {
 			console.error('Error assigning role:', error);
-			toast({ title: "Erreur", description: "Impossible d'assigner le rôle", variant: "destructive" });
+			toast({ title: "Erreur", description: "Impossible d'assigner le rôle", variant: "error" });
 		}
 	};
 
@@ -212,7 +212,7 @@ export function AdminUsers() {
 			toast({ 
 				title: 'Erreur', 
 				description: "Impossible de suspendre l'utilisateur", 
-				variant: 'destructive' 
+				variant: 'error' 
 			})
 			throw error; // Re-throw pour la gestion dans executeAction
 		}
@@ -262,7 +262,7 @@ export function AdminUsers() {
 			toast({ 
 				title: 'Erreur', 
 				description: "Impossible de réactiver le compte", 
-				variant: 'destructive' 
+				variant: 'error' 
 			})
 			throw error; // Re-throw pour la gestion dans executeAction
 		}

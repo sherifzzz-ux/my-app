@@ -3,6 +3,10 @@ import Link from 'next/link'
 import { prisma } from '@/lib/prisma'
 import { Breadcrumb } from '@/components/ui/breadcrumb'
 import { ProductCard } from '@/components/ui/ProductCard'
+import { Button } from '@/components/ui/button'
+import { Heading } from '@/components/ui/heading'
+import { Text } from '@/components/ui/text'
+import { Section } from '@/components/ui/section'
 
 export const metadata: Metadata = {
   title: 'Tous nos produits - Flawless Beauty',
@@ -31,7 +35,7 @@ export default async function ProductsPage() {
   const totalBrands = await prisma.brand.count()
 
   return (
-    <div className="mx-auto max-w-7xl px-4 md:px-6 py-8">
+    <div className="container-responsive">
       <Breadcrumb
         items={[
           { label: 'Accueil', href: '/' }, 
@@ -41,81 +45,81 @@ export default async function ProductsPage() {
       />
 
       {/* En-tête de la page */}
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">
+      <Section spacing="lg" container={false} className="text-center">
+        <Heading level={1} className="mb-6">
           Nos Produits
-        </h1>
-        <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+        </Heading>
+        <Text variant="lead" className="max-w-3xl mx-auto">
           Découvrez notre sélection complète de produits cosmétiques et de parapharmacie. 
           Plus de {totalProducts} produits de qualité premium pour votre beauté et votre bien-être.
-        </p>
+        </Text>
         
         {/* Statistiques */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
           <div className="bg-pink-50 rounded-lg p-6">
             <div className="text-3xl font-bold text-pink-600">{totalProducts}</div>
-            <div className="text-sm text-gray-600">Produits disponibles</div>
+            <Text variant="caption">Produits disponibles</Text>
           </div>
           <div className="bg-blue-50 rounded-lg p-6">
             <div className="text-3xl font-bold text-blue-600">{totalCategories}</div>
-            <div className="text-sm text-gray-600">Catégories</div>
+            <Text variant="caption">Catégories</Text>
           </div>
           <div className="bg-green-50 rounded-lg p-6">
             <div className="text-3xl font-bold text-green-600">{totalBrands}</div>
-            <div className="text-sm text-gray-600">Marques</div>
+            <Text variant="caption">Marques</Text>
           </div>
         </div>
-      </div>
+      </Section>
 
       {/* Navigation rapide */}
-      <div className="mb-8">
-        <h2 className="text-2xl font-semibold mb-4">Navigation rapide</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <Section spacing="sm" container={false}>
+        <Heading level={2} className="mb-6">Navigation rapide</Heading>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <Link 
             href="/catalog" 
-            className="bg-white border border-gray-200 rounded-lg p-4 text-center hover:bg-gray-50 transition-colors"
+            className="bg-white border border-gray-200 rounded-lg p-4 text-center hover:bg-gray-50 transition-colors focus-ring-enhanced"
           >
-            <div className="text-lg font-medium">Catalogue complet</div>
-            <div className="text-sm text-gray-600">Avec filtres avancés</div>
+            <Heading level={5}>Catalogue complet</Heading>
+            <Text variant="caption">Avec filtres avancés</Text>
           </Link>
           <Link 
             href="/categories" 
-            className="bg-white border border-gray-200 rounded-lg p-4 text-center hover:bg-gray-50 transition-colors"
+            className="bg-white border border-gray-200 rounded-lg p-4 text-center hover:bg-gray-50 transition-colors focus-ring-enhanced"
           >
-            <div className="text-lg font-medium">Par catégorie</div>
-            <div className="text-sm text-gray-600">Soins, maquillage, etc.</div>
+            <Heading level={5}>Par catégorie</Heading>
+            <Text variant="caption">Soins, maquillage, etc.</Text>
           </Link>
           <Link 
             href="/brands" 
-            className="bg-white border border-gray-200 rounded-lg p-4 text-center hover:bg-gray-50 transition-colors"
+            className="bg-white border border-gray-200 rounded-lg p-4 text-center hover:bg-gray-50 transition-colors focus-ring-enhanced"
           >
-            <div className="text-lg font-medium">Par marque</div>
-            <div className="text-sm text-gray-600">Nos marques partenaires</div>
+            <Heading level={5}>Par marque</Heading>
+            <Text variant="caption">Nos marques partenaires</Text>
           </Link>
           <Link 
             href="/promotions" 
-            className="bg-white border border-gray-200 rounded-lg p-4 text-center hover:bg-gray-50 transition-colors"
+            className="bg-white border border-gray-200 rounded-lg p-4 text-center hover:bg-gray-50 transition-colors focus-ring-enhanced"
           >
-            <div className="text-lg font-medium">Promotions</div>
-            <div className="text-sm text-gray-600">Offres spéciales</div>
+            <Heading level={5}>Promotions</Heading>
+            <Text variant="caption">Offres spéciales</Text>
           </Link>
         </div>
-      </div>
+      </Section>
 
       {/* Produits récents */}
-      <div className="mb-8">
+      <Section spacing="sm" container={false}>
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-semibold">Produits récents</h2>
+          <Heading level={2}>Produits récents</Heading>
           <Link 
             href="/catalog" 
-            className="text-pink-600 hover:text-pink-700 font-medium"
+            className="link-enhanced"
           >
             Voir tout →
           </Link>
         </div>
         
         {products.length > 0 ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="product-grid">
             {products.map((product) => (
               <ProductCard 
                 key={product.id} 
@@ -128,24 +132,23 @@ export default async function ProductsPage() {
           </div>
         ) : (
           <div className="text-center py-12">
-            <div className="text-gray-500 text-lg">Aucun produit disponible pour le moment.</div>
+            <Text variant="lead" className="text-gray-500">Aucun produit disponible pour le moment.</Text>
           </div>
         )}
-      </div>
+      </Section>
 
       {/* Call to action */}
-      <div className="bg-gradient-to-r from-pink-50 to-blue-50 rounded-lg p-8 text-center">
-        <h3 className="text-2xl font-bold mb-4">Vous ne trouvez pas ce que vous cherchez ?</h3>
-        <p className="text-gray-600 mb-6">
+      <Section background="primary" container={false} className="rounded-lg text-center">
+        <Heading level={3} className="mb-4">Vous ne trouvez pas ce que vous cherchez ?</Heading>
+        <Text variant="body" className="mb-6">
           Utilisez notre catalogue avancé avec filtres pour trouver exactement le produit qu&apos;il vous faut.
-        </p>
-        <Link 
-          href="/catalog" 
-          className="inline-flex items-center px-6 py-3 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition-colors"
-        >
-          Explorer le catalogue complet
-        </Link>
-      </div>
+        </Text>
+        <Button asChild size="lg">
+          <Link href="/catalog">
+            Explorer le catalogue complet
+          </Link>
+        </Button>
+      </Section>
     </div>
   )
 }

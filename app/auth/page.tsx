@@ -69,7 +69,7 @@ export default function AuthPage() {
       toast({
         title: "Erreur de connexion",
         description: "Email ou mot de passe incorrect.",
-        variant: "destructive",
+        variant: "error",
       })
     } finally {
       setIsLoading(false)
@@ -83,7 +83,7 @@ export default function AuthPage() {
       toast({
         title: "Erreur de validation",
         description: "Les mots de passe ne correspondent pas.",
-        variant: "destructive",
+        variant: "error",
       })
       return
     }
@@ -92,7 +92,7 @@ export default function AuthPage() {
       toast({
         title: "Conditions requises",
         description: "Vous devez accepter les conditions d'utilisation.",
-        variant: "destructive",
+        variant: "error",
       })
       return
     }
@@ -124,7 +124,7 @@ export default function AuthPage() {
       toast({
         title: "Erreur d'inscription",
         description: "Impossible de créer votre compte. Veuillez réessayer.",
-        variant: "destructive",
+        variant: "error",
       })
     } finally {
       setIsLoading(false)

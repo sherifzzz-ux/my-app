@@ -127,7 +127,7 @@ export function ProductForm({ product, taxonomy, onSave, onCancel }: ProductForm
 			toast({ 
 				title: 'Erreur de validation', 
 				description: 'Veuillez corriger les erreurs dans le formulaire', 
-				variant: 'destructive' 
+				variant: 'error' 
 			});
 			return;
 		}
@@ -156,7 +156,7 @@ export function ProductForm({ product, taxonomy, onSave, onCancel }: ProductForm
 			toast({ 
 				title: 'Erreur', 
 				description: 'Impossible de sauvegarder le produit', 
-				variant: 'destructive' 
+				variant: 'error' 
 			});
 		} finally {
 			setLoading(false);

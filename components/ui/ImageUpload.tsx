@@ -134,7 +134,7 @@ export function ImageUpload({
     toast({
       title: "Erreur d'upload",
       description: error.message || "Une erreur est survenue lors de l'upload",
-      variant: "destructive",
+      variant: "error",
     });
   };
 
@@ -161,7 +161,7 @@ export function ImageUpload({
       toast({
         title: "Image invalide",
         description: validationResult.errors.join(', '),
-        variant: "destructive",
+        variant: "error",
       });
     }
   };

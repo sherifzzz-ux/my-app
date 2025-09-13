@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { Breadcrumb } from '@/components/ui/breadcrumb'
+import { Button } from '@/components/ui/button'
 import { Heart, ShoppingBag, Star } from 'lucide-react'
 
 export const metadata: Metadata = {
@@ -46,19 +47,17 @@ export default function FavoritesPage() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link 
-              href="/products" 
-              className="inline-flex items-center px-6 py-3 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition-colors"
-            >
-              <ShoppingBag className="h-5 w-5 mr-2" />
-              Découvrir nos produits
-            </Link>
-            <Link 
-              href="/catalog" 
-              className="inline-flex items-center px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
-            >
-              Parcourir le catalogue
-            </Link>
+            <Button asChild size="lg">
+              <Link href="/products">
+                <ShoppingBag className="h-5 w-5 mr-2" />
+                Découvrir nos produits
+              </Link>
+            </Button>
+            <Button asChild variant="outline" size="lg">
+              <Link href="/catalog">
+                Parcourir le catalogue
+              </Link>
+            </Button>
           </div>
         </div>
       </div>

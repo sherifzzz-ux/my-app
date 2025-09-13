@@ -23,7 +23,7 @@ export default async function Header() {
         <div className="flex h-16 items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <Sheet>
-              <SheetTrigger className="md:hidden p-2 -ml-2">
+              <SheetTrigger className="md:hidden p-2 -ml-2 touch-target">
                 <Menu className="h-6 w-6" />
               </SheetTrigger>
               <SheetContent side="left">
@@ -98,7 +98,7 @@ export default async function Header() {
                 Catalogue
               </Link>
             </div>
-            <Link href="/account" className="p-2" aria-label="Compte">
+            <Link href="/account" className="p-2 touch-target" aria-label="Compte">
               <User className="h-5 w-5" />
             </Link>
             <CartDrawer />

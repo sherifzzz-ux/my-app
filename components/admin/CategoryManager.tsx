@@ -73,7 +73,7 @@ export function CategoryManager({ onCategoryChange }: CategoryManagerProps) {
 			toast({ 
 				title: 'Erreur', 
 				description: 'Impossible de charger les catégories', 
-				variant: 'destructive' 
+				variant: 'error' 
 			});
 		} finally {
 			setLoading(false);
@@ -107,7 +107,7 @@ export function CategoryManager({ onCategoryChange }: CategoryManagerProps) {
 			toast({ 
 				title: 'Erreur', 
 				description: 'Impossible de sauvegarder la catégorie', 
-				variant: 'destructive' 
+				variant: 'error' 
 			});
 		}
 	};
@@ -139,7 +139,7 @@ export function CategoryManager({ onCategoryChange }: CategoryManagerProps) {
 			toast({ 
 				title: 'Erreur', 
 				description: 'Impossible de sauvegarder la sous-catégorie', 
-				variant: 'destructive' 
+				variant: 'error' 
 			});
 		}
 	};
@@ -167,7 +167,7 @@ export function CategoryManager({ onCategoryChange }: CategoryManagerProps) {
 			toast({ 
 				title: 'Erreur', 
 				description: 'Impossible de supprimer la catégorie', 
-				variant: 'destructive' 
+				variant: 'error' 
 			});
 		}
 	};
@@ -195,7 +195,7 @@ export function CategoryManager({ onCategoryChange }: CategoryManagerProps) {
 			toast({ 
 				title: 'Erreur', 
 				description: 'Impossible de supprimer la sous-catégorie', 
-				variant: 'destructive' 
+				variant: 'error' 
 			});
 		}
 	};

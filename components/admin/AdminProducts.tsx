@@ -52,7 +52,7 @@ export function AdminProducts() {
 			toast({ 
 				title: 'Erreur', 
 				description: 'Impossible de charger la taxonomie', 
-				variant: 'destructive' 
+				variant: 'error' 
 			});
 		}
 	};
@@ -70,7 +70,7 @@ export function AdminProducts() {
 			toast({ 
 				title: 'Erreur', 
 				description: 'Impossible de charger les produits', 
-				variant: 'destructive' 
+				variant: 'error' 
 			});
 		} finally {
 			setLoading(false);
@@ -121,7 +121,7 @@ export function AdminProducts() {
 			toast({ 
 				title: 'Erreur', 
 				description: error instanceof Error ? error.message : 'Impossible de sauvegarder le produit', 
-				variant: 'destructive' 
+				variant: 'error' 
 			});
 			throw error;
 		}
@@ -149,7 +149,7 @@ export function AdminProducts() {
 			toast({ 
 				title: 'Erreur', 
 				description: 'Impossible de supprimer le produit', 
-				variant: 'destructive' 
+				variant: 'error' 
 			});
 		}
 	};
@@ -194,7 +194,7 @@ export function AdminProducts() {
 			toast({ 
 				title: 'Erreur', 
 				description: 'Erreur lors de l\'export CSV', 
-				variant: 'destructive' 
+				variant: 'error' 
 			});
 		}
 	};
@@ -221,7 +221,7 @@ export function AdminProducts() {
 			toast({ 
 				title: 'Erreur', 
 				description: 'Erreur lors de l\'import CSV', 
-				variant: 'destructive' 
+				variant: 'error' 
 			});
 		}
 	};

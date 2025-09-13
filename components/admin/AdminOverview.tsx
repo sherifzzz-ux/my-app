@@ -95,7 +95,7 @@ export function AdminOverview({ onPageChange }: AdminOverviewProps) {
 				toast({ 
 					title: 'Erreur', 
 					description: "Impossible de charger l'aperçu", 
-					variant: 'destructive' 
+        variant: 'error'
 				});
 			})
 			.finally(() => setLoading(false));

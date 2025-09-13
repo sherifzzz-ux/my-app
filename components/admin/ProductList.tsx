@@ -145,7 +145,7 @@ export function ProductList({
 				toast({ 
 					title: 'Erreur', 
 					description: 'Veuillez sélectionner un fichier CSV valide', 
-					variant: 'destructive' 
+					variant: 'error' 
 				});
 				return;
 			}

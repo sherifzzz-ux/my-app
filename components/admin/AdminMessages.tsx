@@ -49,7 +49,7 @@ export function AdminMessages() {
 			setMessages((data as ContactMessage[]) || []);
 		} catch (error) {
 			console.error('Error fetching messages:', error);
-			toast({ title: "Erreur", description: "Impossible de charger les messages", variant: "destructive" });
+			toast({ title: "Erreur", description: "Impossible de charger les messages", variant: "error" });
 		} finally {
 			setLoading(false);
 		}
@@ -79,7 +79,7 @@ export function AdminMessages() {
 			toast({ title: "Succès", description: "Message marqué comme lu" });
 		} catch (error) {
 			console.error('Error marking message as read:', error);
-			toast({ title: "Erreur", description: "Impossible de marquer le message comme lu", variant: "destructive" });
+			toast({ title: "Erreur", description: "Impossible de marquer le message comme lu", variant: "error" });
 		}
 	};
 
@@ -90,7 +90,7 @@ export function AdminMessages() {
 			setMessages(messages.map(msg => msg.id === messageId ? { ...msg, is_read: false } : msg));
 			toast({ title: 'Succès', description: 'Message marqué comme non lu' });
 		} catch (e) {
-			toast({ title: 'Erreur', description: 'Impossible de marquer comme non lu', variant: 'destructive' });
+                  toast({ title: 'Erreur', description: 'Impossible de marquer comme non lu', variant: 'error' });
 		}
 	}
 
@@ -101,7 +101,7 @@ export function AdminMessages() {
 			setMessages(messages.filter(msg => msg.id !== messageId));
 			toast({ title: 'Archivé', description: 'Message archivé' });
 		} catch (e) {
-			toast({ title: 'Erreur', description: "Impossible d'archiver", variant: 'destructive' });
+                        toast({ title: 'Erreur', description: "Impossible d'archiver", variant: 'error' });
 		}
 	}
 
@@ -111,7 +111,7 @@ export function AdminMessages() {
 			if (!res.ok) throw new Error('reply');
 			toast({ title: 'Envoyé', description: 'Réponse envoyée par email' });
 		} catch {
-			toast({ title: 'Erreur', description: "Échec de l'envoi de l'email", variant: 'destructive' });
+                    toast({ title: 'Erreur', description: "Échec de l'envoi de l'email", variant: 'error' });
 		}
 	}
 
