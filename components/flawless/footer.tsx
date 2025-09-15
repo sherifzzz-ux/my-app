@@ -1,9 +1,13 @@
 import Link from 'next/link'
 
 export function FlawlessFooter() {
+  // Debug: Log pour vérifier que le composant se charge
+  if (typeof window !== 'undefined') {
+    console.log('FlawlessFooter: Component loaded on client side')
+  }
   return (
-    <footer className="bg-gray-900 text-white py-12">
-      <div className="container mx-auto px-4">
+    <footer className="bg-gray-900 text-white py-12 relative z-10 block w-full">
+      <div className="container mx-auto px-4 max-w-7xl">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-1">
             <div className="text-2xl font-serif text-pink-400 italic mb-4">Flawless Beauty</div>
