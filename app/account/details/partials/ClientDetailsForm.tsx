@@ -10,16 +10,11 @@ import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
 import { 
   User, 
-  Mail, 
-  Phone, 
-  MapPin, 
-  Calendar, 
   Camera, 
   Save, 
   Edit3,
   Shield,
   Bell,
-  Globe,
   Lock
 } from 'lucide-react'
 import { useToast } from '@/hooks/use-toast'
@@ -31,7 +26,6 @@ export default function ClientDetailsForm({
   initialName: string
   email: string
 }) {
-  const [name, setName] = useState(initialName)
   const [firstName, setFirstName] = useState(initialName.split(' ')[0] || '')
   const [lastName, setLastName] = useState(initialName.split(' ').slice(1).join(' ') || '')
   const [phone, setPhone] = useState('')
@@ -355,7 +349,7 @@ export default function ClientDetailsForm({
             <div className="flex items-center justify-between">
               <div>
                 <p className="font-medium">Dernière connexion</p>
-                <p className="text-sm text-muted-foreground">Aujourd'hui à 14:30</p>
+                <p className="text-sm text-muted-foreground">Aujourd&apos;hui à 14:30</p>
               </div>
             </div>
             <Button variant="outline" className="w-full">

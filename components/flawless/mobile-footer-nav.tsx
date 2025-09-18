@@ -5,11 +5,11 @@ import Link from 'next/link'
 
 export default function MobileFooterNav() {
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-background border-t border-border z-[9999] shadow-lg md:hidden">
-      <div className="grid grid-cols-4">
+    <div className="fixed bottom-0 left-0 right-0 bg-background border-t border-border z-[9999] shadow-lg">
+      <div className="grid grid-cols-4 max-w-md mx-auto md:max-w-2xl">
         <Link
           href="/"
-          className="mobile-nav-item text-gray-600 hover:text-primary transition-colors"
+          className="mobile-nav-item text-gray-600 hover:text-primary transition-colors hover-lift"
         >
           <Home className="mobile-nav-icon" />
           <span className="text-xs font-medium">ACCUEIL</span>
@@ -17,7 +17,7 @@ export default function MobileFooterNav() {
 
         <Link
           href="/marques"
-          className="mobile-nav-item text-gray-600 hover:text-primary transition-colors"
+          className="mobile-nav-item text-gray-600 hover:text-primary transition-colors hover-lift"
         >
           <Grid3X3 className="mobile-nav-icon" />
           <span className="text-xs font-medium">MARQUES</span>
@@ -25,7 +25,7 @@ export default function MobileFooterNav() {
 
         <Link
           href="/panier"
-          className="mobile-nav-item text-gray-600 hover:text-primary transition-colors"
+          className="mobile-nav-item text-gray-600 hover:text-primary transition-colors hover-lift"
         >
           <ShoppingCart className="mobile-nav-icon" />
           <span className="text-xs font-medium">PANIER</span>
@@ -33,7 +33,7 @@ export default function MobileFooterNav() {
 
         <Link
           href="/compte"
-          className="mobile-nav-item text-gray-600 hover:text-primary transition-colors"
+          className="mobile-nav-item text-gray-600 hover:text-primary transition-colors hover-lift"
         >
           <User className="mobile-nav-icon" />
           <span className="text-xs font-medium">COMPTE</span>

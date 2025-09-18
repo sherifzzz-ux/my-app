@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { History, RotateCcw, Trash2, Download, Eye, Calendar } from "lucide-react";
+import { useState, useEffect, useCallback } from "react";
+import Image from "next/image";
+import { History, RotateCcw, Trash2, Eye, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
@@ -43,13 +44,7 @@ export function ImageVersionHistory({
   const { toast } = useToast();
 
   // Simuler le chargement des versions (à remplacer par un appel API réel)
-  useEffect(() => {
-    if (isOpen) {
-      loadVersions();
-    }
-  }, [isOpen, brandId]);
-
-  const loadVersions = async () => {
+  const loadVersions = useCallback(async () => {
     setIsLoading(true);
     
     // Simulation d'un délai de chargement
@@ -94,7 +89,13 @@ export function ImageVersionHistory({
     
     setVersions(mockVersions);
     setIsLoading(false);
-  };
+  }, [brandId]);
+
+  useEffect(() => {
+    if (isOpen) {
+      loadVersions();
+    }
+  }, [isOpen, loadVersions]);
 
   const handleRestoreVersion = (version: ImageVersion) => {
     onRestoreVersion(version);
@@ -145,7 +146,7 @@ export function ImageVersionHistory({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <History className="h-5 w-5" />
-            Historique des versions d'image
+            Historique des versions d&apos;image
           </DialogTitle>
         </DialogHeader>
         
@@ -154,7 +155,7 @@ export function ImageVersionHistory({
           <div className="p-4 bg-muted rounded-lg">
             <h3 className="font-medium mb-2">Marque ID: {brandId}</h3>
             <p className="text-sm text-muted-foreground">
-              Gestion de l'historique des logos et images de cette marque
+              Gestion de l&apos;historique des logos et images de cette marque
             </p>
           </div>
 
@@ -177,9 +178,11 @@ export function ImageVersionHistory({
                     <div className="flex items-start gap-4">
                       {/* Thumbnail */}
                       <div className="flex-shrink-0">
-                        <img
+                        <Image
                           src={version.thumbnail}
                           alt={`Version ${version.id}`}
+                          width={64}
+                          height={64}
                           className="w-16 h-16 object-cover rounded-lg border"
                         />
                       </div>
@@ -288,9 +291,11 @@ export function ImageVersionHistory({
             
             <div className="space-y-4">
               <div className="text-center">
-                <img
+                <Image
                   src={selectedVersion.url}
                   alt={`Version ${selectedVersion.id}`}
+                  width={800}
+                  height={600}
                   className="max-w-full max-h-96 object-contain mx-auto rounded-lg border"
                 />
               </div>

@@ -6,11 +6,28 @@ import { LazySection, LazyProductGrid, LazyContentSection } from '@/components/u
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import { ProductGridSkeleton, CategoryGridSkeleton, FormSkeleton } from '@/components/ui/skeleton-specialized'
+import { ImageOptimizationDemo } from '@/components/ui/ImageOptimizationDemo'
+import { MicroInteractionsDemo } from '@/components/ui/MicroInteractionsDemo'
+import { FormValidationDemo } from '@/components/ui/FormValidationDemo'
+import { PerformanceOptimizationDemo } from '@/components/ui/PerformanceOptimizationDemo'
+import { FooterNavigationDemo } from '@/components/ui/FooterNavigationDemo'
+import { NavigationDemo } from '@/components/navigation/NavigationDemo'
 import { useGPUOptimization } from '@/components/ui/gpu-animation'
+import { useState, useEffect } from 'react'
 
 export default function DemoPhase5() {
   // Initialiser l'optimisation GPU
   useGPUOptimization()
+  
+  // État pour démontrer les skeletons
+  const [isLoading, setIsLoading] = useState(true)
+  
+  // Simuler un chargement
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 3000)
+    return () => clearTimeout(timer)
+  }, [])
 
   return (
     <div className="container mx-auto px-4 py-8 space-y-12">
@@ -19,51 +36,74 @@ export default function DemoPhase5() {
         <p className="text-lg text-muted-foreground">
           Démonstration des optimisations de performance et d'images
         </p>
+        <Button 
+          onClick={() => setIsLoading(!isLoading)}
+          variant="outline"
+        >
+          {isLoading ? 'Arrêter le chargement' : 'Démarrer le chargement'}
+        </Button>
       </div>
+
+      {/* Section 0: Démonstration des Skeletons */}
+      <Card>
+        <CardHeader>
+          <CardTitle>💀 États de Chargement - Skeletons</CardTitle>
+          <CardDescription>
+            Démonstration des composants Skeleton pour améliorer l'UX pendant le chargement
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-8">
+          {isLoading ? (
+            <>
+              <div>
+                <h3 className="text-lg font-semibold mb-4">Grille de Produits</h3>
+                <ProductGridSkeleton count={6} />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold mb-4">Grille de Catégories</h3>
+                <CategoryGridSkeleton count={4} />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold mb-4">Formulaire</h3>
+                <FormSkeleton fields={3} />
+              </div>
+            </>
+          ) : (
+            <div className="text-center py-8">
+              <p className="text-muted-foreground">Contenu chargé ! 🎉</p>
+            </div>
+          )}
+        </CardContent>
+      </Card>
 
       {/* Section 1: Images Optimisées */}
       <LazyContentSection>
-        <Card>
-          <CardHeader>
-            <CardTitle>🖼️ Images Optimisées avec Next.js</CardTitle>
-            <CardDescription>
-              Remplacement des &lt;img&gt; par des composants &lt;Image&gt; optimisés
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-4">
-                <h3 className="text-lg font-semibold">Image de Produit</h3>
-                <ProductImage
-                  src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
-                  alt="Produit de beauté K-Beauty"
-                  priority={false}
-                />
-              </div>
-              
-              <div className="space-y-4">
-                <h3 className="text-lg font-semibold">Image Hero</h3>
-                <HeroImage
-                  src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                  alt="Bannière hero"
-                  priority={true}
-                />
-              </div>
-            </div>
+        <ImageOptimizationDemo />
+      </LazyContentSection>
 
-            <div className="flex items-center space-x-4">
-              <AvatarImage
-                src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80"
-                alt="Avatar utilisateur"
-                size={60}
-              />
-              <div>
-                <h4 className="font-medium">Utilisateur Test</h4>
-                <p className="text-sm text-muted-foreground">Avatar optimisé</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+      {/* Section 1.5: Micro-interactions */}
+      <LazyContentSection>
+        <MicroInteractionsDemo />
+      </LazyContentSection>
+
+      {/* Section 1.6: Formulaires avec validation */}
+      <LazyContentSection>
+        <FormValidationDemo />
+      </LazyContentSection>
+
+      {/* Section 1.7: Optimisations de performance */}
+      <LazyContentSection>
+        <PerformanceOptimizationDemo />
+      </LazyContentSection>
+
+      {/* Section 1.8: Correction du footer mobile */}
+      <LazyContentSection>
+        <FooterNavigationDemo />
+      </LazyContentSection>
+
+      {/* Section 1.9: Navigation complète */}
+      <LazyContentSection>
+        <NavigationDemo />
       </LazyContentSection>
 
       {/* Section 2: Animations GPU-Accelerated */}
@@ -121,7 +161,7 @@ export default function DemoPhase5() {
         </CardHeader>
         <CardContent>
           <LazyProductGrid>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div className="product-grid">
               {Array.from({ length: 12 }).map((_, i) => (
                 <ProductCardAnimation key={i}>
                   <Card className="overflow-hidden">

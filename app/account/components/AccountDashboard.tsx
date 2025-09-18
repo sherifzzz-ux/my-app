@@ -1,13 +1,11 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { User, ShoppingBag, Heart, Settings, LogOut, Package, CreditCard, MapPin, Bell, Shield, Star, TrendingUp } from 'lucide-react'
+import { User, Heart, Settings, LogOut, Package, CreditCard, MapPin, Bell, Shield, Star } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Badge } from '@/components/ui/badge'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Separator } from '@/components/ui/separator'
 import { useToast } from '@/hooks/use-toast'
 import { 
   useUserStats, 
@@ -28,21 +26,11 @@ export default function AccountDashboard({ user }: { user: User }) {
   const { toast } = useToast()
   
   // Hooks React Query optimisés
-  const { data: stats, isLoading: statsLoading, error: statsError } = useUserStats()
+  const { data: stats, isLoading: statsLoading } = useUserStats()
   const { data: ordersData, isLoading: ordersLoading } = useUserOrders('all', 3, 0)
   const { data: favoritesData, isLoading: favoritesLoading } = useUserFavorites(3, 0)
   const removeFromFavorites = useRemoveFromFavorites()
 
-  // Gestion des erreurs
-  useEffect(() => {
-    if (statsError) {
-      toast({
-        title: "Erreur",
-        description: "Impossible de charger les statistiques",
-        variant: "error",
-      })
-    }
-  }, [statsError, toast])
 
   const handleSignOut = async () => {
     try {

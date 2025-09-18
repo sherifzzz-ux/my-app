@@ -12,23 +12,38 @@ interface ProductCardProps {
   product: {
     id: string
     name: string
-    category: { name: string }
-    priceCents: number
+    category?: { name: string } | string
+    priceCents?: number
+    price?: number
     oldPriceCents?: number | null
+    originalPrice?: number
     imageUrl?: string | null
-    stock: number
+    image?: string
+    stock?: number
+    inStock?: boolean
     isNew?: boolean
     isPromo?: boolean
+    isOnSale?: boolean
     discountPercentage?: number
+    brand?: string
+    rating?: number
+    reviews?: number
+    tags?: string[]
+    description?: string
   }
   className?: string
   showWishlist?: boolean
   showRating?: boolean
   showDescription?: boolean
+  viewMode?: 'grid' | 'list'
 }
 
 function formatCFA(cents: number) {
   return `${(cents / 100).toLocaleString()} FCFA`
+}
+
+function formatPrice(price: number) {
+  return `${price.toLocaleString()} FCFA`
 }
 
 export function ProductCard({ 
@@ -36,7 +51,8 @@ export function ProductCard({
   className = "", 
   showWishlist = true, 
   showRating = false,
-  showDescription = false 
+  showDescription = false,
+  viewMode = 'grid'
 }: ProductCardProps) {
   const [isWishlisted, setIsWishlisted] = useState(false);
 
@@ -46,9 +62,86 @@ export function ProductCard({
     setIsWishlisted(!isWishlisted);
   };
 
-  const price = product.priceCents;
-  const oldPrice = product.oldPriceCents;
+  // Adapter les données selon le format
+  const price = product.priceCents ? product.priceCents / 100 : (product.price || 0);
+  const oldPrice = product.oldPriceCents ? product.oldPriceCents / 100 : (product.originalPrice || 0);
+  const imageUrl = product.imageUrl || product.image || '/placeholder-product.jpg';
+  const categoryName = typeof product.category === 'string' ? product.category : product.category?.name || '';
+  const inStock = product.stock !== undefined ? product.stock > 0 : (product.inStock || false);
+  const isOnSale = product.isPromo || product.isOnSale || false;
   const discountPercentage = oldPrice ? Math.round(((oldPrice - price) / oldPrice) * 100) : 0;
+
+  if (viewMode === 'list') {
+    return (
+      <Card className={`group hover:shadow-xl transition-all duration-300 overflow-hidden h-full ${className}`}>
+        <CardContent className="p-4">
+          <div className="flex gap-4">
+            {/* Image */}
+            <Link href={`/product/${product.id}`} className="block flex-shrink-0">
+              <div className="relative w-24 h-24">
+                <Image
+                  src={imageUrl}
+                  alt={product.name}
+                  fill
+                  className="object-cover rounded-md group-hover:scale-110 transition-transform duration-500 cursor-pointer"
+                />
+              </div>
+            </Link>
+            
+            {/* Content */}
+            <div className="flex-1 min-w-0">
+              <div className="flex justify-between items-start mb-2">
+                <div>
+                  <h3 className="font-semibold text-lg line-clamp-2 group-hover:text-primary transition-colors">
+                    <Link href={`/product/${product.id}`}>
+                      {product.name}
+                    </Link>
+                  </h3>
+                  {product.brand && (
+                    <p className="text-sm text-muted-foreground">{product.brand}</p>
+                  )}
+                </div>
+                {showWishlist && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleWishlistToggle}
+                    className={`p-2 ${isWishlisted ? 'text-red-500' : 'text-gray-400 hover:text-red-500'}`}
+                  >
+                    <Heart className={`h-4 w-4 ${isWishlisted ? 'fill-current' : ''}`} />
+                  </Button>
+                )}
+              </div>
+              
+              {showDescription && product.description && (
+                <p className="text-sm text-muted-foreground mb-2 line-clamp-2">
+                  {product.description}
+                </p>
+              )}
+              
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="text-lg font-bold text-primary">
+                    {formatPrice(price)}
+                  </span>
+                  {oldPrice > price && (
+                    <span className="text-sm text-muted-foreground line-through">
+                      {formatPrice(oldPrice)}
+                    </span>
+                  )}
+                </div>
+                
+                <Button size="sm" disabled={!inStock}>
+                  <ShoppingCart className="h-4 w-4 mr-2" />
+                  {inStock ? 'Ajouter' : 'Rupture'}
+                </Button>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    )
+  }
 
   return (
     <Card className={`group hover:shadow-xl transition-all duration-300 overflow-hidden h-full ${className}`}>
@@ -57,18 +150,12 @@ export function ProductCard({
           {/* Product Image - Clickable to view product */}
           <Link href={`/product/${product.id}`} className="block">
             <div className="relative w-full h-64">
-              {product.imageUrl ? (
-                <Image
-                  src={product.imageUrl}
-                  alt={product.name}
-                  fill
-                  className="object-cover group-hover:scale-110 transition-transform duration-500 cursor-pointer"
-                />
-              ) : (
-                <div className="w-full h-64 bg-gray-200 flex items-center justify-center">
-                  <span className="text-gray-400">Image non disponible</span>
-                </div>
-              )}
+              <Image
+                src={imageUrl}
+                alt={product.name}
+                fill
+                className="object-cover group-hover:scale-110 transition-transform duration-500 cursor-pointer"
+              />
             </div>
           </Link>
           
@@ -79,15 +166,17 @@ export function ProductCard({
                 Nouveau
               </Badge>
             )}
-            {product.isPromo && discountPercentage > 0 && (
+            {isOnSale && discountPercentage > 0 && (
               <Badge className="bg-gradient-to-r from-red-500 to-pink-500 text-white shadow-md">
                 -{discountPercentage}%
               </Badge>
             )}
-            <Badge variant="secondary" className="bg-primary/90 text-primary-foreground shadow-md">
-              {product.category.name}
-            </Badge>
-            {product.stock === 0 && (
+            {categoryName && (
+              <Badge variant="secondary" className="bg-primary/90 text-primary-foreground shadow-md">
+                {categoryName}
+              </Badge>
+            )}
+            {!inStock && (
               <Badge variant="destructive" className="shadow-md">
                 Rupture
               </Badge>
@@ -119,10 +208,45 @@ export function ProductCard({
             </h3>
           </Link>
 
+          {/* Brand */}
+          {product.brand && (
+            <p className="text-sm text-muted-foreground mb-2">{product.brand}</p>
+          )}
+
+          {/* Rating */}
+          {showRating && product.rating && (
+            <div className="flex items-center gap-1 mb-2">
+              <div className="flex">
+                {[...Array(5)].map((_, i) => (
+                  <span
+                    key={i}
+                    className={`text-sm ${
+                      i < Math.floor(product.rating || 0)
+                        ? 'text-yellow-400'
+                        : 'text-gray-300'
+                    }`}
+                  >
+                    ★
+                  </span>
+                ))}
+              </div>
+              <span className="text-xs text-muted-foreground">
+                ({product.reviews || 0})
+              </span>
+            </div>
+          )}
+
+          {/* Description */}
+          {showDescription && product.description && (
+            <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
+              {product.description}
+            </p>
+          )}
+
           {/* Stock Status */}
           <div className="text-xs mb-3">
-            {product.stock > 0 ? (
-              <span className="text-[#F792CC]">En stock: {product.stock}</span>
+            {inStock ? (
+              <span className="text-[#F792CC]">En stock</span>
             ) : (
               <span className="text-red-600">Rupture de stock</span>
             )}
@@ -131,11 +255,11 @@ export function ProductCard({
           {/* Price */}
           <div className="flex items-center gap-2 mb-4">
             <span className="text-xl font-bold text-gray-900">
-              {formatCFA(price)}
+              {formatPrice(price)}
             </span>
             {oldPrice && oldPrice > price && (
               <span className="text-sm text-gray-500 line-through">
-                {formatCFA(oldPrice)}
+                {formatPrice(oldPrice)}
               </span>
             )}
           </div>
@@ -144,10 +268,10 @@ export function ProductCard({
           <Button 
             className="w-full" 
             size="sm"
-            disabled={product.stock === 0}
+            disabled={!inStock}
           >
             <ShoppingCart className="h-4 w-4 mr-2" />
-            {product.stock === 0 ? 'Indisponible' : 'Ajouter au panier'}
+            {!inStock ? 'Indisponible' : 'Ajouter au panier'}
           </Button>
         </div>
       </CardContent>

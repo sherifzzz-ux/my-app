@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { Breadcrumb } from '@/components/ui/breadcrumb'
+import { Button } from '@/components/ui/button'
 import { 
   Search, 
   Filter, 
@@ -35,11 +36,11 @@ export default function SearchPage() {
       <div className="text-center mb-12">
         <div className="flex items-center justify-center mb-4">
           <Search className="h-12 w-12 text-blue-500 mr-4" />
-          <h1 className="text-4xl font-bold text-gray-900">
+          <h1 className="heading-1 text-gray-900">
             Recherche avancée
           </h1>
         </div>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+        <p className="text-lead max-w-2xl mx-auto">
           Trouvez facilement vos produits de beauté préférés avec notre moteur de recherche 
           intelligent et nos filtres avancés.
         </p>
@@ -55,9 +56,12 @@ export default function SearchPage() {
               className="w-full h-12 pl-12 pr-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
             <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-            <button className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">
+            <Button 
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 hover-scale focus-ring"
+              size="sm"
+            >
               Rechercher
-            </button>
+            </Button>
           </div>
         </div>
       </div>
@@ -66,17 +70,17 @@ export default function SearchPage() {
       <div className="mb-8">
         <div className="bg-white border border-gray-200 rounded-lg p-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold flex items-center">
+            <h2 className="heading-5 flex items-center">
               <Filter className="h-5 w-5 mr-2" />
               Filtres et options
             </h2>
             <div className="flex items-center space-x-2">
-              <button className="p-2 border border-gray-300 rounded-md hover:bg-gray-50">
+              <Button variant="outline" size="sm" className="p-2 hover-scale focus-ring">
                 <Grid className="h-4 w-4" />
-              </button>
-              <button className="p-2 border border-gray-300 rounded-md hover:bg-gray-50">
+              </Button>
+              <Button variant="outline" size="sm" className="p-2 hover-scale focus-ring">
                 <List className="h-4 w-4" />
-              </button>
+              </Button>
             </div>
           </div>
 
@@ -162,36 +166,36 @@ export default function SearchPage() {
         <div className="text-center py-16">
           <div className="bg-gray-50 rounded-lg p-12">
             <Search className="h-24 w-24 text-gray-300 mx-auto mb-6" />
-            <h3 className="text-2xl font-semibold text-gray-700 mb-4">
+            <h3 className="heading-3 text-gray-700 mb-4">
               Commencez votre recherche
             </h3>
-            <p className="text-gray-500 mb-8 max-w-md mx-auto">
+            <p className="text-body-sm mb-8 max-w-md mx-auto">
               Utilisez la barre de recherche ci-dessus pour trouver vos produits préférés. 
               Vous pouvez aussi explorer nos catégories populaires.
             </p>
             
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto">
+            <div className="category-grid max-w-2xl mx-auto">
               <Link 
                 href="/catalog?cat=soins-visage" 
-                className="bg-white border border-gray-200 rounded-lg p-4 text-center hover:bg-gray-50 transition-colors"
+                className="bg-white border border-gray-200 rounded-lg p-4 text-center hover:bg-gray-50 transition-colors hover-lift hover-glow"
               >
                 <div className="text-sm font-medium">Soins du visage</div>
               </Link>
               <Link 
                 href="/catalog?cat=maquillage" 
-                className="bg-white border border-gray-200 rounded-lg p-4 text-center hover:bg-gray-50 transition-colors"
+                className="bg-white border border-gray-200 rounded-lg p-4 text-center hover:bg-gray-50 transition-colors hover-lift hover-glow"
               >
                 <div className="text-sm font-medium">Maquillage</div>
               </Link>
               <Link 
                 href="/catalog?cat=cheveux" 
-                className="bg-white border border-gray-200 rounded-lg p-4 text-center hover:bg-gray-50 transition-colors"
+                className="bg-white border border-gray-200 rounded-lg p-4 text-center hover:bg-gray-50 transition-colors hover-lift hover-glow"
               >
                 <div className="text-sm font-medium">Cheveux</div>
               </Link>
               <Link 
                 href="/catalog?cat=parfums" 
-                className="bg-white border border-gray-200 rounded-lg p-4 text-center hover:bg-gray-50 transition-colors"
+                className="bg-white border border-gray-200 rounded-lg p-4 text-center hover:bg-gray-50 transition-colors hover-lift hover-glow"
               >
                 <div className="text-sm font-medium">Parfums</div>
               </Link>

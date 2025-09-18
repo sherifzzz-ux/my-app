@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { Breadcrumb } from '@/components/ui/breadcrumb'
+import { Button } from '@/components/ui/button'
 import { 
   Cookie, 
   Shield, 
@@ -33,11 +34,11 @@ export default function CookiesPage() {
       <div className="text-center mb-12">
         <div className="flex items-center justify-center mb-4">
           <Cookie className="h-12 w-12 text-orange-500 mr-4" />
-          <h1 className="text-4xl font-bold text-gray-900">
+          <h1 className="heading-1 text-gray-900">
             Politique des cookies
           </h1>
         </div>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+        <p className="text-lead max-w-2xl mx-auto">
           Découvrez comment nous utilisons les cookies pour améliorer votre expérience 
           sur Flawless Beauty et comment vous pouvez gérer vos préférences.
         </p>
@@ -45,10 +46,10 @@ export default function CookiesPage() {
 
       {/* Qu'est-ce qu'un cookie */}
       <div className="mb-12">
-        <h2 className="text-2xl font-semibold mb-6">
+        <h2 className="heading-3 mb-6">
           Qu&apos;est-ce qu&apos;un cookie ?
         </h2>
-        <div className="bg-white border border-gray-200 rounded-lg p-6">
+        <div className="bg-white border border-gray-200 rounded-lg p-6 hover-lift hover-glow">
           <div className="flex items-start">
             <Info className="h-6 w-6 text-blue-500 mr-3 mt-1" />
             <div>
@@ -72,7 +73,7 @@ export default function CookiesPage() {
           Types de cookies utilisés
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-white border border-gray-200 rounded-lg p-6">
+          <div className="bg-white border border-gray-200 rounded-lg p-6 hover-lift hover-glow">
             <div className="flex items-center mb-4">
               <CheckCircle className="h-6 w-6 text-green-500 mr-3" />
               <h3 className="text-lg font-semibold">Cookies essentiels</h3>
@@ -88,7 +89,7 @@ export default function CookiesPage() {
             </ul>
           </div>
 
-          <div className="bg-white border border-gray-200 rounded-lg p-6">
+          <div className="bg-white border border-gray-200 rounded-lg p-6 hover-lift hover-glow">
             <div className="flex items-center mb-4">
               <Settings className="h-6 w-6 text-blue-500 mr-3" />
               <h3 className="text-lg font-semibold">Cookies de performance</h3>
@@ -104,7 +105,7 @@ export default function CookiesPage() {
             </ul>
           </div>
 
-          <div className="bg-white border border-gray-200 rounded-lg p-6">
+          <div className="bg-white border border-gray-200 rounded-lg p-6 hover-lift hover-glow">
             <div className="flex items-center mb-4">
               <Eye className="h-6 w-6 text-purple-500 mr-3" />
               <h3 className="text-lg font-semibold">Cookies de fonctionnalité</h3>
@@ -120,7 +121,7 @@ export default function CookiesPage() {
             </ul>
           </div>
 
-          <div className="bg-white border border-gray-200 rounded-lg p-6">
+          <div className="bg-white border border-gray-200 rounded-lg p-6 hover-lift hover-glow">
             <div className="flex items-center mb-4">
               <Globe className="h-6 w-6 text-orange-500 mr-3" />
               <h3 className="text-lg font-semibold">Cookies marketing</h3>
@@ -143,7 +144,7 @@ export default function CookiesPage() {
         <h2 className="text-2xl font-semibold mb-6">
           Cookies tiers
         </h2>
-        <div className="bg-white border border-gray-200 rounded-lg p-6">
+        <div className="bg-white border border-gray-200 rounded-lg p-6 hover-lift hover-glow">
           <p className="text-gray-700 mb-4">
             Nous utilisons également des services tiers qui peuvent placer leurs propres cookies sur votre appareil :
           </p>
@@ -174,7 +175,7 @@ export default function CookiesPage() {
           Comment gérer vos cookies
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-white border border-gray-200 rounded-lg p-6">
+          <div className="bg-white border border-gray-200 rounded-lg p-6 hover-lift hover-glow">
             <div className="flex items-center mb-4">
               <Settings className="h-6 w-6 text-blue-500 mr-3" />
               <h3 className="text-lg font-semibold">Paramètres du navigateur</h3>
@@ -190,7 +191,7 @@ export default function CookiesPage() {
             </ul>
           </div>
 
-          <div className="bg-white border border-gray-200 rounded-lg p-6">
+          <div className="bg-white border border-gray-200 rounded-lg p-6 hover-lift hover-glow">
             <div className="flex items-center mb-4">
               <Shield className="h-6 w-6 text-green-500 mr-3" />
               <h3 className="text-lg font-semibold">Centre de préférences</h3>
@@ -198,9 +199,9 @@ export default function CookiesPage() {
             <p className="text-gray-600 mb-4">
               Utilisez notre centre de préférences pour gérer vos choix de cookies :
             </p>
-            <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
+            <Button className="w-full hover-scale focus-ring">
               Gérer mes préférences
-            </button>
+            </Button>
             <p className="text-xs text-gray-500 mt-2">
               Vous pouvez modifier vos préférences à tout moment
             </p>
@@ -213,7 +214,7 @@ export default function CookiesPage() {
         <h2 className="text-2xl font-semibold mb-6">
           Durée de conservation
         </h2>
-        <div className="bg-white border border-gray-200 rounded-lg p-6">
+        <div className="bg-white border border-gray-200 rounded-lg p-6 hover-lift hover-glow">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="text-center">
               <div className="bg-green-100 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3">

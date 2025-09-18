@@ -3,6 +3,8 @@ import Link from 'next/link'
 import { prisma } from '@/lib/prisma'
 import { Breadcrumb } from '@/components/ui/breadcrumb'
 import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { ProductGridSkeleton } from '@/components/ui/skeleton-specialized'
 import AddToCartButton from '@/components/product/AddToCartButton'
 import { formatCFA } from '@/lib/utils'
 import { ProductCard } from '@/components/ui/ProductCard'
@@ -190,15 +192,12 @@ export default async function CatalogPage({
             </option>
           ))}
         </select>
-        <button
-          type="submit"
-          className="h-10 rounded-md bg-zinc-900 text-white text-sm px-4 hover:bg-zinc-800"
-        >
+        <Button type="submit">
           Appliquer
-        </button>
+        </Button>
       </form>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="product-grid">
                 {(sort === 'random'
           ? [...products].sort((a, b) => {
               // deterministic pseudo-random shuffle by page to keep UX predictable

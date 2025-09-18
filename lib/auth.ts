@@ -57,7 +57,13 @@ export const authOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user, account, trigger, session }: any) {
+    async jwt({ token, user, account, trigger, session }: {
+      token: any;
+      user?: any;
+      account?: any;
+      trigger?: string;
+      session?: any;
+    }) {
       // Premier login: synchroniser avec Supabase Auth
       if (account && user?.email) {
         // Pour OAuth, créer/mettre à jour le profil utilisateur
@@ -129,7 +135,10 @@ export const authOptions = {
 
       return token
     },
-    async session({ session, token }: any) {
+    async session({ session, token }: {
+      session: any;
+      token: any;
+    }) {
       // Propager les claims utiles au client sans perdre les champs AdapterUser (ex: emailVerified)
       if (session.user) {
         session.user.id = String((token.userId as string) ?? token.sub ?? '')
