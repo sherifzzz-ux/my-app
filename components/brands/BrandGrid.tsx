@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Badge } from '@/components/ui/badge'
 import { Search, Grid3X3, List, Filter, X } from 'lucide-react'
-import { Brand, brandCategories, countries, specialties } from '@/lib/data/marques'
+import { Brand, brandCategories, countries, specialties } from '@/lib/data/real-brands'
 
 interface BrandGridProps {
   brands: Brand[]
@@ -194,7 +194,7 @@ export function BrandGrid({
                     <SelectContent>
                       <SelectItem value="all">Tous les pays</SelectItem>
                       {countries.map((country) => (
-                        <SelectItem key={country.id} value={country.id}>
+                        <SelectItem key={country.name} value={country.name}>
                           {country.flag} {country.name} ({country.count})
                         </SelectItem>
                       ))}
@@ -212,8 +212,8 @@ export function BrandGrid({
                     <SelectContent>
                       <SelectItem value="all">Toutes les spécialités</SelectItem>
                       {specialties.map((specialty) => (
-                        <SelectItem key={specialty.id} value={specialty.id}>
-                          {specialty.name} ({specialty.count})
+                        <SelectItem key={specialty} value={specialty}>
+                          {specialty}
                         </SelectItem>
                       ))}
                     </SelectContent>

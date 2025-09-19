@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Star, ExternalLink, Heart, Share2 } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Brand } from '@/lib/data/marques'
+import { Brand } from '@/lib/data/real-brands'
 
 interface BrandCardProps {
   brand: Brand
@@ -15,12 +15,16 @@ export function BrandCard({ brand, viewMode = 'grid' }: BrandCardProps) {
   if (viewMode === 'list') {
     return (
       <Card className="flex flex-row overflow-hidden">
-        <div className="relative w-32 h-32 flex-shrink-0">
+        <div className="relative w-48 h-48 flex-shrink-0">
           <Image
             src={brand.logo}
             alt={`Logo ${brand.name}`}
             fill
-            className="object-contain p-4"
+            className="object-contain p-6"
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              target.src = '/images/brands/placeholder-logo.svg';
+            }}
           />
         </div>
         <div className="flex-1 p-6">
@@ -76,12 +80,16 @@ export function BrandCard({ brand, viewMode = 'grid' }: BrandCardProps) {
 
   return (
     <Card className="group overflow-hidden hover:shadow-lg transition-shadow">
-      <div className="relative h-48 bg-gradient-to-br from-gray-50 to-gray-100">
+      <div className="relative h-64 bg-gradient-to-br from-gray-50 to-gray-100">
         <Image
-          src={brand.banner}
-          alt={`Bannière ${brand.name}`}
+          src={brand.logo}
+          alt={`Logo ${brand.name}`}
           fill
-          className="object-cover group-hover:scale-105 transition-transform duration-300"
+          className="object-contain p-8 group-hover:scale-105 transition-transform duration-300"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.src = '/images/brands/placeholder-logo.svg';
+          }}
         />
         <div className="absolute top-4 right-4 flex gap-2">
           {brand.isPremium && (
@@ -98,12 +106,16 @@ export function BrandCard({ brand, viewMode = 'grid' }: BrandCardProps) {
       
       <CardHeader className="pb-3">
         <div className="flex items-center gap-3 mb-2">
-          <div className="relative w-12 h-12 flex-shrink-0">
+          <div className="relative w-16 h-16 flex-shrink-0">
             <Image
               src={brand.logo}
               alt={`Logo ${brand.name}`}
               fill
               className="object-contain"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.src = '/images/brands/placeholder-logo.svg';
+              }}
             />
           </div>
           <div>

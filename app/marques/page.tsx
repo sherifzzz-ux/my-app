@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { ArrowRight, Star, Globe, Award, Users } from 'lucide-react'
 import Link from 'next/link'
-import { brands, brandCategories, countries } from '@/lib/data/marques'
+import { realBrands as brands, brandCategories, countries } from '@/lib/data/real-brands'
 
 export default function MarquesPage() {
   const breadcrumbItems = [
