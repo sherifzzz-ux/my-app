@@ -49,14 +49,12 @@ export function ParapharmacieGrid({ products, title, showFilters = true }: Parap
       const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                            product.brand.toLowerCase().includes(searchTerm.toLowerCase()) ||
                            product.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                           product.benefits.some(benefit => benefit.toLowerCase().includes(searchTerm.toLowerCase()))
+                           product.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
       
       const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory
       const matchesSubcategory = selectedSubcategory === 'all' || product.subcategory === selectedSubcategory
-      const matchesAgeGroup = selectedAgeGroup === 'all' || product.ageGroup === selectedAgeGroup
-      const matchesPrescription = selectedPrescription === 'all' || 
-        (selectedPrescription === 'yes' && product.prescription) ||
-        (selectedPrescription === 'no' && !product.prescription)
+      const matchesAgeGroup = selectedAgeGroup === 'all' // Age group filter removed as property doesn't exist
+      const matchesPrescription = selectedPrescription === 'all' // Prescription filter removed as property doesn't exist
       
       let matchesPrice = true
       if (priceRange !== 'all') {

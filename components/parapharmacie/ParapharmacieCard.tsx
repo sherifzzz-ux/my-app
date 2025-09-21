@@ -38,15 +38,9 @@ export function ParapharmacieCard({ product, viewMode = 'grid' }: ParapharmacieC
                   Nouveau
                 </Badge>
               )}
-              {product.isPromo && (
+              {product.isOnSale && (
                 <Badge className="absolute top-2 right-2 bg-red-500">
                   Promo
-                </Badge>
-              )}
-              {product.prescription && (
-                <Badge className="absolute bottom-2 left-2 bg-blue-500">
-                  <Pill className="h-3 w-3 mr-1" />
-                  Sur ordonnance
                 </Badge>
               )}
             </div>
@@ -63,11 +57,6 @@ export function ParapharmacieCard({ product, viewMode = 'grid' }: ParapharmacieC
                   <Badge variant="secondary" className="text-xs">
                     {product.category}
                   </Badge>
-                  {product.ageGroup && (
-                    <Badge variant="outline" className="text-xs">
-                      {product.ageGroup}
-                    </Badge>
-                  )}
                 </div>
                 
                 <CardTitle className="text-xl mb-2">{product.name}</CardTitle>
@@ -97,25 +86,20 @@ export function ParapharmacieCard({ product, viewMode = 'grid' }: ParapharmacieC
                       {formatPrice(product.originalPrice)}
                     </span>
                   )}
-                  {product.volume && (
-                    <span className="text-sm text-muted-foreground">
-                      {product.volume}
-                    </span>
-                  )}
                 </div>
                 
-                {/* Benefits */}
+                {/* Tags */}
                 <div className="mb-4">
-                  <h4 className="text-sm font-medium mb-2">Bénéfices</h4>
+                  <h4 className="text-sm font-medium mb-2">Tags</h4>
                   <div className="flex flex-wrap gap-1">
-                    {product.benefits.slice(0, 3).map((benefit) => (
-                      <Badge key={benefit} variant="outline" className="text-xs">
-                        {benefit}
+                    {product.tags.slice(0, 3).map((tag) => (
+                      <Badge key={tag} variant="outline" className="text-xs">
+                        {tag}
                       </Badge>
                     ))}
-                    {product.benefits.length > 3 && (
+                    {product.tags.length > 3 && (
                       <Badge variant="outline" className="text-xs">
-                        +{product.benefits.length - 3} autres
+                        +{product.tags.length - 3} autres
                       </Badge>
                     )}
                   </div>
@@ -157,15 +141,9 @@ export function ParapharmacieCard({ product, viewMode = 'grid' }: ParapharmacieC
             Nouveau
           </Badge>
         )}
-        {product.isPromo && (
+        {product.isOnSale && (
           <Badge className="absolute top-2 right-2 bg-red-500">
             Promo
-          </Badge>
-        )}
-        {product.prescription && (
-          <Badge className="absolute bottom-2 left-2 bg-blue-500">
-            <Pill className="h-3 w-3 mr-1" />
-            Sur ordonnance
           </Badge>
         )}
         <Button
@@ -211,11 +189,6 @@ export function ParapharmacieCard({ product, viewMode = 'grid' }: ParapharmacieC
             <Badge variant="outline" className="text-xs">
               {product.subcategory}
             </Badge>
-            {product.ageGroup && (
-              <Badge variant="outline" className="text-xs">
-                {product.ageGroup}
-              </Badge>
-            )}
           </div>
           
           {/* Price */}
@@ -228,20 +201,15 @@ export function ParapharmacieCard({ product, viewMode = 'grid' }: ParapharmacieC
                 {formatPrice(product.originalPrice)}
               </span>
             )}
-            {product.volume && (
-              <span className="text-sm text-muted-foreground">
-                {product.volume}
-              </span>
-            )}
           </div>
           
-          {/* Key Benefits */}
+          {/* Key Tags */}
           <div>
-            <p className="text-xs text-muted-foreground mb-1">Bénéfices principaux :</p>
+            <p className="text-xs text-muted-foreground mb-1">Tags principaux :</p>
             <div className="flex flex-wrap gap-1">
-              {product.benefits.slice(0, 2).map((benefit) => (
-                <Badge key={benefit} variant="outline" className="text-xs">
-                  {benefit}
+              {product.tags.slice(0, 2).map((tag) => (
+                <Badge key={tag} variant="outline" className="text-xs">
+                  {tag}
                 </Badge>
               ))}
             </div>

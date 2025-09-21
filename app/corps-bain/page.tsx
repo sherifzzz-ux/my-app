@@ -7,7 +7,7 @@ import { ProductGrid } from '@/components/category/ProductGrid'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { ArrowRight, Droplets, Sparkles, Heart, Star } from 'lucide-react'
+import { ArrowRight, Sparkles, Shield, Heart } from 'lucide-react'
 import Link from 'next/link'
 import { corpsBainProducts, corpsBainSubcategories } from '@/lib/data/corps-bain'
 
@@ -33,18 +33,18 @@ export default function CorpsBainPage() {
       {/* Hero Section */}
       <CategoryHero
         title="Corps & Bain"
-        description="Prenez soin de votre corps avec notre sélection de produits de bain et de soins corporels. Des gels douche aux crèmes hydratantes, offrez à votre peau le soin qu'elle mérite."
+        description="Découvrez notre sélection de soins pour le corps et produits de bain. Des gels douche aux crèmes hydratantes, prenez soin de votre peau au quotidien."
         image="/images/corps-bain-hero.jpg"
-        badge="Soins naturels"
+        badge="Nouveautés 2024"
         stats={{
           products: corpsBainProducts.length,
           brands: new Set(corpsBainProducts.map(p => p.brand)).size,
-          rating: 4.5
+          rating: 4.4
         }}
         features={[
-          'Produits naturels et doux',
-          'Formules hydratantes et nourrissantes',
-          'Senteurs délicates et relaxantes'
+          'Produits testés dermatologiquement',
+          'Formules adaptées à tous types de peau',
+          'Marques reconnues et de qualité'
         ]}
       />
 
@@ -52,13 +52,13 @@ export default function CorpsBainPage() {
         {/* Sous-catégories */}
         <div className="mb-8">
           <h2 className="text-2xl font-bold mb-6">Catégories</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             <Button
               variant={selectedSubcategory === 'all' ? 'default' : 'outline'}
               className="h-auto p-4 flex flex-col items-center gap-2"
               onClick={() => setSelectedSubcategory('all')}
             >
-              <span className="text-2xl">🛁</span>
+              <span className="text-2xl">🌟</span>
               <span className="text-sm font-medium">Tous</span>
               <Badge variant="secondary" className="text-xs">
                 {corpsBainProducts.length}
@@ -71,35 +71,38 @@ export default function CorpsBainPage() {
                 variant={selectedSubcategory === subcategory.id ? 'default' : 'outline'}
                 className="h-auto p-4 flex flex-col items-center gap-2"
                 onClick={() => setSelectedSubcategory(subcategory.id)}
+                asChild
               >
-                <span className="text-2xl">{subcategory.icon}</span>
-                <span className="text-sm font-medium">{subcategory.name}</span>
-                <Badge variant="secondary" className="text-xs">
-                  {subcategory.productCount}
-                </Badge>
+                <Link href={`/corps-bain/${subcategory.slug}`}>
+                  <span className="text-2xl">{subcategory.icon}</span>
+                  <span className="text-sm font-medium">{subcategory.name}</span>
+                  <Badge variant="secondary" className="text-xs">
+                    {subcategory.productCount}
+                  </Badge>
+                </Link>
               </Button>
             ))}
           </div>
         </div>
 
-        {/* Guide des soins corps */}
+        {/* Guide de soins */}
         <div className="mb-8">
-          <h2 className="text-2xl font-bold mb-6">Guide Corps & Bain</h2>
+          <h2 className="text-2xl font-bold mb-6">Guide des Soins</h2>
           <div className="grid md:grid-cols-3 gap-6">
             <Card>
               <CardHeader>
                 <div className="flex items-center gap-2">
-                  <Droplets className="h-5 w-5 text-blue-500" />
+                  <Sparkles className="h-5 w-5 text-blue-500" />
                   <CardTitle className="text-lg">Routine Corps</CardTitle>
                 </div>
               </CardHeader>
               <CardContent>
                 <CardDescription className="mb-4">
-                  Découvrez les étapes essentielles pour une routine corps parfaite.
+                  Découvrez les étapes essentielles pour une routine corps efficace.
                 </CardDescription>
                 <Button variant="outline" size="sm" asChild>
                   <Link href="/guide/routine-corps">
-                    Voir la routine
+                    Voir le guide
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
@@ -109,13 +112,13 @@ export default function CorpsBainPage() {
             <Card>
               <CardHeader>
                 <div className="flex items-center gap-2">
-                  <Sparkles className="h-5 w-5 text-purple-500" />
+                  <Shield className="h-5 w-5 text-green-500" />
                   <CardTitle className="text-lg">Types de Peau</CardTitle>
                 </div>
               </CardHeader>
               <CardContent>
                 <CardDescription className="mb-4">
-                  Identifiez votre type de peau et choisissez les produits adaptés.
+                  Identifiez votre type de peau et trouvez les produits adaptés.
                 </CardDescription>
                 <Button variant="outline" size="sm" asChild>
                   <Link href="/guide/types-peau-corps">
@@ -130,16 +133,16 @@ export default function CorpsBainPage() {
               <CardHeader>
                 <div className="flex items-center gap-2">
                   <Heart className="h-5 w-5 text-pink-500" />
-                  <CardTitle className="text-lg">Moment Détente</CardTitle>
+                  <CardTitle className="text-lg">Conseils Experts</CardTitle>
                 </div>
               </CardHeader>
               <CardContent>
                 <CardDescription className="mb-4">
-                  Créez votre moment spa à la maison avec nos conseils.
+                  Les conseils de nos dermatologues pour une peau en pleine santé.
                 </CardDescription>
                 <Button variant="outline" size="sm" asChild>
-                  <Link href="/guide/moment-detente">
-                    Créer le moment
+                  <Link href="/guide/conseils-corps">
+                    Lire les conseils
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>

@@ -1,5 +1,15 @@
 // Données de test pour la catégorie Cheveux
 
+export interface CheveuxSubcategory {
+  id: string
+  name: string
+  slug: string
+  description: string
+  icon: string
+  productCount: number
+  featured: boolean
+}
+
 export interface CheveuxProduct {
   id: string
   name: string
@@ -10,225 +20,147 @@ export interface CheveuxProduct {
   rating: number
   reviews: number
   inStock: boolean
-  isNew?: boolean
-  isOnSale?: boolean
+  isNew: boolean
+  isOnSale: boolean
   category: string
   subcategory: string
-  hairType: string[]
-  problem: string[]
   tags: string[]
   description: string
-  volume?: string
 }
 
 export const cheveuxProducts: CheveuxProduct[] = [
   {
-    id: '1',
-    name: 'Shampoing Hydratant',
-    price: 24.90,
-    originalPrice: 29.90,
-    image: '/products/shampoing-hydratant.jpg',
-    brand: 'L\'Oréal Paris',
+    id: 'ch1',
+    name: 'Vitamines Cheveux',
+    price: 19.90,
+    image: '/products/vitamines-cheveux.jpg',
+    brand: 'Biotin',
     rating: 4.5,
-    reviews: 189,
-    inStock: true,
-    isOnSale: true,
-    category: 'cheveux',
-    subcategory: 'shampoings',
-    hairType: ['secs', 'abîmés', 'colorés'],
-    problem: ['sécheresse', 'cassants'],
-    tags: ['hydratant', 'sans-sulfate', 'colorés'],
-    description: 'Shampoing hydratant pour cheveux secs et abîmés.',
-    volume: '400ml'
-  },
-  {
-    id: '2',
-    name: 'Après-Shampoing Réparateur',
-    price: 28.90,
-    image: '/products/apres-shampoing.jpg',
-    brand: 'Garnier',
-    rating: 4.6,
-    reviews: 234,
-    inStock: true,
-    isNew: true,
-    category: 'cheveux',
-    subcategory: 'apres-shampoings',
-    hairType: ['abîmés', 'cassants'],
-    problem: ['cassants', 'fourchus'],
-    tags: ['réparateur', 'masque', 'intense'],
-    description: 'Après-shampoing réparateur pour cheveux très abîmés.',
-    volume: '300ml'
-  },
-  {
-    id: '3',
-    name: 'Masque Capillaire Nourrissant',
-    price: 32.50,
-    image: '/products/masque-capillaire.jpg',
-    brand: 'Kerastase',
-    rating: 4.8,
-    reviews: 156,
-    inStock: true,
-    category: 'cheveux',
-    subcategory: 'soins',
-    hairType: ['secs', 'abîmés'],
-    problem: ['sécheresse', 'manque-nutrition'],
-    tags: ['nourrissant', 'intense', 'luxe'],
-    description: 'Masque capillaire nourrissant pour une hydratation intense.',
-    volume: '200ml'
-  },
-  {
-    id: '4',
-    name: 'Coloration Crème',
-    price: 18.90,
-    image: '/products/coloration-creme.jpg',
-    brand: 'L\'Oréal Paris',
-    rating: 4.3,
-    reviews: 298,
-    inStock: true,
-    category: 'cheveux',
-    subcategory: 'coloration',
-    hairType: ['tous-types'],
-    problem: ['gris', 'terne'],
-    tags: ['coloration', 'crème', 'facile'],
-    description: 'Coloration crème facile à appliquer pour un résultat naturel.',
-    volume: '1 boîte'
-  },
-  {
-    id: '5',
-    name: 'Sérum Anti-Cassure',
-    price: 22.90,
-    image: '/products/serum-anti-cassure.jpg',
-    brand: 'Schwarzkopf',
-    rating: 4.4,
     reviews: 167,
     inStock: true,
+    isNew: false,
+    isOnSale: false,
     category: 'cheveux',
-    subcategory: 'soins',
-    hairType: ['cassants', 'fins'],
-    problem: ['cassants', 'fragiles'],
-    tags: ['anti-cassure', 'renforçant', 'sérum'],
-    description: 'Sérum anti-cassure pour renforcer les cheveux fragiles.',
-    volume: '100ml'
+    subcategory: 'complements-alimentaires',
+    tags: ['vitamines', 'cheveux', 'biotine'],
+    description: 'Complément alimentaire spécial cheveux avec biotine et zinc.'
   },
   {
-    id: '6',
-    name: 'Shampoing Volume',
-    price: 26.90,
-    image: '/products/shampoing-volume.jpg',
-    brand: 'Redken',
-    rating: 4.7,
-    reviews: 123,
+    id: 'ch2',
+    name: 'Collagène Marin',
+    price: 24.90,
+    image: '/products/collagene-marin.jpg',
+    brand: 'Peptan',
+    rating: 4.3,
+    reviews: 134,
     inStock: true,
+    isNew: true,
+    isOnSale: false,
     category: 'cheveux',
-    subcategory: 'shampoings',
-    hairType: ['fins', 'plats'],
-    problem: ['manque-volume', 'plats'],
-    tags: ['volume', 'gonflant', 'texture'],
-    description: 'Shampoing volume pour donner du corps aux cheveux fins.',
-    volume: '300ml'
+    subcategory: 'complements-alimentaires',
+    tags: ['collagène', 'cheveux', 'ongles'],
+    description: 'Collagène marin pour renforcer cheveux et ongles.'
   },
   {
-    id: '7',
-    name: 'Huile Capillaire Argan',
-    price: 19.90,
-    image: '/products/huile-argan.jpg',
-    brand: 'Moroccanoil',
+    id: 'ch3',
+    name: 'Shampooing Nourrissant',
+    price: 16.90,
+    image: '/products/shampooing-nourrissant.jpg',
+    brand: 'Kérastase',
     rating: 4.6,
-    reviews: 145,
+    reviews: 289,
     inStock: true,
+    isNew: false,
+    isOnSale: true,
     category: 'cheveux',
-    subcategory: 'soins',
-    hairType: ['secs', 'bouclés', 'crépus'],
-    problem: ['sécheresse', 'frisottis'],
-    tags: ['huile', 'argan', 'nourrissant'],
-    description: 'Huile capillaire à l\'argan pour nourrir et discipliner.',
-    volume: '100ml'
+    subcategory: 'routine-capillaire',
+    tags: ['shampooing', 'nourrissant', 'cheveux'],
+    description: 'Shampooing nourrissant pour tous types de cheveux.'
   },
   {
-    id: '8',
-    name: 'Décolorant Poudre',
-    price: 15.90,
-    image: '/products/decolorant-poudre.jpg',
-    brand: 'L\'Oréal Paris',
-    rating: 4.2,
-    reviews: 89,
+    id: 'ch4',
+    name: 'Masque Capillaire',
+    price: 22.90,
+    image: '/products/masque-capillaire.jpg',
+    brand: 'L\'Oréal Professionnel',
+    rating: 4.4,
+    reviews: 203,
     inStock: true,
+    isNew: false,
+    isOnSale: false,
     category: 'cheveux',
-    subcategory: 'coloration',
-    hairType: ['tous-types'],
-    problem: ['couleur-sombre'],
-    tags: ['décolorant', 'poudre', 'blond'],
-    description: 'Décolorant poudre pour éclaircir les cheveux.',
-    volume: '1 boîte'
+    subcategory: 'routine-capillaire',
+    tags: ['masque', 'hydratant', 'cheveux'],
+    description: 'Masque capillaire hydratant pour des cheveux soyeux.'
+  },
+  {
+    id: 'ch5',
+    name: 'Sérum Repousse',
+    price: 28.90,
+    image: '/products/serum-repousse.jpg',
+    brand: 'The Ordinary',
+    rating: 4.2,
+    reviews: 156,
+    inStock: true,
+    isNew: true,
+    isOnSale: false,
+    category: 'cheveux',
+    subcategory: 'soins-cheveux',
+    tags: ['sérum', 'repousse', 'cheveux'],
+    description: 'Sérum pour stimuler la repousse des cheveux.'
+  },
+  {
+    id: 'ch6',
+    name: 'Huile Capillaire',
+    price: 18.90,
+    image: '/products/huile-capillaire.jpg',
+    brand: 'Moroccanoil',
+    rating: 4.7,
+    reviews: 234,
+    inStock: true,
+    isNew: false,
+    isOnSale: false,
+    category: 'cheveux',
+    subcategory: 'soins-cheveux',
+    tags: ['huile', 'nourrissant', 'cheveux'],
+    description: 'Huile capillaire nourrissante à l\'argan.'
   }
 ]
 
-export const cheveuxSubcategories = [
+export const cheveuxSubcategories: CheveuxSubcategory[] = [
   {
-    id: 'shampoings',
-    name: 'Shampoings',
-    description: 'Shampoings pour tous types de cheveux et problèmes capillaires',
+    id: 'complements-alimentaires',
+    name: 'Compléments alimentaires',
+    slug: 'complements-alimentaires',
+    description: 'Vitamines et compléments pour cheveux',
+    icon: '💊',
+    productCount: 2,
+    featured: true
+  },
+  {
+    id: 'routine-capillaire',
+    name: 'Routine capillaire',
+    slug: 'routine-capillaire',
+    description: 'Shampooings et après-shampooings',
     icon: '🧴',
-    productCount: 2
+    productCount: 2,
+    featured: true
   },
   {
-    id: 'apres-shampoings',
-    name: 'Après-shampoings',
-    description: 'Après-shampoings et démêlants pour des cheveux soyeux',
-    icon: '💧',
-    productCount: 1
-  },
-  {
-    id: 'soins',
-    name: 'Soins',
-    description: 'Masques, sérums et huiles pour des cheveux en pleine santé',
-    icon: '✨',
-    productCount: 3
-  },
-  {
-    id: 'coloration',
-    name: 'Coloration',
-    description: 'Colorations, décolorants et soins post-coloration',
-    icon: '🎨',
-    productCount: 2
-  },
-  {
-    id: 'styling',
-    name: 'Styling',
-    description: 'Gels, laques et produits de coiffage',
-    icon: '💇',
-    productCount: 0
-  },
-  {
-    id: 'accessoires',
-    name: 'Accessoires',
-    description: 'Brosses, peignes et accessoires de coiffage',
-    icon: '🪥',
-    productCount: 0
+    id: 'soins-cheveux',
+    name: 'Soins cheveux',
+    slug: 'soins-cheveux',
+    description: 'Sérums et huiles capillaires',
+    icon: '💆‍♀️',
+    productCount: 2,
+    featured: true
   }
 ]
 
 export const hairTypes = [
-  { id: 'secs', name: 'Secs', description: 'Cheveux secs et déshydratés' },
-  { id: 'gras', name: 'Gras', description: 'Cheveux gras à la racine' },
-  { id: 'normaux', name: 'Normaux', description: 'Cheveux équilibrés' },
-  { id: 'mixtes', name: 'Mixtes', description: 'Cheveux gras aux racines, secs aux pointes' },
-  { id: 'fins', name: 'Fins', description: 'Cheveux fins et manquant de volume' },
-  { id: 'épais', name: 'Épais', description: 'Cheveux épais et volumineux' },
-  { id: 'bouclés', name: 'Bouclés', description: 'Cheveux bouclés et ondulés' },
-  { id: 'crépus', name: 'Crépus', description: 'Cheveux crépus et frisés' },
-  { id: 'colorés', name: 'Colorés', description: 'Cheveux colorés ou décolorés' },
-  { id: 'abîmés', name: 'Abîmés', description: 'Cheveux abîmés et cassants' }
-]
-
-export const hairProblems = [
-  { id: 'sécheresse', name: 'Sécheresse', description: 'Cheveux secs et déshydratés' },
-  { id: 'cassants', name: 'Cassants', description: 'Cheveux qui cassent facilement' },
-  { id: 'fourchus', name: 'Fourchus', description: 'Pointes fourchues' },
-  { id: 'chute', name: 'Chute', description: 'Chute de cheveux excessive' },
-  { id: 'gris', name: 'Cheveux blancs', description: 'Apparition de cheveux blancs' },
-  { id: 'terne', name: 'Terne', description: 'Cheveux sans éclat' },
-  { id: 'frisottis', name: 'Frisottis', description: 'Cheveux frisottés et indisciplinés' },
-  { id: 'manque-volume', name: 'Manque de volume', description: 'Cheveux plats et sans volume' },
-  { id: 'pellicules', name: 'Pellicules', description: 'Pellicules et démangeaisons' }
+  { id: 'normaux', name: 'Cheveux normaux', description: 'Cheveux équilibrés' },
+  { id: 'secs', name: 'Cheveux secs', description: 'Cheveux qui manquent d\'hydratation' },
+  { id: 'gras', name: 'Cheveux gras', description: 'Cheveux qui graissent vite' },
+  { id: 'mixtes', name: 'Cheveux mixtes', description: 'Racines grasses, pointes sèches' },
+  { id: 'abimes', name: 'Cheveux abîmés', description: 'Cheveux cassants et fourchus' }
 ]

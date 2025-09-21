@@ -1,5 +1,15 @@
 // Données de test pour la catégorie Parfumerie
 
+export interface ParfumerieSubcategory {
+  id: string
+  name: string
+  slug: string
+  description: string
+  icon: string
+  productCount: number
+  featured: boolean
+}
+
 export interface ParfumerieProduct {
   id: string
   name: string
@@ -10,234 +20,189 @@ export interface ParfumerieProduct {
   rating: number
   reviews: number
   inStock: boolean
-  isNew?: boolean
-  isOnSale?: boolean
+  isNew: boolean
+  isOnSale: boolean
   category: string
   subcategory: string
-  gender: string[]
-  fragranceFamily: string[]
   tags: string[]
   description: string
-  concentration?: string
-  volume?: string
 }
 
 export const parfumerieProducts: ParfumerieProduct[] = [
   {
-    id: '1',
-    name: 'Eau de Parfum Femme',
+    id: 'pf1',
+    name: 'Chanel N°5',
     price: 89.90,
-    originalPrice: 109.90,
-    image: '/products/parfum-femme.jpg',
+    image: '/products/chanel-no5.jpg',
     brand: 'Chanel',
     rating: 4.8,
     reviews: 456,
     inStock: true,
-    isOnSale: true,
+    isNew: false,
+    isOnSale: false,
     category: 'parfumerie',
-    subcategory: 'femme',
-    gender: ['femme'],
-    fragranceFamily: ['floral', 'oriental'],
-    tags: ['luxe', 'iconique', 'longue-tenue'],
-    description: 'Eau de parfum féminine aux notes florales et orientales.',
-    concentration: 'Eau de Parfum',
-    volume: '50ml'
+    subcategory: 'parfums-femme',
+    tags: ['classique', 'floral', 'élégant'],
+    description: 'Le parfum iconique de Chanel, un bouquet floral sophistiqué.'
   },
   {
-    id: '2',
-    name: 'Eau de Toilette Homme',
-    price: 65.90,
-    image: '/products/parfum-homme.jpg',
+    id: 'pf2',
+    name: 'Dior Sauvage',
+    price: 95.90,
+    image: '/products/dior-sauvage.jpg',
     brand: 'Dior',
-    rating: 4.7,
+    rating: 4.6,
     reviews: 389,
     inStock: true,
     isNew: true,
+    isOnSale: false,
     category: 'parfumerie',
-    subcategory: 'homme',
-    gender: ['homme'],
-    fragranceFamily: ['boisé', 'épicé'],
-    tags: ['masculin', 'sophistiqué', 'boisé'],
-    description: 'Eau de toilette masculine aux notes boisées et épicées.',
-    concentration: 'Eau de Toilette',
-    volume: '100ml'
+    subcategory: 'parfums-homme',
+    tags: ['boisé', 'épicé', 'moderne'],
+    description: 'Un parfum masculin audacieux et moderne.'
   },
   {
-    id: '3',
-    name: 'Parfum Unisexe',
-    price: 75.90,
-    image: '/products/parfum-unisexe.jpg',
-    brand: 'Tom Ford',
-    rating: 4.9,
+    id: 'pf3',
+    name: 'Eau de Toilette Unisexe',
+    price: 45.90,
+    image: '/products/eau-toilette-unisexe.jpg',
+    brand: 'CK One',
+    rating: 4.3,
     reviews: 234,
     inStock: true,
+    isNew: false,
+    isOnSale: true,
     category: 'parfumerie',
-    subcategory: 'unisexe',
-    gender: ['femme', 'homme'],
-    fragranceFamily: ['boisé', 'oriental'],
-    tags: ['unisexe', 'luxe', 'unique'],
-    description: 'Parfum unisexe aux notes boisées et orientales.',
-    concentration: 'Eau de Parfum',
-    volume: '50ml'
+    subcategory: 'eaux-de-toilette',
+    tags: ['unisexe', 'citronné', 'frais'],
+    description: 'Eau de toilette unisexe aux notes citronnées et fraîches.'
   },
   {
-    id: '4',
-    name: 'Eau de Cologne Classique',
-    price: 45.90,
-    image: '/products/cologne-classique.jpg',
-    brand: 'Acqua di Parma',
-    rating: 4.6,
-    reviews: 178,
-    inStock: true,
-    category: 'parfumerie',
-    subcategory: 'cologne',
-    gender: ['homme'],
-    fragranceFamily: ['citrus', 'frais'],
-    tags: ['classique', 'italien', 'citrus'],
-    description: 'Eau de cologne classique aux notes d\'agrumes.',
-    concentration: 'Eau de Cologne',
-    volume: '100ml'
-  },
-  {
-    id: '5',
-    name: 'Parfum Floral',
-    price: 95.90,
-    image: '/products/parfum-floral.jpg',
-    brand: 'Lancôme',
+    id: 'pf4',
+    name: 'Coffret Découverte',
+    price: 29.90,
+    image: '/products/coffret-decouverte.jpg',
+    brand: 'Dior',
     rating: 4.5,
-    reviews: 267,
+    reviews: 167,
     inStock: true,
+    isNew: false,
+    isOnSale: false,
     category: 'parfumerie',
-    subcategory: 'femme',
-    gender: ['femme'],
-    fragranceFamily: ['floral', 'fruité'],
-    tags: ['floral', 'romantique', 'délicat'],
-    description: 'Parfum floral aux notes de rose et de fruits.',
-    concentration: 'Eau de Parfum',
-    volume: '75ml'
+    subcategory: 'coffrets-parfums',
+    tags: ['coffret', 'découverte', 'miniatures'],
+    description: 'Coffret découverte avec 5 miniatures de parfums Dior.'
   },
   {
-    id: '6',
-    name: 'Eau de Toilette Sport',
-    price: 55.90,
-    image: '/products/parfum-sport.jpg',
-    brand: 'Hugo Boss',
-    rating: 4.4,
-    reviews: 198,
-    inStock: true,
-    category: 'parfumerie',
-    subcategory: 'homme',
-    gender: ['homme'],
-    fragranceFamily: ['aquatique', 'frais'],
-    tags: ['sport', 'dynamique', 'frais'],
-    description: 'Eau de toilette sport aux notes aquatiques.',
-    concentration: 'Eau de Toilette',
-    volume: '100ml'
-  },
-  {
-    id: '7',
-    name: 'Parfum Oriental',
-    price: 85.90,
-    image: '/products/parfum-oriental.jpg',
+    id: 'pf5',
+    name: 'Yves Saint Laurent Libre',
+    price: 78.90,
+    image: '/products/ysl-libre.jpg',
     brand: 'Yves Saint Laurent',
     rating: 4.7,
-    reviews: 312,
+    reviews: 298,
     inStock: true,
+    isNew: true,
+    isOnSale: false,
     category: 'parfumerie',
-    subcategory: 'femme',
-    gender: ['femme'],
-    fragranceFamily: ['oriental', 'boisé'],
-    tags: ['oriental', 'sensuel', 'mystérieux'],
-    description: 'Parfum oriental aux notes sensuelles et mystérieuses.',
-    concentration: 'Eau de Parfum',
-    volume: '60ml'
+    subcategory: 'parfums-femme',
+    tags: ['floral', 'vanillé', 'sensuel'],
+    description: 'Un parfum floral vanillé pour la femme moderne et libre.'
   },
   {
-    id: '8',
-    name: 'Eau Fraîche',
+    id: 'pf6',
+    name: 'Hugo Boss Bottled',
+    price: 65.90,
+    image: '/products/hugo-boss-bottled.jpg',
+    brand: 'Hugo Boss',
+    rating: 4.4,
+    reviews: 189,
+    inStock: true,
+    isNew: false,
+    isOnSale: false,
+    category: 'parfumerie',
+    subcategory: 'parfums-homme',
+    tags: ['boisé', 'épicé', 'professionnel'],
+    description: 'Parfum masculin boisé et épicé pour l\'homme d\'affaires.'
+  },
+  {
+    id: 'pf7',
+    name: 'Eau de Cologne Classique',
     price: 35.90,
-    image: '/products/eau-fraiche.jpg',
-    brand: 'Kenzo',
-    rating: 4.3,
+    image: '/products/eau-cologne-classique.jpg',
+    brand: '4711',
+    rating: 4.2,
     reviews: 145,
     inStock: true,
+    isNew: false,
+    isOnSale: false,
     category: 'parfumerie',
-    subcategory: 'unisexe',
-    gender: ['femme', 'homme'],
-    fragranceFamily: ['aquatique', 'frais'],
-    tags: ['frais', 'léger', 'quotidien'],
-    description: 'Eau fraîche légère pour un usage quotidien.',
-    concentration: 'Eau Fraîche',
-    volume: '100ml'
+    subcategory: 'eaux-de-toilette',
+    tags: ['classique', 'citronné', 'rafraîchissant'],
+    description: 'Eau de cologne classique aux notes citronnées rafraîchissantes.'
+  },
+  {
+    id: 'pf8',
+    name: 'Coffret Voyage',
+    price: 39.90,
+    image: '/products/coffret-voyage.jpg',
+    brand: 'Chanel',
+    rating: 4.6,
+    reviews: 123,
+    inStock: true,
+    isNew: true,
+    isOnSale: false,
+    category: 'parfumerie',
+    subcategory: 'coffrets-parfums',
+    tags: ['voyage', 'miniatures', 'luxe'],
+    description: 'Coffret voyage avec 3 miniatures de parfums Chanel.'
   }
 ]
 
-export const parfumerieSubcategories = [
+export const parfumerieSubcategories: ParfumerieSubcategory[] = [
   {
-    id: 'femme',
-    name: 'Femme',
-    description: 'Parfums et eaux de toilette pour femme',
+    id: 'parfums-femme',
+    name: 'Parfums femme',
+    slug: 'parfums-femme',
+    description: 'Parfums et eaux de parfum pour femme',
     icon: '👩',
-    productCount: 3
+    productCount: 2,
+    featured: true
   },
   {
-    id: 'homme',
-    name: 'Homme',
+    id: 'parfums-homme',
+    name: 'Parfums homme',
+    slug: 'parfums-homme',
     description: 'Parfums et eaux de toilette pour homme',
     icon: '👨',
-    productCount: 3
+    productCount: 2,
+    featured: true
   },
   {
-    id: 'unisexe',
-    name: 'Unisexe',
-    description: 'Parfums unisexes pour tous',
-    icon: '👥',
-    productCount: 2
+    id: 'eaux-de-toilette',
+    name: 'Eaux de toilette',
+    slug: 'eaux-de-toilette',
+    description: 'Eaux de toilette unisexes',
+    icon: '💧',
+    productCount: 2,
+    featured: true
   },
   {
-    id: 'cologne',
-    name: 'Eau de Cologne',
-    description: 'Eaux de cologne classiques et rafraîchissantes',
-    icon: '🍋',
-    productCount: 1
-  },
-  {
-    id: 'miniatures',
-    name: 'Miniatures',
-    description: 'Parfums en format voyage et miniatures',
-    icon: '✈️',
-    productCount: 0
-  },
-  {
-    id: 'coffrets',
-    name: 'Coffrets',
-    description: 'Coffrets de parfums et coffrets découverte',
+    id: 'coffrets-parfums',
+    name: 'Coffrets parfums',
+    slug: 'coffrets-parfums',
+    description: 'Coffrets et coffrets découverte',
     icon: '🎁',
-    productCount: 0
+    productCount: 2,
+    featured: false
   }
 ]
 
 export const fragranceFamilies = [
-  { id: 'floral', name: 'Floral', description: 'Notes de fleurs délicates' },
-  { id: 'oriental', name: 'Oriental', description: 'Notes épicées et sensuelles' },
-  { id: 'boisé', name: 'Boisé', description: 'Notes de bois chaudes' },
-  { id: 'citrus', name: 'Citrus', description: 'Notes d\'agrumes fraîches' },
-  { id: 'aquatique', name: 'Aquatique', description: 'Notes marines et fraîches' },
-  { id: 'fruité', name: 'Fruité', description: 'Notes de fruits sucrées' },
-  { id: 'épicé', name: 'Épicé', description: 'Notes d\'épices chaudes' },
-  { id: 'frais', name: 'Frais', description: 'Notes fraîches et légères' }
-]
-
-export const concentrations = [
-  { id: 'parfum', name: 'Parfum', description: 'Concentration la plus élevée (20-30%)' },
-  { id: 'eau-de-parfum', name: 'Eau de Parfum', description: 'Concentration élevée (15-20%)' },
-  { id: 'eau-de-toilette', name: 'Eau de Toilette', description: 'Concentration moyenne (8-15%)' },
-  { id: 'eau-de-cologne', name: 'Eau de Cologne', description: 'Concentration légère (3-8%)' },
-  { id: 'eau-fraiche', name: 'Eau Fraîche', description: 'Concentration très légère (1-3%)' }
-]
-
-export const genders = [
-  { id: 'femme', name: 'Femme', description: 'Parfums féminins' },
-  { id: 'homme', name: 'Homme', description: 'Parfums masculins' },
-  { id: 'unisexe', name: 'Unisexe', description: 'Parfums pour tous' }
+  { id: 'floral', name: 'Floral', description: 'Notes de fleurs' },
+  { id: 'boise', name: 'Boisé', description: 'Notes de bois' },
+  { id: 'citronne', name: 'Citronné', description: 'Notes d\'agrumes' },
+  { id: 'epice', name: 'Épicé', description: 'Notes d\'épices' },
+  { id: 'vanille', name: 'Vanillé', description: 'Notes de vanille' },
+  { id: 'musc', name: 'Musqué', description: 'Notes de musc' }
 ]

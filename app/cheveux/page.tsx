@@ -7,7 +7,7 @@ import { ProductGrid } from '@/components/category/ProductGrid'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { ArrowRight, Scissors, Sparkles, Heart, Star } from 'lucide-react'
+import { ArrowRight, Sparkles, Shield, Heart } from 'lucide-react'
 import Link from 'next/link'
 import { cheveuxProducts, cheveuxSubcategories } from '@/lib/data/cheveux'
 
@@ -33,18 +33,18 @@ export default function CheveuxPage() {
       {/* Hero Section */}
       <CategoryHero
         title="Cheveux"
-        description="Prenez soin de vos cheveux avec notre sélection de produits capillaires de qualité. Des shampoings aux soins, trouvez les produits adaptés à votre type de cheveux et à vos besoins."
+        description="Découvrez notre sélection de soins capillaires et produits pour cheveux. Des shampooings aux sérums, prenez soin de vos cheveux au quotidien."
         image="/images/cheveux-hero.jpg"
         badge="Soins professionnels"
         stats={{
           products: cheveuxProducts.length,
           brands: new Set(cheveuxProducts.map(p => p.brand)).size,
-          rating: 4.6
+          rating: 4.5
         }}
         features={[
-          'Produits adaptés à tous types de cheveux',
-          'Marques professionnelles reconnues',
-          'Formules sans sulfates et parabens'
+          'Produits testés par des coiffeurs',
+          'Formules adaptées à tous types de cheveux',
+          'Marques professionnelles reconnues'
         ]}
       />
 
@@ -52,13 +52,13 @@ export default function CheveuxPage() {
         {/* Sous-catégories */}
         <div className="mb-8">
           <h2 className="text-2xl font-bold mb-6">Catégories</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             <Button
               variant={selectedSubcategory === 'all' ? 'default' : 'outline'}
               className="h-auto p-4 flex flex-col items-center gap-2"
               onClick={() => setSelectedSubcategory('all')}
             >
-              <span className="text-2xl">💇‍♀️</span>
+              <span className="text-2xl">🌟</span>
               <span className="text-sm font-medium">Tous</span>
               <Badge variant="secondary" className="text-xs">
                 {cheveuxProducts.length}
@@ -71,45 +71,28 @@ export default function CheveuxPage() {
                 variant={selectedSubcategory === subcategory.id ? 'default' : 'outline'}
                 className="h-auto p-4 flex flex-col items-center gap-2"
                 onClick={() => setSelectedSubcategory(subcategory.id)}
+                asChild
               >
-                <span className="text-2xl">{subcategory.icon}</span>
-                <span className="text-sm font-medium">{subcategory.name}</span>
-                <Badge variant="secondary" className="text-xs">
-                  {subcategory.productCount}
-                </Badge>
+                <Link href={`/cheveux/${subcategory.slug}`}>
+                  <span className="text-2xl">{subcategory.icon}</span>
+                  <span className="text-sm font-medium">{subcategory.name}</span>
+                  <Badge variant="secondary" className="text-xs">
+                    {subcategory.productCount}
+                  </Badge>
+                </Link>
               </Button>
             ))}
           </div>
         </div>
 
-        {/* Guide des cheveux */}
+        {/* Guide capillaire */}
         <div className="mb-8">
           <h2 className="text-2xl font-bold mb-6">Guide Capillaire</h2>
           <div className="grid md:grid-cols-3 gap-6">
             <Card>
               <CardHeader>
                 <div className="flex items-center gap-2">
-                  <Scissors className="h-5 w-5 text-blue-500" />
-                  <CardTitle className="text-lg">Diagnostic Capillaire</CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="mb-4">
-                  Identifiez votre type de cheveux et trouvez les produits adaptés.
-                </CardDescription>
-                <Button variant="outline" size="sm" asChild>
-                  <Link href="/guide/diagnostic-capillaire">
-                    Faire le diagnostic
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <div className="flex items-center gap-2">
-                  <Sparkles className="h-5 w-5 text-purple-500" />
+                  <Sparkles className="h-5 w-5 text-blue-500" />
                   <CardTitle className="text-lg">Routine Capillaire</CardTitle>
                 </div>
               </CardHeader>
@@ -119,7 +102,27 @@ export default function CheveuxPage() {
                 </CardDescription>
                 <Button variant="outline" size="sm" asChild>
                   <Link href="/guide/routine-capillaire">
-                    Voir la routine
+                    Voir le guide
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <div className="flex items-center gap-2">
+                  <Shield className="h-5 w-5 text-green-500" />
+                  <CardTitle className="text-lg">Types de Cheveux</CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <CardDescription className="mb-4">
+                  Identifiez votre type de cheveux et trouvez les produits adaptés.
+                </CardDescription>
+                <Button variant="outline" size="sm" asChild>
+                  <Link href="/guide/types-cheveux">
+                    Découvrir
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
@@ -130,12 +133,12 @@ export default function CheveuxPage() {
               <CardHeader>
                 <div className="flex items-center gap-2">
                   <Heart className="h-5 w-5 text-pink-500" />
-                  <CardTitle className="text-lg">Conseils Experts</CardTitle>
+                  <CardTitle className="text-lg">Conseils Coiffeurs</CardTitle>
                 </div>
               </CardHeader>
               <CardContent>
                 <CardDescription className="mb-4">
-                  Les conseils de nos coiffeurs professionnels pour des cheveux sublimes.
+                  Les conseils de nos coiffeurs professionnels pour des cheveux en pleine santé.
                 </CardDescription>
                 <Button variant="outline" size="sm" asChild>
                   <Link href="/guide/conseils-coiffeurs">
