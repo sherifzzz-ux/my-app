@@ -1,5 +1,15 @@
 // Données de test pour la catégorie Soin du visage
 
+export interface SoinVisageSubcategory {
+  id: string
+  name: string
+  slug: string
+  description: string
+  icon: string
+  productCount: number
+  featured: boolean
+}
+
 export interface SoinVisageProduct {
   id: string
   name: string
@@ -10,8 +20,8 @@ export interface SoinVisageProduct {
   rating: number
   reviews: number
   inStock: boolean
-  isNew?: boolean
-  isOnSale?: boolean
+  isNew: boolean
+  isOnSale: boolean
   category: string
   subcategory: string
   skinType: string[]
@@ -30,6 +40,7 @@ export const soinVisageProducts: SoinVisageProduct[] = [
     rating: 4.5,
     reviews: 128,
     inStock: true,
+    isNew: false,
     isOnSale: true,
     category: 'soin-du-visage',
     subcategory: 'nettoyants',
@@ -47,6 +58,7 @@ export const soinVisageProducts: SoinVisageProduct[] = [
     reviews: 89,
     inStock: true,
     isNew: true,
+    isOnSale: false,
     category: 'soin-du-visage',
     subcategory: 'hydratants',
     skinType: ['mature', 'normale'],
@@ -62,6 +74,8 @@ export const soinVisageProducts: SoinVisageProduct[] = [
     rating: 4.3,
     reviews: 256,
     inStock: true,
+    isNew: false,
+    isOnSale: false,
     category: 'soin-du-visage',
     subcategory: 'serums',
     skinType: ['normale', 'mixte', 'grasse'],
@@ -77,6 +91,8 @@ export const soinVisageProducts: SoinVisageProduct[] = [
     rating: 4.2,
     reviews: 167,
     inStock: true,
+    isNew: false,
+    isOnSale: false,
     category: 'soin-du-visage',
     subcategory: 'masques',
     skinType: ['grasse', 'mixte'],
@@ -92,6 +108,8 @@ export const soinVisageProducts: SoinVisageProduct[] = [
     rating: 4.4,
     reviews: 94,
     inStock: true,
+    isNew: false,
+    isOnSale: false,
     category: 'soin-du-visage',
     subcategory: 'exfoliants',
     skinType: ['normale', 'mixte'],
@@ -107,6 +125,8 @@ export const soinVisageProducts: SoinVisageProduct[] = [
     rating: 4.6,
     reviews: 203,
     inStock: true,
+    isNew: false,
+    isOnSale: false,
     category: 'soin-du-visage',
     subcategory: 'hydratants',
     skinType: ['sensible', 'normale'],
@@ -122,6 +142,8 @@ export const soinVisageProducts: SoinVisageProduct[] = [
     rating: 4.5,
     reviews: 178,
     inStock: true,
+    isNew: false,
+    isOnSale: false,
     category: 'soin-du-visage',
     subcategory: 'serums',
     skinType: ['normale', 'sèche', 'mature'],
@@ -137,6 +159,8 @@ export const soinVisageProducts: SoinVisageProduct[] = [
     rating: 4.1,
     reviews: 145,
     inStock: true,
+    isNew: false,
+    isOnSale: false,
     category: 'soin-du-visage',
     subcategory: 'nettoyants',
     skinType: ['grasse', 'mixte'],
@@ -145,48 +169,60 @@ export const soinVisageProducts: SoinVisageProduct[] = [
   }
 ]
 
-export const soinVisageSubcategories = [
+export const soinVisageSubcategories: SoinVisageSubcategory[] = [
   {
     id: 'nettoyants',
     name: 'Nettoyants',
+    slug: 'nettoyants',
     description: 'Nettoyants doux et purifiants pour tous types de peau',
     icon: '🧼',
-    productCount: 2
+    productCount: 2,
+    featured: true
   },
   {
     id: 'hydratants',
     name: 'Hydratants',
+    slug: 'hydratants',
     description: 'Crèmes et lotions hydratantes pour une peau nourrie',
     icon: '💧',
-    productCount: 2
+    productCount: 2,
+    featured: true
   },
   {
     id: 'serums',
     name: 'Sérums',
+    slug: 'serums',
     description: 'Sérums concentrés pour des soins ciblés',
     icon: '✨',
-    productCount: 2
+    productCount: 2,
+    featured: true
   },
   {
     id: 'masques',
     name: 'Masques',
+    slug: 'masques',
     description: 'Masques de soin pour des traitements intensifs',
     icon: '🎭',
-    productCount: 1
+    productCount: 1,
+    featured: false
   },
   {
     id: 'exfoliants',
     name: 'Exfoliants',
+    slug: 'exfoliants',
     description: 'Gommages et exfoliants pour une peau lisse',
     icon: '🌊',
-    productCount: 1
+    productCount: 1,
+    featured: false
   },
   {
     id: 'anti-age',
     name: 'Anti-Âge',
+    slug: 'anti-age',
     description: 'Soins anti-âge pour préserver la jeunesse de votre peau',
     icon: '⏰',
-    productCount: 0
+    productCount: 0,
+    featured: false
   }
 ]
 

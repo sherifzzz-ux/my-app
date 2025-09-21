@@ -71,12 +71,15 @@ export default function SoinDuVisagePage() {
                 variant={selectedSubcategory === subcategory.id ? 'default' : 'outline'}
                 className="h-auto p-4 flex flex-col items-center gap-2"
                 onClick={() => setSelectedSubcategory(subcategory.id)}
+                asChild
               >
-                <span className="text-2xl">{subcategory.icon}</span>
-                <span className="text-sm font-medium">{subcategory.name}</span>
-                <Badge variant="secondary" className="text-xs">
-                  {subcategory.productCount}
-                </Badge>
+                <Link href={`/soin-du-visage/sous-categorie/${subcategory.slug}`}>
+                  <span className="text-2xl">{subcategory.icon}</span>
+                  <span className="text-sm font-medium">{subcategory.name}</span>
+                  <Badge variant="secondary" className="text-xs">
+                    {subcategory.productCount}
+                  </Badge>
+                </Link>
               </Button>
             ))}
           </div>
