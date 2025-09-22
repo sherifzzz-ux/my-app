@@ -12,12 +12,16 @@ const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-inter',
+  fallback: ['system-ui', 'arial'],
+  preload: false, // Désactiver le preload pour éviter les erreurs
 })
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-playfair',
+  fallback: ['serif', 'Times New Roman'],
+  preload: false, // Désactiver le preload pour éviter les erreurs
 })
 
 export const metadata: Metadata = {

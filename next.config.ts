@@ -17,6 +17,19 @@ const nextConfig: NextConfig = {
       { source: '/promotion', destination: '/promotions', permanent: true },
     ]
   },
+  experimental: {
+    optimizePackageImports: ['@radix-ui/react-icons'],
+  },
+  // Configuration pour gérer les erreurs de Google Fonts
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+      };
+    }
+    return config;
+  },
 };
 
 export default nextConfig;

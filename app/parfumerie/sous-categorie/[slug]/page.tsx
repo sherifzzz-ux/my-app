@@ -1,11 +1,17 @@
 import { notFound } from 'next/navigation'
 import { SubcategoryPage } from '@/components/category'
-import { corpsBainSubcategories, corpsBainProducts } from '@/lib/data/corps-bain'
+import { parfumerieSubcategories, parfumerieProducts } from '@/lib/data/parfumerie'
 
-export default async function EpilationPage() {
-  const slug = 'epilation'
-  
-  const subcategoryData = corpsBainSubcategories.find(
+interface SubcategoryPageProps {
+  params: Promise<{
+    slug: string
+  }>
+}
+
+export default async function ParfumerieSubcategoryPage({ params }: SubcategoryPageProps) {
+  const { slug } = await params
+
+  const subcategoryData = parfumerieSubcategories.find(
     sub => sub.slug === slug
   )
 
@@ -13,18 +19,18 @@ export default async function EpilationPage() {
     notFound()
   }
 
-  const subcategoryProducts = corpsBainProducts.filter(
+  const subcategoryProducts = parfumerieProducts.filter(
     product => product.subcategory === subcategoryData.id
   )
 
   const categoryData = {
-    id: 'corps-bain',
-    name: 'Corps & Bain',
-    description: 'Découvrez notre sélection de soins pour le corps et le bain',
-    icon: '🛁',
-    color: 'bg-blue-500',
-    subcategories: corpsBainSubcategories,
-    totalProducts: corpsBainProducts.length,
+    id: 'parfumerie',
+    name: 'Parfumerie',
+    description: 'Découvrez notre sélection de parfums et eaux de toilette',
+    icon: '🌸',
+    color: 'bg-rose-500',
+    subcategories: parfumerieSubcategories,
+    totalProducts: parfumerieProducts.length,
     featured: true
   }
 
@@ -36,7 +42,7 @@ export default async function EpilationPage() {
       content: 'Contenu du guide...',
       image: '/images/guides/guide-placeholder.jpg',
       readTime: 5,
-      category: 'corps-bain',
+      category: 'parfumerie',
       subcategory: subcategoryData.id,
       featured: true
     }
@@ -53,10 +59,10 @@ export default async function EpilationPage() {
   )
 }
 
-export async function generateMetadata() {
-  const slug = 'epilation'
+export async function generateMetadata({ params }: SubcategoryPageProps) {
+  const { slug } = await params
   
-  const subcategoryData = corpsBainSubcategories.find(
+  const subcategoryData = parfumerieSubcategories.find(
     sub => sub.slug === slug
   )
 
@@ -68,13 +74,19 @@ export async function generateMetadata() {
   }
 
   return {
-    title: `${subcategoryData.name} - Corps & Bain | Mami Shop`,
+    title: `${subcategoryData.name} - Parfumerie | Mami Shop`,
     description: subcategoryData.description,
-    keywords: [`${subcategoryData.name}`, 'corps & bain', 'beauté', 'soins'],
+    keywords: [`${subcategoryData.name}`, 'parfumerie', 'parfums', 'beauté'],
     openGraph: {
-      title: `${subcategoryData.name} - Corps & Bain`,
+      title: `${subcategoryData.name} - Parfumerie`,
       description: subcategoryData.description,
       type: 'website',
     },
   }
+}
+
+export async function generateStaticParams() {
+  return parfumerieSubcategories.map((subcategory) => ({
+    slug: subcategory.slug,
+  }))
 }

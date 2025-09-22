@@ -2,9 +2,15 @@ import { notFound } from 'next/navigation'
 import { SubcategoryPage } from '@/components/category'
 import { parapharmacieSubcategories, parapharmacieProducts } from '@/lib/data/parapharmacie'
 
-export default async function ComplementsPage() {
-  const slug = 'complements'
-  
+interface SubcategoryPageProps {
+  params: Promise<{
+    slug: string
+  }>
+}
+
+export default async function ParapharmacieSubcategoryPage({ params }: SubcategoryPageProps) {
+  const { slug } = await params
+
   const subcategoryData = parapharmacieSubcategories.find(
     sub => sub.slug === slug
   )
@@ -53,8 +59,8 @@ export default async function ComplementsPage() {
   )
 }
 
-export async function generateMetadata() {
-  const slug = 'complements'
+export async function generateMetadata({ params }: SubcategoryPageProps) {
+  const { slug } = await params
   
   const subcategoryData = parapharmacieSubcategories.find(
     sub => sub.slug === slug
@@ -77,4 +83,10 @@ export async function generateMetadata() {
       type: 'website',
     },
   }
+}
+
+export async function generateStaticParams() {
+  return parapharmacieSubcategories.map((subcategory) => ({
+    slug: subcategory.slug,
+  }))
 }

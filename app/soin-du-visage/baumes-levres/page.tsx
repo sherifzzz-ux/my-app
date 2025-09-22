@@ -2,15 +2,9 @@ import { notFound } from 'next/navigation'
 import { SubcategoryPage } from '@/components/category'
 import { soinVisageSubcategories, soinVisageProducts } from '@/lib/data/soin-visage'
 
-interface SubcategoryPageProps {
-  params: Promise<{
-    slug: string
-  }>
-}
-
-export default async function BaumesLevresPage({ params }: SubcategoryPageProps) {
-  const { slug } = await params
-
+export default async function BaumesLevresPage() {
+  const slug = 'baumes-levres'
+  
   const subcategoryData = soinVisageSubcategories.find(
     sub => sub.slug === slug
   )
@@ -59,8 +53,8 @@ export default async function BaumesLevresPage({ params }: SubcategoryPageProps)
   )
 }
 
-export async function generateMetadata({ params }: SubcategoryPageProps) {
-  const { slug } = await params
+export async function generateMetadata() {
+  const slug = 'baumes-levres'
   
   const subcategoryData = soinVisageSubcategories.find(
     sub => sub.slug === slug
@@ -83,10 +77,4 @@ export async function generateMetadata({ params }: SubcategoryPageProps) {
       type: 'website',
     },
   }
-}
-
-export async function generateStaticParams() {
-  return soinVisageSubcategories.map((subcategory) => ({
-    slug: subcategory.slug,
-  }))
 }

@@ -1,11 +1,17 @@
 import { notFound } from 'next/navigation'
 import { SubcategoryPage } from '@/components/category'
-import { corpsBainSubcategories, corpsBainProducts } from '@/lib/data/corps-bain'
+import { cheveuxSubcategories, cheveuxProducts } from '@/lib/data/cheveux'
 
-export default async function EpilationPage() {
-  const slug = 'epilation'
-  
-  const subcategoryData = corpsBainSubcategories.find(
+interface SubcategoryPageProps {
+  params: Promise<{
+    slug: string
+  }>
+}
+
+export default async function CheveuxSubcategoryPage({ params }: SubcategoryPageProps) {
+  const { slug } = await params
+
+  const subcategoryData = cheveuxSubcategories.find(
     sub => sub.slug === slug
   )
 
@@ -13,18 +19,18 @@ export default async function EpilationPage() {
     notFound()
   }
 
-  const subcategoryProducts = corpsBainProducts.filter(
+  const subcategoryProducts = cheveuxProducts.filter(
     product => product.subcategory === subcategoryData.id
   )
 
   const categoryData = {
-    id: 'corps-bain',
-    name: 'Corps & Bain',
-    description: 'Découvrez notre sélection de soins pour le corps et le bain',
-    icon: '🛁',
-    color: 'bg-blue-500',
-    subcategories: corpsBainSubcategories,
-    totalProducts: corpsBainProducts.length,
+    id: 'cheveux',
+    name: 'Cheveux',
+    description: 'Découvrez notre sélection de soins pour les cheveux',
+    icon: '💇',
+    color: 'bg-purple-500',
+    subcategories: cheveuxSubcategories,
+    totalProducts: cheveuxProducts.length,
     featured: true
   }
 
@@ -36,7 +42,7 @@ export default async function EpilationPage() {
       content: 'Contenu du guide...',
       image: '/images/guides/guide-placeholder.jpg',
       readTime: 5,
-      category: 'corps-bain',
+      category: 'cheveux',
       subcategory: subcategoryData.id,
       featured: true
     }
@@ -53,10 +59,10 @@ export default async function EpilationPage() {
   )
 }
 
-export async function generateMetadata() {
-  const slug = 'epilation'
+export async function generateMetadata({ params }: SubcategoryPageProps) {
+  const { slug } = await params
   
-  const subcategoryData = corpsBainSubcategories.find(
+  const subcategoryData = cheveuxSubcategories.find(
     sub => sub.slug === slug
   )
 
@@ -68,13 +74,19 @@ export async function generateMetadata() {
   }
 
   return {
-    title: `${subcategoryData.name} - Corps & Bain | Mami Shop`,
+    title: `${subcategoryData.name} - Cheveux | Mami Shop`,
     description: subcategoryData.description,
-    keywords: [`${subcategoryData.name}`, 'corps & bain', 'beauté', 'soins'],
+    keywords: [`${subcategoryData.name}`, 'cheveux', 'beauté', 'soins capillaires'],
     openGraph: {
-      title: `${subcategoryData.name} - Corps & Bain`,
+      title: `${subcategoryData.name} - Cheveux`,
       description: subcategoryData.description,
       type: 'website',
     },
   }
+}
+
+export async function generateStaticParams() {
+  return cheveuxSubcategories.map((subcategory) => ({
+    slug: subcategory.slug,
+  }))
 }

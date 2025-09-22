@@ -89,36 +89,36 @@ export function Header() {
     'CORPS & BAIN': {
       href: '/corps-bain',
       subcategories: [
-        { name: 'Soins Corps', href: '/corps-bain/soins-corps' },
-        { name: 'Bain & Douche', href: '/corps-bain/bain-douche' },
-        { name: 'Épilation', href: '/corps-bain/epilation' },
-        { name: 'Hygiène intime', href: '/corps-bain/hygiene-intime' },
-        { name: 'Mains & Pieds', href: '/corps-bain/mains-pieds' },
+        { name: 'Soins Corps', href: '/corps-bain/sous-categorie/soins-corps' },
+        { name: 'Bain & Douche', href: '/corps-bain/sous-categorie/bain-douche' },
+        { name: 'Épilation', href: '/corps-bain/sous-categorie/epilation' },
+        { name: 'Hygiène intime', href: '/corps-bain/sous-categorie/hygiene-intime' },
+        { name: 'Mains & Pieds', href: '/corps-bain/sous-categorie/mains-pieds' },
       ],
     },
     PARAPHARMACIE: {
       href: '/parapharmacie',
       subcategories: [
-        { name: 'Complément Alimentaire', href: '/parapharmacie/complements' },
-        { name: 'Soins du visage', href: '/parapharmacie/soins-visage' },
-        { name: 'Soins du corps', href: '/parapharmacie/soins-corps' },
+        { name: 'Complément Alimentaire', href: '/parapharmacie/sous-categorie/complements' },
+        { name: 'Soins du visage', href: '/parapharmacie/sous-categorie/soins-visage' },
+        { name: 'Soins du corps', href: '/parapharmacie/sous-categorie/soins-corps' },
       ],
     },
     CHEVEUX: {
       href: '/cheveux',
       subcategories: [
-        { name: 'Compléments alimentaires', href: '/cheveux/complements-alimentaires' },
-        { name: 'Routine capillaire', href: '/cheveux/routine-capillaire' },
-        { name: 'Soins cheveux', href: '/cheveux/soins-cheveux' },
+        { name: 'Compléments alimentaires', href: '/cheveux/sous-categorie/complements-alimentaires' },
+        { name: 'Routine capillaire', href: '/cheveux/sous-categorie/routine-capillaire' },
+        { name: 'Soins cheveux', href: '/cheveux/sous-categorie/soins-cheveux' },
       ],
     },
     PARFUMERIE: {
       href: '/parfumerie',
       subcategories: [
-        { name: 'Parfumerie Femmes', href: '/parfumerie/femmes' },
-        { name: 'Parfumerie Hommes', href: '/parfumerie/hommes' },
-        { name: 'Huile parfumé', href: '/parfumerie/huile-parfume' },
-        { name: 'Bougie parfumée', href: '/parfumerie/bougie-parfumee' },
+        { name: 'Parfumerie Femmes', href: '/parfumerie/sous-categorie/parfums-femme' },
+        { name: 'Parfumerie Hommes', href: '/parfumerie/sous-categorie/parfums-homme' },
+        { name: 'Eaux de toilette', href: '/parfumerie/sous-categorie/eaux-de-toilette' },
+        { name: 'Coffrets parfums', href: '/parfumerie/sous-categorie/coffrets-parfums' },
       ],
     },
     'GROSSESSE ET POST-PARTUM': {

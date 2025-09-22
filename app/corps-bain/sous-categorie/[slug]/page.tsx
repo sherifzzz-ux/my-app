@@ -2,9 +2,15 @@ import { notFound } from 'next/navigation'
 import { SubcategoryPage } from '@/components/category'
 import { corpsBainSubcategories, corpsBainProducts } from '@/lib/data/corps-bain'
 
-export default async function EpilationPage() {
-  const slug = 'epilation'
-  
+interface SubcategoryPageProps {
+  params: Promise<{
+    slug: string
+  }>
+}
+
+export default async function CorpsBainSubcategoryPage({ params }: SubcategoryPageProps) {
+  const { slug } = await params
+
   const subcategoryData = corpsBainSubcategories.find(
     sub => sub.slug === slug
   )
@@ -53,8 +59,8 @@ export default async function EpilationPage() {
   )
 }
 
-export async function generateMetadata() {
-  const slug = 'epilation'
+export async function generateMetadata({ params }: SubcategoryPageProps) {
+  const { slug } = await params
   
   const subcategoryData = corpsBainSubcategories.find(
     sub => sub.slug === slug
@@ -77,4 +83,10 @@ export async function generateMetadata() {
       type: 'website',
     },
   }
+}
+
+export async function generateStaticParams() {
+  return corpsBainSubcategories.map((subcategory) => ({
+    slug: subcategory.slug,
+  }))
 }
