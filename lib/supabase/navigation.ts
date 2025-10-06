@@ -67,7 +67,15 @@ export async function getCategoryMenuItems(): Promise<CategoryMenuItem[]> {
       throw new Error(`Erreur lors de la récupération des catégories: ${error.message}`)
     }
     
-    return categories?.map(cat => ({
+    const categoryRows = (categories || []) as unknown as Array<{
+      id: string;
+      name: string;
+      slug: string;
+      imageUrl?: string;
+      Subcategory?: Array<{ id: string; name: string; slug: string }>
+    }>
+    
+    return categoryRows.map(cat => ({
       id: cat.id,
       label: cat.name,
       href: `/categories/${cat.slug}`,
@@ -79,7 +87,7 @@ export async function getCategoryMenuItems(): Promise<CategoryMenuItem[]> {
         href: `/categories/${cat.slug}/${sub.slug}`,
         slug: sub.slug
       })) || []
-    })) || []
+    }))
     
   } catch (error) {
     console.error('Error in getCategoryMenuItems:', error)
@@ -125,12 +133,21 @@ export async function getCategoryMenuItemsWithCount(): Promise<CategoryMenuItem[
     }
     
     // Compter les produits par catégorie
-    const categoryCounts = productCounts?.reduce((acc, product) => {
+    const productCountRows = (productCounts || []) as unknown as Array<{ categoryId: string }>
+    const categoryCounts = productCountRows.reduce((acc, product) => {
       acc[product.categoryId] = (acc[product.categoryId] || 0) + 1
       return acc
-    }, {} as Record<string, number>) || {}
+    }, {} as Record<string, number>)
     
-    return categories?.map(cat => ({
+    const categoryRows = (categories || []) as unknown as Array<{
+      id: string;
+      name: string;
+      slug: string;
+      imageUrl?: string;
+      Subcategory?: Array<{ id: string; name: string; slug: string }>
+    }>
+    
+    return categoryRows.map(cat => ({
       id: cat.id,
       label: cat.name,
       href: `/categories/${cat.slug}`,
@@ -203,16 +220,24 @@ export async function getCategoryById(categoryId: string): Promise<CategoryMenuI
       return null
     }
     
+    const categoryRow = category as unknown as {
+      id: string;
+      name: string;
+      slug: string;
+      imageUrl?: string;
+      Subcategory?: Array<{ id: string; name: string; slug: string }>
+    }
+    
     return {
-      id: category.id,
-      label: category.name,
-      href: `/categories/${category.slug}`,
-      slug: category.slug,
-      imageUrl: category.imageUrl || undefined,
-      children: category.Subcategory?.map(sub => ({
+      id: categoryRow.id,
+      label: categoryRow.name,
+      href: `/categories/${categoryRow.slug}`,
+      slug: categoryRow.slug,
+      imageUrl: categoryRow.imageUrl || undefined,
+      children: categoryRow.Subcategory?.map(sub => ({
         id: sub.id,
         label: sub.name,
-        href: `/categories/${category.slug}/${sub.slug}`,
+        href: `/categories/${categoryRow.slug}/${sub.slug}`,
         slug: sub.slug
       })) || []
     }
@@ -240,12 +265,18 @@ export async function getSubcategoriesByCategoryId(categoryId: string): Promise<
       return []
     }
     
-    return subcategories?.map(sub => ({
+    const subcategoryRows = (subcategories || []) as unknown as Array<{
+      id: string;
+      name: string;
+      slug: string;
+    }>
+    
+    return subcategoryRows.map(sub => ({
       id: sub.id,
       label: sub.name,
       href: `/categories/${categoryId}/${sub.slug}`,
       slug: sub.slug
-    })) || []
+    }))
   } catch (error) {
     console.error('Error in getSubcategoriesByCategoryId:', error)
     return []
@@ -258,7 +289,7 @@ export async function getSubcategoriesByCategoryId(categoryId: string): Promise<
 export function createNavigationError(
   code: string, 
   message: string, 
-  details?: any
+  details?: unknown
 ): NavigationError {
   return {
     code,

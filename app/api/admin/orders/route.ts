@@ -35,8 +35,8 @@ export async function GET(req: Request) {
 	if (!orders || orders.length === 0) return NextResponse.json([])
 
 	// 2) Récupérer les profils correspondants et fusionner côté serveur
-	const userIds = Array.from(new Set(orders.map((o: any) => o.user_id).filter(Boolean)))
-	let profilesMap = new Map<string, { first_name: string | null; last_name: string | null }>()
+	const userIds = Array.from(new Set(orders.map((o: { user_id: string | null }) => o.user_id).filter(Boolean) as string[]))
+	const profilesMap = new Map<string, { first_name: string | null; last_name: string | null }>()
 	if (userIds.length > 0) {
 		const { data: profiles, error: profilesError } = await supabase
 			.from('profiles')
@@ -44,19 +44,19 @@ export async function GET(req: Request) {
 			.in('id', userIds)
 		if (profilesError) return NextResponse.json({ error: profilesError.message }, { status: 500 })
 		for (const p of profiles ?? []) {
-			profilesMap.set(p.id as string, { first_name: p.first_name as any, last_name: p.last_name as any })
+			profilesMap.set(p.id as string, { first_name: p.first_name, last_name: p.last_name })
 		}
 	}
 
-	let merged = orders.map((o: any) => ({
+	let merged = orders.map((o: { user_id: string | null; order_number: string }) => ({
 		...o,
-		profiles: profilesMap.get(o.user_id) ?? null,
+		profiles: o.user_id ? profilesMap.get(o.user_id) ?? null : null,
 	}))
 
   // Filtre recherche texte (client nom/prénom ou numéro commande)
   if (q) {
     const qLower = q.toLowerCase()
-    merged = merged.filter((o: any) =>
+    merged = merged.filter((o: { order_number: string; profiles?: { first_name?: string; last_name?: string } | null }) =>
       String(o.order_number || '').toLowerCase().includes(qLower) ||
       String(o.profiles?.first_name || '').toLowerCase().includes(qLower) ||
       String(o.profiles?.last_name || '').toLowerCase().includes(qLower)

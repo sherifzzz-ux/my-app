@@ -107,7 +107,7 @@ export interface NavigationConfig {
 export interface NavigationError {
   code: string
   message: string
-  details?: any
+  details?: unknown
   timestamp: Date
 }
 
@@ -116,5 +116,5 @@ export interface NavigationEvent {
   type: 'click' | 'hover' | 'focus' | 'blur'
   target: string
   timestamp: Date
-  metadata?: Record<string, any>
+  metadata?: Record<string, unknown>
 }

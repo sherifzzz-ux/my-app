@@ -38,6 +38,9 @@ model Category {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 
+  // Paramètres d'affichage
+  displaySettings Json?   @default("{}")
+
   products Product[]
   subcategories Subcategory[]
 }
@@ -65,6 +68,9 @@ model Product {
   isFeatured    Boolean   @default(false)
   rating        Float?    @default(0)
   stock         Int       @default(0)
+
+  // Paramètres d'affichage
+  displaySettings Json?   @default("{}")
 
   reviews   Review[]
   orderItems OrderItem[]

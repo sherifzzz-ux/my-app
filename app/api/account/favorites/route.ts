@@ -54,7 +54,7 @@ export async function GET(request: NextRequest) {
     if (favorites && favorites.length > 0) {
       const productIds = favorites.map(fav => fav.productId)
       const { data: products, error: productsError } = await supabase
-        .from('Product')
+        .from('Product' as any)
         .select(`
           id,
           name,
@@ -79,7 +79,7 @@ export async function GET(request: NextRequest) {
       }
 
       // Créer un map des produits pour un accès rapide
-      const productsMap = new Map(products?.map(p => [p.id, p]) || [])
+      const productsMap = new Map(products?.map((p: any) => [p.id, p]) || [])
 
       // Formater les données pour l'affichage
       const formattedFavorites = favorites.map(fav => {

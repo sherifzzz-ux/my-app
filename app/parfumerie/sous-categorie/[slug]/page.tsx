@@ -12,7 +12,7 @@ export default async function ParfumerieSubcategoryPage({ params }: SubcategoryP
   const { slug } = await params
 
   const subcategoryData = parfumerieSubcategories.find(
-    sub => sub.slug === slug
+    (sub: { slug: string }) => sub.slug === slug
   )
 
   if (!subcategoryData) {
@@ -20,7 +20,7 @@ export default async function ParfumerieSubcategoryPage({ params }: SubcategoryP
   }
 
   const subcategoryProducts = parfumerieProducts.filter(
-    product => product.subcategory === subcategoryData.id
+    (product: { subcategory: string }) => product.subcategory === subcategoryData.id
   )
 
   const categoryData = {
@@ -63,7 +63,7 @@ export async function generateMetadata({ params }: SubcategoryPageProps) {
   const { slug } = await params
   
   const subcategoryData = parfumerieSubcategories.find(
-    sub => sub.slug === slug
+    (sub: { slug: string }) => sub.slug === slug
   )
 
   if (!subcategoryData) {
@@ -86,7 +86,7 @@ export async function generateMetadata({ params }: SubcategoryPageProps) {
 }
 
 export async function generateStaticParams() {
-  return parfumerieSubcategories.map((subcategory) => ({
+  return parfumerieSubcategories.map((subcategory: { slug: string }) => ({
     slug: subcategory.slug,
   }))
 }

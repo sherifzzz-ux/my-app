@@ -12,7 +12,7 @@ export default async function ParapharmacieSubcategoryPage({ params }: Subcatego
   const { slug } = await params
 
   const subcategoryData = parapharmacieSubcategories.find(
-    sub => sub.slug === slug
+    (sub: { slug: string }) => sub.slug === slug
   )
 
   if (!subcategoryData) {
@@ -20,7 +20,7 @@ export default async function ParapharmacieSubcategoryPage({ params }: Subcatego
   }
 
   const subcategoryProducts = parapharmacieProducts.filter(
-    product => product.subcategory === subcategoryData.id
+    (product: { subcategory: string }) => product.subcategory === subcategoryData.id
   )
 
   const categoryData = {
@@ -63,7 +63,7 @@ export async function generateMetadata({ params }: SubcategoryPageProps) {
   const { slug } = await params
   
   const subcategoryData = parapharmacieSubcategories.find(
-    sub => sub.slug === slug
+    (sub: { slug: string }) => sub.slug === slug
   )
 
   if (!subcategoryData) {
@@ -86,7 +86,7 @@ export async function generateMetadata({ params }: SubcategoryPageProps) {
 }
 
 export async function generateStaticParams() {
-  return parapharmacieSubcategories.map((subcategory) => ({
+  return parapharmacieSubcategories.map((subcategory: { slug: string }) => ({
     slug: subcategory.slug,
   }))
 }

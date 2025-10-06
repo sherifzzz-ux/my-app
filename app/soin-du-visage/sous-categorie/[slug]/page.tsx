@@ -13,7 +13,7 @@ export default async function SoinDuVisageSubcategoryPage({ params }: Subcategor
 
   // Trouver la sous-catégorie correspondante
   const subcategoryData = soinVisageSubcategories.find(
-    sub => sub.slug === slug
+    (sub: { slug: string }) => sub.slug === slug
   )
 
   if (!subcategoryData) {
@@ -22,7 +22,7 @@ export default async function SoinDuVisageSubcategoryPage({ params }: Subcategor
 
   // Filtrer les produits pour cette sous-catégorie
   const subcategoryProducts = soinVisageProducts.filter(
-    product => product.subcategory === subcategoryData.id
+    (product: { subcategory: string }) => product.subcategory === subcategoryData.id
   )
 
   // Données de la catégorie parent
@@ -68,7 +68,7 @@ export async function generateMetadata({ params }: SubcategoryPageProps) {
   const { slug } = await params
   
   const subcategoryData = soinVisageSubcategories.find(
-    sub => sub.slug === slug
+    (sub: { slug: string }) => sub.slug === slug
   )
 
   if (!subcategoryData) {
@@ -92,7 +92,7 @@ export async function generateMetadata({ params }: SubcategoryPageProps) {
 
 // Générer les paramètres statiques pour toutes les sous-catégories
 export async function generateStaticParams() {
-  return soinVisageSubcategories.map((subcategory) => ({
+  return soinVisageSubcategories.map((subcategory: { slug: string }) => ({
     slug: subcategory.slug,
   }))
 }

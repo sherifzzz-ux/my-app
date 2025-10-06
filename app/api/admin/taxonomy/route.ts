@@ -19,9 +19,19 @@ export async function GET() {
 		// Récupérer toutes les données de taxonomie avec Prisma
 		const [categories, subcategories, brands] = await Promise.all([
 			prisma.category.findMany({
+				include: {
+					subcategories: {
+						orderBy: { name: 'asc' }
+					}
+				},
 				orderBy: { name: 'asc' }
 			}),
 			prisma.subcategory.findMany({
+				include: {
+					category: {
+						select: { id: true, name: true, slug: true }
+					}
+				},
 				orderBy: { name: 'asc' }
 			}),
 			prisma.brand.findMany({
