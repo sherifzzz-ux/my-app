@@ -18,7 +18,7 @@ async function getSubcategoryData(categorySlug: string, subcategorySlug: string)
     // Récupérer la catégorie
     console.log(`🔍 Recherche de la catégorie: ${categorySlug}`)
     const { data: category, error: categoryError } = await supabase
-      .from('Category')
+      .from('categories')
       .select('id, name, slug')
       .eq('slug', categorySlug)
       .single()
@@ -44,9 +44,9 @@ async function getSubcategoryData(categorySlug: string, subcategorySlug: string)
     // Récupérer toutes les sous-catégories de cette catégorie
     const categoryId: string = (category as unknown as { id: string }).id
     const { data: subcategories, error: subcategoriesError } = await supabase
-      .from('Subcategory')
-      .select('id, name, slug, categoryId')
-      .eq('categoryId', categoryId)
+      .from('subcategories')
+      .select('id, name, slug, category_id')
+      .eq('category_id', categoryId)
       .order('name')
 
     if (subcategoriesError) {
@@ -95,40 +95,40 @@ async function getProducts(categorySlug: string, subcategorySlug: string) {
     const supabase = createServiceSupabaseClient()
 
     const { data: products, error } = await supabase
-      .from('Product')
+      .from('products')
       .select(`
         id,
         name,
         description,
-        priceCents,
-        oldPriceCents,
-        imageUrl,
-        isFeatured,
+        price_cents,
+        old_price_cents,
+        image_url,
+        is_featured,
         stock,
         rating,
-        createdAt,
-        Category!inner (
+        created_at,
+        categories!inner (
           id,
           name,
           slug
         ),
-        Subcategory (
+        subcategories (
           id,
           name,
           slug
         ),
-        Brand (
+        brands (
           id,
           name,
           slug
         )
       `)
-      .eq('Category.slug', categorySlug)
-      .eq('Subcategory.slug', subcategorySlug)
+      .eq('categories.slug', categorySlug)
+      .eq('subcategories.slug', subcategorySlug)
       .gt('stock', 0)
-      .order('isFeatured', { ascending: false })
+      .order('is_featured', { ascending: false })
       .order('rating', { ascending: false })
-      .order('createdAt', { ascending: false })
+      .order('created_at', { ascending: false })
 
     if (error) {
       console.error('Erreur lors de la récupération des produits:', error)
@@ -285,7 +285,7 @@ export async function generateStaticParams() {
     const supabase = createServiceSupabaseClient()
     
     const { data: category } = await supabase
-      .from('Category')
+      .from('categories')
       .select('id')
       .eq('slug', 'corps-bain')
       .single()
@@ -293,9 +293,9 @@ export async function generateStaticParams() {
     if (!category) return []
     
     const { data: subcategories } = await supabase
-      .from('Subcategory')
+      .from('subcategories')
       .select('slug')
-      .eq('categoryId', category.id)
+      .eq('category_id', category.id)
     
     return subcategories?.map((subcategory) => ({
       slug: subcategory.slug,

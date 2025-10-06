@@ -41,71 +41,71 @@ export async function GET(req: Request) {
 	try {
 		const supabase = createServiceSupabaseClient()
 
-		// Construire la requête de base
-		let query = supabase
-			.from('Product')
-			.select(`
+	// Construire la requête de base
+	let query = supabase
+		.from('products')
+		.select(`
+			id,
+			name,
+			description,
+			price_cents,
+			old_price_cents,
+			image_url,
+			is_featured,
+			stock,
+			rating,
+			created_at,
+			updated_at,
+			category_id,
+			subcategory_id,
+			brand_id,
+			categories (
 				id,
 				name,
-				description,
-				priceCents,
-				oldPriceCents,
-				imageUrl,
-				isFeatured,
-				stock,
-				rating,
-				createdAt,
-				updatedAt,
-				categoryId,
-				subcategoryId,
-				brandId,
-				Category (
-					id,
-					name,
-					slug
-				),
-				Subcategory (
-					id,
-					name,
-					slug
-				),
-				Brand (
-					id,
-					name,
-					slug
-				)
-			`)
+				slug
+			),
+			subcategories (
+				id,
+				name,
+				slug
+			),
+			brands (
+				id,
+				name,
+				slug
+			)
+		`)
 
-		// Appliquer les filtres
-		if (q) {
-			query = query.or(`name.ilike.%${q}%,description.ilike.%${q}%`)
-		}
-		if (categoryId && categoryId !== 'all') {
-			query = query.eq('categoryId', categoryId)
-		}
-		if (subcategoryId && subcategoryId !== 'all') {
-			query = query.eq('subcategoryId', subcategoryId)
-		}
-		if (brandId && brandId !== 'all') {
-			query = query.eq('brandId', brandId)
-		}
-		if (featured && featured !== 'all') {
-			query = query.eq('isFeatured', featured === 'true')
-		}
-		
-		// Filtres de stock
-		if (lowStock === 'true') {
-			query = query.lte('stock', 5)
-		} else if (stockFilter === 'low') {
-			query = query.lte('stock', 5)
-		} else if (stockFilter === 'out') {
-			query = query.eq('stock', 0)
-		} else if (stockFilter === 'in') {
-			query = query.gt('stock', 0)
-		}
+	// Appliquer les filtres
+	if (q) {
+		query = query.or(`name.ilike.%${q}%,description.ilike.%${q}%`)
+	}
+	if (categoryId && categoryId !== 'all') {
+		query = query.eq('category_id', categoryId)
+	}
+	if (subcategoryId && subcategoryId !== 'all') {
+		query = query.eq('subcategory_id', subcategoryId)
+	}
+	if (brandId && brandId !== 'all') {
+		query = query.eq('brand_id', brandId)
+	}
+	if (featured && featured !== 'all') {
+		query = query.eq('is_featured', featured === 'true')
+	}
+	
+	// Filtres de stock
+	if (lowStock === 'true') {
+		query = query.lte('stock', 5)
+	} else if (stockFilter === 'low') {
+		query = query.lte('stock', 5)
+	} else if (stockFilter === 'out') {
+		query = query.eq('stock', 0)
+	} else if (stockFilter === 'in') {
+		query = query.gt('stock', 0)
+	}
 
-		// Trier par date de mise à jour
-		query = query.order('updatedAt', { ascending: false })
+	// Trier par date de mise à jour
+	query = query.order('updated_at', { ascending: false })
 
 		const { data: products, error } = await query
 
@@ -139,24 +139,24 @@ export async function POST(request: Request) {
 
 		const supabase = createServiceSupabaseClient()
 
-		// Vérifier que la catégorie existe
-		const { data: categoryExists } = await supabase
-			.from('Category')
-			.select('id')
-			.eq('id', validatedData.categoryId)
-			.single()
+	// Vérifier que la catégorie existe
+	const { data: categoryExists } = await supabase
+		.from('categories')
+		.select('id')
+		.eq('id', validatedData.categoryId)
+		.single()
 
 		if (!categoryExists) {
 			return NextResponse.json({ error: 'Catégorie invalide' }, { status: 400 })
 		}
 
-		// Vérifier que la sous-catégorie existe si fournie
-		if (validatedData.subcategoryId) {
-			const { data: subcategoryExists } = await supabase
-				.from('Subcategory')
-				.select('id')
-				.eq('id', validatedData.subcategoryId)
-				.eq('categoryId', validatedData.categoryId)
+	// Vérifier que la sous-catégorie existe si fournie
+	if (validatedData.subcategoryId) {
+		const { data: subcategoryExists } = await supabase
+			.from('subcategories')
+			.select('id')
+			.eq('id', validatedData.subcategoryId)
+			.eq('category_id', validatedData.categoryId)
 				.single()
 
 			if (!subcategoryExists) {
@@ -164,12 +164,12 @@ export async function POST(request: Request) {
 			}
 		}
 
-		// Vérifier que la marque existe si fournie
-		if (validatedData.brandId) {
-			const { data: brandExists } = await supabase
-				.from('Brand')
-				.select('id')
-				.eq('id', validatedData.brandId)
+	// Vérifier que la marque existe si fournie
+	if (validatedData.brandId) {
+		const { data: brandExists } = await supabase
+			.from('brands')
+			.select('id')
+			.eq('id', validatedData.brandId)
 				.single()
 
 			if (!brandExists) {
@@ -177,53 +177,53 @@ export async function POST(request: Request) {
 			}
 		}
 
-		// Créer le produit
-		const { data: product, error } = await supabase
-			.from('Product')
-			.insert([{
-				name: validatedData.name,
-				description: validatedData.description || null,
-				priceCents: validatedData.priceCents,
-				oldPriceCents: validatedData.oldPriceCents || null,
-				imageUrl: validatedData.imageUrl || null,
-				isFeatured: validatedData.isFeatured,
-				stock: validatedData.stock,
-				categoryId: validatedData.categoryId,
-				subcategoryId: validatedData.subcategoryId || null,
-				brandId: validatedData.brandId || null,
-				rating: validatedData.rating || 0,
-			}])
-			.select(`
+	// Créer le produit
+	const { data: product, error } = await supabase
+		.from('products')
+		.insert([{
+			name: validatedData.name,
+			description: validatedData.description || null,
+			price_cents: validatedData.priceCents,
+			old_price_cents: validatedData.oldPriceCents || null,
+			image_url: validatedData.imageUrl || null,
+			is_featured: validatedData.isFeatured,
+			stock: validatedData.stock,
+			category_id: validatedData.categoryId,
+			subcategory_id: validatedData.subcategoryId || null,
+			brand_id: validatedData.brandId || null,
+			rating: validatedData.rating || 0,
+		}])
+		.select(`
+			id,
+			name,
+			description,
+			price_cents,
+			old_price_cents,
+			image_url,
+			is_featured,
+			stock,
+			rating,
+			created_at,
+			updated_at,
+			category_id,
+			subcategory_id,
+			brand_id,
+			categories (
 				id,
 				name,
-				description,
-				priceCents,
-				oldPriceCents,
-				imageUrl,
-				isFeatured,
-				stock,
-				rating,
-				createdAt,
-				updatedAt,
-				categoryId,
-				subcategoryId,
-				brandId,
-				Category (
-					id,
-					name,
-					slug
-				),
-				Subcategory (
-					id,
-					name,
-					slug
-				),
-				Brand (
-					id,
-					name,
-					slug
-				)
-			`)
+				slug
+			),
+			subcategories (
+				id,
+				name,
+				slug
+			),
+			brands (
+				id,
+				name,
+				slug
+			)
+		`)
 			.single()
 
 		if (error) throw error
@@ -265,22 +265,22 @@ export async function DELETE(request: Request) {
 
 		const supabase = createServiceSupabaseClient()
 
-		// Vérifier que le produit existe
-		const { data: existingProduct } = await supabase
-			.from('Product')
-			.select('id, name')
-			.eq('id', id)
-			.single()
+	// Vérifier que le produit existe
+	const { data: existingProduct } = await supabase
+		.from('products')
+		.select('id, name')
+		.eq('id', id)
+		.single()
 
 		if (!existingProduct) {
 			return NextResponse.json({ error: 'Produit non trouvé' }, { status: 404 })
 		}
 
-		// Supprimer le produit
-		const { error } = await supabase
-			.from('Product')
-			.delete()
-			.eq('id', id)
+	// Supprimer le produit
+	const { error } = await supabase
+		.from('products')
+		.delete()
+		.eq('id', id)
 
 		if (error) throw error
 
