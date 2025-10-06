@@ -307,12 +307,12 @@ export async function generateStaticParams() {
     
     // Récupérer toutes les sous-catégories (sans relations)
     const { data: subcategories } = await supabase
-      .from('Subcategory')
-      .select('slug, categoryId')
+      .from('subcategories')
+      .select('slug, category_id')
 
     // Récupérer les catégories pour mapper id -> slug
     const { data: categories } = await supabase
-      .from('Category')
+      .from('categories')
       .select('id, slug')
 
     const categorySlugById: Record<string, string> = {}
@@ -322,9 +322,9 @@ export async function generateStaticParams() {
     }
 
     const params = []
-    const subcategoryRows = (subcategories || []) as unknown as Array<{ slug: string; categoryId: string }>
+    const subcategoryRows = (subcategories || []) as unknown as Array<{ slug: string; category_id: string }>
     for (const sub of subcategoryRows) {
-      const catSlug = categorySlugById[sub.categoryId]
+      const catSlug = categorySlugById[sub.category_id]
       if (catSlug) {
         params.push({
           categorySlug: catSlug,

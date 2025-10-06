@@ -56,7 +56,7 @@ export async function GET(req: Request) {
   // Filtre recherche texte (client nom/prénom ou numéro commande)
   if (q) {
     const qLower = q.toLowerCase()
-    merged = merged.filter((o: { order_number: string; profiles?: { first_name?: string; last_name?: string } | null }) =>
+    merged = merged.filter((o) =>
       String(o.order_number || '').toLowerCase().includes(qLower) ||
       String(o.profiles?.first_name || '').toLowerCase().includes(qLower) ||
       String(o.profiles?.last_name || '').toLowerCase().includes(qLower)
