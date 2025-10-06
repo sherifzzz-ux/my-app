@@ -25,10 +25,62 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  title: 'FlawlessBeauty - Parapharmacie en ligne & Cosmétiques',
+  title: 'Mami-Shop - Parapharmacie & Cosmétiques au Sénégal',
   description:
-    'Découvrez notre sélection de produits de beauté, cosmétiques et parapharmacie. Livraison gratuite dès 39€.',
-  generator: 'v0.app',
+    'Découvrez notre sélection de produits de beauté, cosmétiques et parapharmacie. Livraison rapide à Dakar (<24h) et dans toutes les régions du Sénégal. Paiement sécurisé par Wave, Orange Money et carte bancaire.',
+  keywords: 'parapharmacie, cosmétiques, beauté, Sénégal, Dakar, Wave, Orange Money, livraison rapide',
+  authors: [{ name: 'Mami-Shop' }],
+  creator: 'Mami-Shop',
+  publisher: 'Mami-Shop',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  metadataBase: new URL(process.env.NEXTAUTH_URL || 'http://localhost:3000'),
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    title: 'Mami-Shop - Parapharmacie & Cosmétiques au Sénégal',
+    description: 'Découvrez notre sélection de produits de beauté. Livraison rapide à Dakar (<24h). Paiement Wave, Orange Money.',
+    url: '/',
+    siteName: 'Mami-Shop',
+    locale: 'fr_SN',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Mami-Shop - Parapharmacie & Cosmétiques',
+    description: 'Livraison rapide au Sénégal. Paiement Wave, Orange Money.',
+  },
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 5,
+    userScalable: true,
+  },
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: dark)', color: '#0a0a0a' },
+  ],
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'Mami-Shop',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
 }
 
 export default function RootLayout({
