@@ -3,7 +3,7 @@
  * Basées sur la structure de la base de données existante
  */
 
-import { createClient } from '@/lib/supabase/client'
+import { createBrowserSupabaseClient } from '@/lib/supabase'
 import type { 
   CategoryMenuItem, 
   SubcategoryMenuItem, 
@@ -45,16 +45,16 @@ export const staticMenuItems: StaticMenuItem[] = [
  */
 export async function getCategoryMenuItems(): Promise<CategoryMenuItem[]> {
   try {
-    const supabase = createClient()
+    const supabase = createBrowserSupabaseClient()
     
     const { data: categories, error } = await supabase
-      .from('Category')
+      .from('categories')
       .select(`
         id,
         name,
         slug,
-        imageUrl,
-        Subcategory (
+        image_url,
+        subcategories (
           id,
           name,
           slug
@@ -71,8 +71,8 @@ export async function getCategoryMenuItems(): Promise<CategoryMenuItem[]> {
       id: string;
       name: string;
       slug: string;
-      imageUrl?: string;
-      Subcategory?: Array<{ id: string; name: string; slug: string }>
+      image_url?: string;
+      subcategories?: Array<{ id: string; name: string; slug: string }>
     }>
     
     return categoryRows.map(cat => ({
@@ -80,8 +80,8 @@ export async function getCategoryMenuItems(): Promise<CategoryMenuItem[]> {
       label: cat.name,
       href: `/categories/${cat.slug}`,
       slug: cat.slug,
-      imageUrl: cat.imageUrl || undefined,
-      children: cat.Subcategory?.map(sub => ({
+      imageUrl: cat.image_url || undefined,
+      children: cat.subcategories?.map(sub => ({
         id: sub.id,
         label: sub.name,
         href: `/categories/${cat.slug}/${sub.slug}`,
@@ -100,17 +100,17 @@ export async function getCategoryMenuItems(): Promise<CategoryMenuItem[]> {
  */
 export async function getCategoryMenuItemsWithCount(): Promise<CategoryMenuItem[]> {
   try {
-    const supabase = createClient()
+    const supabase = createBrowserSupabaseClient()
     
     // Récupérer les catégories avec le nombre de produits
     const { data: categories, error } = await supabase
-      .from('Category')
+      .from('categories')
       .select(`
         id,
         name,
         slug,
-        imageUrl,
-        Subcategory (
+        image_url,
+        subcategories (
           id,
           name,
           slug
@@ -125,17 +125,17 @@ export async function getCategoryMenuItemsWithCount(): Promise<CategoryMenuItem[
     
     // Récupérer le nombre de produits par catégorie
     const { data: productCounts, error: countError } = await supabase
-      .from('Product')
-      .select('categoryId')
+      .from('products')
+      .select('category_id')
     
     if (countError) {
       console.error('Error fetching product counts:', countError)
     }
     
     // Compter les produits par catégorie
-    const productCountRows = (productCounts || []) as unknown as Array<{ categoryId: string }>
+    const productCountRows = (productCounts || []) as unknown as Array<{ category_id: string }>
     const categoryCounts = productCountRows.reduce((acc, product) => {
-      acc[product.categoryId] = (acc[product.categoryId] || 0) + 1
+      acc[product.category_id] = (acc[product.category_id] || 0) + 1
       return acc
     }, {} as Record<string, number>)
     
@@ -143,8 +143,8 @@ export async function getCategoryMenuItemsWithCount(): Promise<CategoryMenuItem[
       id: string;
       name: string;
       slug: string;
-      imageUrl?: string;
-      Subcategory?: Array<{ id: string; name: string; slug: string }>
+      image_url?: string;
+      subcategories?: Array<{ id: string; name: string; slug: string }>
     }>
     
     return categoryRows.map(cat => ({
@@ -152,9 +152,9 @@ export async function getCategoryMenuItemsWithCount(): Promise<CategoryMenuItem[
       label: cat.name,
       href: `/categories/${cat.slug}`,
       slug: cat.slug,
-      imageUrl: cat.imageUrl || undefined,
+      imageUrl: cat.image_url || undefined,
       productCount: categoryCounts[cat.id] || 0,
-      children: cat.Subcategory?.map(sub => ({
+      children: cat.subcategories?.map(sub => ({
         id: sub.id,
         label: sub.name,
         href: `/categories/${cat.slug}/${sub.slug}`,
@@ -197,16 +197,16 @@ export async function getNavigationData(): Promise<NavigationData> {
  */
 export async function getCategoryById(categoryId: string): Promise<CategoryMenuItem | null> {
   try {
-    const supabase = createClient()
+    const supabase = createBrowserSupabaseClient()
     
     const { data: category, error } = await supabase
-      .from('Category')
+      .from('categories')
       .select(`
         id,
         name,
         slug,
-        imageUrl,
-        Subcategory (
+        image_url,
+        subcategories (
           id,
           name,
           slug
@@ -224,8 +224,8 @@ export async function getCategoryById(categoryId: string): Promise<CategoryMenuI
       id: string;
       name: string;
       slug: string;
-      imageUrl?: string;
-      Subcategory?: Array<{ id: string; name: string; slug: string }>
+      image_url?: string;
+      subcategories?: Array<{ id: string; name: string; slug: string }>
     }
     
     return {
@@ -233,8 +233,8 @@ export async function getCategoryById(categoryId: string): Promise<CategoryMenuI
       label: categoryRow.name,
       href: `/categories/${categoryRow.slug}`,
       slug: categoryRow.slug,
-      imageUrl: categoryRow.imageUrl || undefined,
-      children: categoryRow.Subcategory?.map(sub => ({
+      imageUrl: categoryRow.image_url || undefined,
+      children: categoryRow.subcategories?.map(sub => ({
         id: sub.id,
         label: sub.name,
         href: `/categories/${categoryRow.slug}/${sub.slug}`,
@@ -252,12 +252,12 @@ export async function getCategoryById(categoryId: string): Promise<CategoryMenuI
  */
 export async function getSubcategoriesByCategoryId(categoryId: string): Promise<SubcategoryMenuItem[]> {
   try {
-    const supabase = createClient()
+    const supabase = createBrowserSupabaseClient()
     
     const { data: subcategories, error } = await supabase
-      .from('Subcategory')
+      .from('subcategories')
       .select('id, name, slug')
-      .eq('categoryId', categoryId)
+      .eq('category_id', categoryId)
       .order('name', { ascending: true })
     
     if (error) {

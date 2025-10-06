@@ -165,7 +165,10 @@ async function getProducts(categorySlug: string, subcategorySlug: string) {
       stock: product.stock,
       isFeatured: product.isFeatured,
       category: product.Category?.name || '',
-      subcategory: product.Subcategory?.name || ''
+      subcategory: product.Subcategory?.name || '',
+      isNew: false,
+      isOnSale: !!product.oldPriceCents,
+      tags: []
     }))
   } catch (error) {
     console.error('Erreur lors de la récupération des produits:', error)
