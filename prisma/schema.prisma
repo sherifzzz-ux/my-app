@@ -5,14 +5,36 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
 }
 
 enum OrderStatus {
-  PENDING
-  PAID
-  SHIPPED
-  CANCELLED
+  PENDING      // En attente de paiement
+  CONFIRMED    // Confirmée (payée)
+  PROCESSING   // En préparation
+  SHIPPED      // Expédiée
+  DELIVERED    // Livrée
+  CANCELLED    // Annulée
+}
+
+enum PaymentStatus {
+  PENDING      // En attente
+  PROCESSING   // En cours
+  PAID         // Payé
+  FAILED       // Échoué
+  CANCELLED    // Annulé
+  REFUNDED     // Remboursé
+}
+
+enum PaymentMethod {
+  ORANGE_MONEY
+  WAVE
+  CARD
+}
+
+enum ShippingZone {
+  DAKAR
+  THIES
+  AUTRE
 }
 
 model User {
@@ -113,16 +135,44 @@ model Review {
 }
 
 model Order {
-  id        String       @id @default(cuid())
-  status    OrderStatus  @default(PENDING)
-  totalCents Int         @default(0)
-  createdAt DateTime     @default(now())
-  updatedAt DateTime     @updatedAt
-
-  user   User   @relation(fields: [userId], references: [id])
-  userId String
-
-  items  OrderItem[]
+  id           String       @id @default(cuid())
+  orderNumber  String       @unique @default(cuid())
+  
+  // User optionnel (guest checkout)
+  userId       String?
+  user         User?        @relation(fields: [userId], references: [id])
+  
+  // Infos guest (si pas connecté)
+  guestEmail   String?
+  guestName    String?
+  guestPhone   String?
+  
+  // Adresse de livraison
+  shippingName     String
+  shippingPhone    String
+  shippingAddress  String
+  shippingCity     String
+  shippingZone     ShippingZone  @default(DAKAR)
+  shippingFees     Int           @default(0)
+  
+  // Paiement
+  paymentMethod    PaymentMethod @default(ORANGE_MONEY)
+  paymentStatus    PaymentStatus @default(PENDING)
+  paytechToken     String?
+  paytechRef       String?
+  
+  // Totaux
+  subtotalCents    Int
+  shippingCents    Int
+  totalCents       Int
+  
+  // Statuts
+  status           OrderStatus   @default(PENDING)
+  
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  
+  items            OrderItem[]
 }
 
 model OrderItem {
