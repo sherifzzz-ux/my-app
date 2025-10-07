@@ -1,106 +1,162 @@
+/**
+ * Checkout Page
+ * Multi-step checkout flow with PayTech integration
+ */
+
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { useSession } from 'next-auth/react'
 import { useCart } from '@/hooks/use-cart'
+import { useCheckout } from '@/hooks/use-checkout'
+import { createOrder } from '@/server/actions/checkout'
+import { CheckoutLayout } from '@/components/checkout/CheckoutLayout'
+import { CheckoutSteps } from '@/components/checkout/CheckoutSteps'
+import { CheckoutCart } from '@/components/checkout/CheckoutCart'
+import { CustomerInfoForm } from '@/components/checkout/CustomerInfoForm'
+import { ShippingSelector } from '@/components/checkout/ShippingSelector'
+import { PaymentMethodSelector } from '@/components/checkout/PaymentMethodSelector'
+import { CheckoutSummary } from '@/components/checkout/CheckoutSummary'
 import { Button } from '@/components/ui/button'
-import { formatCFA } from '@/lib/utils'
+import { Card, CardContent } from '@/components/ui/card'
+import Link from 'next/link'
+import { ShoppingBag } from 'lucide-react'
 
 export default function CheckoutPage() {
-  const { items, clear } = useCart()
-  const [loading, setLoading] = useState(false)
-  const [customer, setCustomer] = useState({ name: '', phone: '', city: '', addressLine1: '' })
-  const [status, setStatus] = useState<'idle' | 'success' | 'canceled'>('idle')
-  const totalCents = items.reduce((sum, i) => sum + i.priceCents * i.quantity, 0)
+  const router = useRouter()
+  const { data: session } = useSession()
+  const { items, clear: clearCart } = useCart()
+  const { step, goToStep, nextStep, previousStep, customer, shipping, payment, reset } = useCheckout()
+  const [isLoading, setIsLoading] = useState(false)
 
-  async function startPayment() {
-    setLoading(true)
+  // Redirect to cart if empty
+  useEffect(() => {
+    if (items.length === 0 && step !== 1) {
+      router.push('/cart')
+    }
+  }, [items.length, step, router])
+
+  // Handle checkout submission
+  const handleSubmit = async () => {
+    setIsLoading(true)
+
     try {
-      const res = await fetch('/api/checkout/session', {
+      // 1. Create order
+      const result = await createOrder({
+        customer,
+        shipping,
+        payment,
+        termsAccepted: true,
+        items: items.map((item) => ({
+          productId: item.id,
+          name: item.name,
+          quantity: item.quantity,
+          priceCents: item.priceCents,
+        })),
+      })
+
+      if (!result.success || !result.orderId) {
+        throw new Error(result.error || 'Failed to create order')
+      }
+
+      // 2. Create PayTech session
+      const sessionResponse = await fetch('/api/paytech/session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ items, customer }),
+        body: JSON.stringify({ orderId: result.orderId }),
       })
-      const data = await res.json()
-      if (!res.ok) throw new Error(data?.error || 'Erreur de paiement')
-      if (data.url) window.location.href = data.url as string
-    } catch (e) {
-      console.error(e)
-      alert('Le paiement a échoué. Veuillez réessayer.')
-    } finally {
-      setLoading(false)
+
+      if (!sessionResponse.ok) {
+        throw new Error('Failed to create payment session')
+      }
+
+      const sessionData = await sessionResponse.json()
+
+      if (!sessionData.redirectUrl) {
+        throw new Error('No redirect URL received')
+      }
+
+      // 3. Clear cart and checkout state
+      clearCart()
+      reset()
+
+      // 4. Redirect to PayTech
+      window.location.href = sessionData.redirectUrl
+    } catch (error) {
+      console.error('Checkout error:', error)
+      alert(
+        error instanceof Error
+          ? error.message
+          : 'Une erreur est survenue. Veuillez réessayer.'
+      )
+      setIsLoading(false)
     }
   }
 
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search)
-    if (params.get('success') === '1') {
-      setStatus('success')
-      clear()
-    } else if (params.get('canceled') === '1') {
-      setStatus('canceled')
-    }
-  }, [clear])
+  // Empty cart message
+  if (items.length === 0) {
+    return (
+      <CheckoutLayout>
+        <div className="max-w-2xl mx-auto py-12">
+          <Card>
+            <CardContent className="py-12 text-center space-y-6">
+              <div className="flex justify-center">
+                <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center">
+                  <ShoppingBag className="w-8 h-8 text-muted-foreground" />
+                </div>
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold mb-2">Votre panier est vide</h2>
+                <p className="text-muted-foreground">
+                  Ajoutez des produits à votre panier pour passer commande
+                </p>
+              </div>
+              <Button asChild size="lg">
+                <Link href="/catalog">Continuer les achats</Link>
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      </CheckoutLayout>
+    )
+  }
 
   return (
-    <div className="mx-auto max-w-3xl px-4 md:px-6 py-8">
-      <h1 className="text-2xl font-semibold mb-6">Paiement</h1>
-      {status === 'success' ? (
-        <div className="rounded-xl border p-6">
-          <h2 className="text-lg font-semibold mb-2">Merci pour votre commande !</h2>
-          <p className="text-sm text-muted-foreground">
-            Votre paiement a été confirmé. Un email de confirmation vous sera envoyé.
-          </p>
+    <CheckoutLayout>
+      {/* Progress bar */}
+      <CheckoutSteps currentStep={step} />
+
+      {/* Content */}
+      <div className="grid lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        {/* Main content */}
+        <div className="lg:col-span-2">
+          {step === 1 && <CheckoutCart onNext={nextStep} />}
+          {step === 2 && (
+            <CustomerInfoForm
+              onNext={nextStep}
+              onBack={previousStep}
+            />
+          )}
+          {step === 3 && (
+            <ShippingSelector
+              onNext={nextStep}
+              onBack={previousStep}
+            />
+          )}
+          {step === 4 && (
+            <PaymentMethodSelector
+              onBack={previousStep}
+              onSubmit={handleSubmit}
+            />
+          )}
         </div>
-      ) : items.length === 0 ? (
-        <div className="text-sm text-muted-foreground">Votre panier est vide.</div>
-      ) : (
-        <div className="space-y-6">
-          <div className="rounded-xl border p-4">
-            <h2 className="font-medium mb-3">Adresse et contact</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <input
-                className="h-10 rounded-md border border-input bg-background px-3 text-sm"
-                placeholder="Nom complet"
-                value={customer.name}
-                onChange={(e) => setCustomer({ ...customer, name: e.target.value })}
-              />
-              <input
-                className="h-10 rounded-md border border-input bg-background px-3 text-sm"
-                placeholder="Téléphone"
-                value={customer.phone}
-                onChange={(e) => setCustomer({ ...customer, phone: e.target.value })}
-              />
-              <input
-                className="h-10 rounded-md border border-input bg-background px-3 text-sm"
-                placeholder="Ville"
-                value={customer.city}
-                onChange={(e) => setCustomer({ ...customer, city: e.target.value })}
-              />
-              <input
-                className="h-10 rounded-md border border-input bg-background px-3 text-sm md:col-span-2"
-                placeholder="Adresse"
-                value={customer.addressLine1}
-                onChange={(e) => setCustomer({ ...customer, addressLine1: e.target.value })}
-              />
-            </div>
-          </div>
-          <div className="rounded-xl border p-4">
-            <h2 className="font-medium mb-3">Récapitulatif</h2>
-            <div className="flex items-center justify-between text-sm">
-              <div>Total</div>
-              <div className="font-medium">{formatCFA(totalCents)}</div>
-            </div>
-            <Button className="mt-4 w-full" onClick={startPayment} disabled={loading}>
-              {loading ? 'Redirection vers le paiement...' : 'Payer avec Stripe'}
-            </Button>
-            {status === 'canceled' ? (
-              <div className="text-xs text-red-600 mt-2">
-                Paiement annulé. Vous pouvez réessayer.
-              </div>
-            ) : null}
-          </div>
+
+        {/* Sidebar summary */}
+        <div className="lg:col-span-1">
+          <CheckoutSummary />
         </div>
-      )}
-    </div>
+      </div>
+    </CheckoutLayout>
   )
 }
