@@ -6,6 +6,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -169,9 +170,9 @@ export function CustomerInfoForm({ onNext, onBack }: CustomerInfoFormProps) {
             <div className="pt-4 border-t">
               <p className="text-sm text-muted-foreground">
                 💡 Vous avez déjà un compte ?{' '}
-                <a href="/login" className="text-primary hover:underline">
+                <Link href="/login" className="text-primary hover:underline">
                   Connectez-vous
-                </a>
+                </Link>
               </p>
             </div>
           )}
