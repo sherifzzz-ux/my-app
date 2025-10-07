@@ -3,6 +3,9 @@ import { PromoProduct } from '@/types/promo'
 import { calculateDiscountPercentage, calculateSavings } from '@/lib/utils/price-utils'
 import { createServerSupabaseClient } from '@/lib/supabase'
 
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
+
 type RawProductRow = {
   id: string | number
   name?: string

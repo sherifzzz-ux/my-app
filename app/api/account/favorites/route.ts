@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import { auth } from '@/lib/auth'
 import { createServiceSupabaseClient } from '@/lib/supabase'
 
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
+
 // Définir les types pour les données Supabase
 interface Product {
   id: string
