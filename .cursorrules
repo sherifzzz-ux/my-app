@@ -139,10 +139,15 @@
   - [X] Ajout/suppression/mise à jour quantités
   - [X] Persistance (Zustand + storage)
   - [X] État vide: message + CTA "Continuer les achats"
-- [X] Checkout:
-  - [X] Adresse et livraison (formulaire de base)
-  - [X] Paiement Stripe (création de session + webhook)
-  - [X] Confirmation de commande
+- [ ] Checkout (REFONTE EN COURS):
+  - [X] Adresse et livraison (formulaire de base - Stripe)
+  - [ ] Migration vers PayTech (Orange Money, Wave, CB)
+  - [ ] Guest checkout (commande sans connexion)
+  - [ ] Flow multi-étapes (panier → infos → livraison → paiement)
+  - [ ] Calcul frais de livraison par zone (Dakar, Thiès, Autres)
+  - [ ] Intégration webhook PayTech (IPN)
+  - [ ] Page de confirmation avec vérification paiement
+  - [ ] Emails de confirmation
 - [X] Espace utilisateur:
   - [X] Historique commandes (listing de base)
   - [X] Profil et adresses (édition profil + CRUD adresses)
@@ -298,7 +303,26 @@
 
 ### 11. FONCTIONNALITÉS MANQUANTES POUR 100% FONCTIONNEL [ ]
 
-#### A. Contenu dynamique des pages catégories [ ]
+#### A. Checkout PayTech (PRIORITÉ 1) [ ]
+- [ ] Configurer PayTech (API key, secret, URLs)
+- [ ] Mettre à jour schéma Prisma (guest checkout, zones livraison)
+- [ ] Créer composants checkout multi-étapes
+  - [ ] CheckoutLayout avec barre de progression
+  - [ ] CustomerInfoForm (guest + connecté)
+  - [ ] ShippingSelector (zones + frais)
+  - [ ] PaymentMethodSelector (Orange Money, Wave, CB)
+- [ ] Implémenter API routes PayTech
+  - [ ] POST /api/paytech/session (créer session)
+  - [ ] POST /api/paytech/webhook (IPN)
+  - [ ] GET /api/paytech/verify (vérifier paiement)
+- [ ] Créer server actions
+  - [ ] createGuestOrder()
+  - [ ] updateOrderStatus()
+  - [ ] sendOrderConfirmation()
+- [ ] Tester flow complet (guest + user)
+- [ ] Configurer emails de confirmation
+
+#### B. Contenu dynamique des pages catégories [ ]
 - [ ] Implémenter le contenu dynamique pour toutes les pages de catégories
 - [ ] Remplacer les placeholders "Contenu catégorie à venir" par du vrai contenu
 - [ ] Intégrer les produits par catégorie avec filtres et tri
