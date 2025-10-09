@@ -147,11 +147,61 @@ Résultat attendu :
 
 ## 🎯 Après l'exécution
 
-Une fois ces commandes exécutées :
+Une fois **TOUTES** ces commandes exécutées (y compris l'ÉTAPE 6 sur userId) :
 
 1. ✅ L'erreur `The column orderNumber does not exist` sera résolue
-2. ✅ Le checkout fonctionnera normalement
-3. ✅ Les commandes pourront être créées avec tous les champs nécessaires
+2. ✅ L'erreur `Null constraint violation on userId` sera résolue
+3. ✅ Le guest checkout fonctionnera (commandes sans compte utilisateur)
+4. ✅ Le checkout fonctionnera normalement pour les utilisateurs connectés
+5. ✅ Les commandes pourront être créées avec tous les champs nécessaires
+
+---
+
+---
+
+## 📋 ÉTAPE 6 : Rendre userId nullable (GUEST CHECKOUT)
+
+**⚠️ IMPORTANT** : Cette étape est **CRITIQUE** pour permettre le guest checkout !
+
+```sql
+-- Supprimer la contrainte de clé étrangère
+ALTER TABLE "Order" 
+DROP CONSTRAINT IF EXISTS "Order_userId_fkey";
+
+-- Rendre userId nullable
+ALTER TABLE "Order" 
+ALTER COLUMN "userId" DROP NOT NULL;
+
+-- Recréer la contrainte FK avec ON DELETE SET NULL
+ALTER TABLE "Order" 
+ADD CONSTRAINT "Order_userId_fkey" 
+FOREIGN KEY ("userId") 
+REFERENCES "User"("id") 
+ON DELETE SET NULL 
+ON UPDATE CASCADE;
+```
+
+---
+
+## 📋 ÉTAPE 7 : Vérifier userId nullable
+
+```sql
+SELECT 
+  column_name,
+  data_type,
+  is_nullable,
+  column_default
+FROM information_schema.columns
+WHERE table_name = 'Order' AND column_name = 'userId';
+```
+
+**Résultat attendu** :
+```
+column_name | data_type | is_nullable | column_default
+userId      | text      | YES         | null
+```
+
+✅ Si `is_nullable = YES`, le guest checkout est maintenant possible !
 
 ---
 

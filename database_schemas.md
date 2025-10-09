@@ -53,7 +53,7 @@
 | totalCents | integer | null | 0 | NO |
 | createdAt | timestamp | null | CURRENT_TIMESTAMP | NO |
 | updatedAt | timestamp | null | null | NO |
-| userId | text | null | null | NO |
+| userId | text | null | null | YES (nullable pour guest checkout) |
 
 ### Contraintes
 
