@@ -58,6 +58,7 @@ interface ProductListProps {
 	onView: (id: string) => void;
 	onExport: () => void;
 	onImport: (file: File) => void;
+	onFixImages?: () => void;
 }
 
 export function ProductList({ 
@@ -68,7 +69,8 @@ export function ProductList({
 	onDelete, 
 	onView, 
 	onExport, 
-	onImport 
+	onImport,
+	onFixImages
 }: ProductListProps) {
 	const { toast } = useToast();
 	const [searchTerm, setSearchTerm] = useState('');
@@ -184,21 +186,28 @@ export function ProductList({
 							Exporter CSV
 						</Button>
 						
-						<label className="inline-flex items-center gap-2 border rounded-lg px-3 py-2 cursor-pointer hover:bg-muted transition-colors">
-							<Upload className="h-4 w-4" />
-							<span className="text-sm font-medium">Importer CSV</span>
-							<input 
-								type="file" 
-								accept=".csv" 
-								className="hidden" 
-								onChange={handleFileImport}
-							/>
-						</label>
-						
-						<Button onClick={() => onEdit({} as Product)} size="sm">
-							<Plus className="h-4 w-4 mr-2" />
-							Ajouter
+					<label className="inline-flex items-center gap-2 border rounded-lg px-3 py-2 cursor-pointer hover:bg-muted transition-colors">
+						<Upload className="h-4 w-4" />
+						<span className="text-sm font-medium">Importer CSV</span>
+						<input 
+							type="file" 
+							accept=".csv" 
+							className="hidden" 
+							onChange={handleFileImport}
+						/>
+					</label>
+					
+					{onFixImages && (
+						<Button onClick={onFixImages} variant="outline" size="sm" title="Corriger les images manquantes en base de données">
+							<AlertTriangle className="h-4 w-4 mr-2" />
+							Corriger Images
 						</Button>
+					)}
+					
+					<Button onClick={() => onEdit({} as Product)} size="sm">
+						<Plus className="h-4 w-4 mr-2" />
+						Ajouter
+					</Button>
 					</div>
 				</div>
 

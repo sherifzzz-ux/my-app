@@ -234,6 +234,34 @@ export function AdminProducts() {
 		window.open(`/product/${id}`, '_blank');
 	};
 
+	// Corriger les images manquantes
+	const fixImages = async () => {
+		try {
+			const res = await fetch('/api/admin/fix-images', {
+				method: 'POST',
+				credentials: 'include',
+			});
+
+			if (!res.ok) throw new Error('Erreur lors de la correction des images');
+			
+			const data = await res.json();
+			
+			toast({ 
+				title: 'Succès', 
+				description: `${data.results?.length || 0} images corrigées`,
+			});
+			
+			// Recharger les produits pour voir les changements
+			await loadProducts();
+		} catch (error) {
+			toast({ 
+				title: 'Erreur', 
+				description: 'Impossible de corriger les images', 
+				variant: 'error' 
+			});
+		}
+	};
+
 	// Charger les données au montage
 	useEffect(() => {
 		loadTaxonomy();
@@ -263,6 +291,7 @@ export function AdminProducts() {
 				onView={viewProduct}
 				onExport={exportCsv}
 				onImport={importCsv}
+				onFixImages={fixImages}
 			/>
 		</div>
 	);

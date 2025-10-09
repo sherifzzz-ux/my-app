@@ -51,7 +51,7 @@ export const shippingSchema = z.object({
  * Payment information schema
  */
 export const paymentSchema = z.object({
-  method: z.enum(['ORANGE_MONEY', 'WAVE', 'CARD']),
+  method: z.enum(['ORANGE_MONEY', 'WAVE', 'CARD', 'CASH_ON_DELIVERY']),
 })
 
 /**
