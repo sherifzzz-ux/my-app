@@ -141,6 +141,7 @@ export const useCheckout = create<CheckoutState>()(
             // Customer info step
             return !!(
               state.customer.email &&
+              state.customer.name &&
               state.customer.firstName &&
               state.customer.lastName &&
               state.customer.phone &&
@@ -148,6 +149,7 @@ export const useCheckout = create<CheckoutState>()(
               state.customer.quartier &&
               state.customer.adresseDetaillee &&
               state.customer.email.includes('@') &&
+              state.customer.name.length >= 3 &&
               state.customer.firstName.length >= 2 &&
               state.customer.lastName.length >= 2 &&
               state.customer.phone.length >= 9 &&
