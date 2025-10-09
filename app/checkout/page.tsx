@@ -79,8 +79,13 @@ export default function CheckoutPage() {
           const errorData = await sessionResponse.json()
           
           if (sessionResponse.status === 503) {
+            // PayTech n'est pas configuré - suggérer le paiement à la livraison
+            const fallbackMessage = errorData.fallbackMessage 
+              ? `\n\n${errorData.fallbackMessage}`
+              : '\n\nVous pouvez utiliser le paiement à la livraison pour finaliser votre commande.'
+            
             throw new Error(
-              'Le système de paiement n\'est pas disponible pour le moment. Veuillez réessayer plus tard ou contacter le support.'
+              (errorData.details || 'Le système de paiement n\'est pas disponible pour le moment.') + fallbackMessage
             )
           }
           
@@ -109,10 +114,21 @@ export default function CheckoutPage() {
         ? error.message
         : 'Une erreur est survenue. Veuillez réessayer.'
       
+      // Afficher un toast avec un message plus long pour les erreurs de configuration
       toast.error('Erreur de paiement', {
         description: errorMessage,
-        duration: 5000,
+        duration: 10000, // 10 secondes pour lire le message
       })
+      
+      // Si c'est une erreur de configuration PayTech, suggérer automatiquement le paiement à la livraison
+      if (errorMessage.includes('paiement à la livraison')) {
+        setTimeout(() => {
+          toast.info('💡 Suggestion', {
+            description: 'Sélectionnez "Paiement à la livraison" pour finaliser votre commande immédiatement.',
+            duration: 8000,
+          })
+        }, 1000)
+      }
       
       setIsLoading(false)
     }
