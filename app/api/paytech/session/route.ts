@@ -16,11 +16,19 @@ export async function POST(req: NextRequest) {
     const configValidation = validatePaytechConfig()
     if (!configValidation.valid) {
       console.error('PayTech configuration errors:', configValidation.errors)
+      
+      // Message plus explicite pour l'utilisateur
+      const userMessage = process.env.NODE_ENV === 'development'
+        ? `Configuration PayTech manquante : ${configValidation.errors.join(', ')}. Consultez le fichier VERCEL_SETUP.md pour configurer les variables d'environnement.`
+        : 'Le système de paiement en ligne n\'est pas disponible actuellement. Veuillez utiliser le paiement à la livraison ou contacter le support.'
+      
       return NextResponse.json(
         { 
           error: 'Payment system not configured', 
-          details: 'PayTech credentials are missing. Please contact support.',
-          configErrors: process.env.NODE_ENV === 'development' ? configValidation.errors : undefined
+          details: userMessage,
+          configErrors: process.env.NODE_ENV === 'development' ? configValidation.errors : undefined,
+          fallbackAvailable: true,
+          fallbackMessage: 'Vous pouvez utiliser le paiement à la livraison pour finaliser votre commande.'
         },
         { status: 503 }
       )
