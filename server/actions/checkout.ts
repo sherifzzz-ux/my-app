@@ -266,6 +266,132 @@ export async function getUserOrders() {
 }
 
 /**
+ * Update product stock after order
+ */
+export async function updateProductStock(orderId: string) {
+  try {
+    const order = await prisma.order.findUnique({
+      where: { id: orderId },
+      include: {
+        items: {
+          include: {
+            product: true,
+          },
+        },
+      },
+    })
+
+    if (!order) {
+      return { success: false, error: 'Order not found' }
+    }
+
+    // Update stock for each product
+    for (const item of order.items) {
+      await prisma.product.update({
+        where: { id: item.productId },
+        data: {
+          stock: {
+            decrement: item.quantity,
+          },
+        },
+      })
+    }
+
+    return { success: true }
+  } catch (error) {
+    console.error('Stock update error:', error)
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Failed to update stock',
+    }
+  }
+}
+
+/**
+ * Restore product stock (for cancelled/refunded orders)
+ */
+export async function restoreProductStock(orderId: string) {
+  try {
+    const order = await prisma.order.findUnique({
+      where: { id: orderId },
+      include: {
+        items: {
+          include: {
+            product: true,
+          },
+        },
+      },
+    })
+
+    if (!order) {
+      return { success: false, error: 'Order not found' }
+    }
+
+    // Restore stock for each product
+    for (const item of order.items) {
+      await prisma.product.update({
+        where: { id: item.productId },
+        data: {
+          stock: {
+            increment: item.quantity,
+          },
+        },
+      })
+    }
+
+    return { success: true }
+  } catch (error) {
+    console.error('Stock restore error:', error)
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Failed to restore stock',
+    }
+  }
+}
+
+/**
+ * Confirm order payment (for cash on delivery)
+ */
+export async function confirmCashOnDeliveryOrder(orderId: string) {
+  try {
+    const order = await prisma.order.findUnique({
+      where: { id: orderId },
+      include: {
+        items: {
+          include: {
+            product: true,
+          },
+        },
+      },
+    })
+
+    if (!order) {
+      return { success: false, error: 'Order not found' }
+    }
+
+    // Update order status
+    await prisma.order.update({
+      where: { id: orderId },
+      data: {
+        status: 'CONFIRMED',
+        // Payment status stays PENDING until delivery
+      },
+    })
+
+    // Update stock
+    await updateProductStock(orderId)
+
+    return { success: true, order }
+  } catch (error) {
+    console.error('Order confirmation error:', error)
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Failed to confirm order',
+    }
+  }
+}
+
+/**
  * Cancel order
  */
 export async function cancelOrder(orderId: string) {
@@ -275,6 +401,9 @@ export async function cancelOrder(orderId: string) {
     // Get order
     const order = await prisma.order.findUnique({
       where: { id: orderId },
+      include: {
+        items: true,
+      },
     })
 
     if (!order) {
@@ -303,8 +432,10 @@ export async function cancelOrder(orderId: string) {
       },
     })
 
-    // TODO: Restore stock
-    // TODO: Process refund if paid
+    // Restore stock if order was confirmed
+    if (order.status === 'CONFIRMED') {
+      await restoreProductStock(orderId)
+    }
 
     return { success: true, order: updatedOrder }
   } catch (error) {

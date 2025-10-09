@@ -60,29 +60,37 @@ export default function CheckoutPage() {
         throw new Error(result.error || 'Failed to create order')
       }
 
-      // 2. Create PayTech session
-      const sessionResponse = await fetch('/api/paytech/session', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ orderId: result.orderId }),
-      })
+      // 2. Handle payment method
+      if (payment.method === 'CASH_ON_DELIVERY') {
+        // Paiement à la livraison - Redirect to success page directly
+        clearCart()
+        reset()
+        router.push(`/checkout/success?orderId=${result.orderId}&method=cash`)
+      } else {
+        // Online payment via PayTech
+        const sessionResponse = await fetch('/api/paytech/session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ orderId: result.orderId }),
+        })
 
-      if (!sessionResponse.ok) {
-        throw new Error('Failed to create payment session')
+        if (!sessionResponse.ok) {
+          throw new Error('Failed to create payment session')
+        }
+
+        const sessionData = await sessionResponse.json()
+
+        if (!sessionData.redirectUrl) {
+          throw new Error('No redirect URL received')
+        }
+
+        // Clear cart and checkout state
+        clearCart()
+        reset()
+
+        // Redirect to PayTech
+        window.location.href = sessionData.redirectUrl
       }
-
-      const sessionData = await sessionResponse.json()
-
-      if (!sessionData.redirectUrl) {
-        throw new Error('No redirect URL received')
-      }
-
-      // 3. Clear cart and checkout state
-      clearCart()
-      reset()
-
-      // 4. Redirect to PayTech
-      window.location.href = sessionData.redirectUrl
     } catch (error) {
       console.error('Checkout error:', error)
       alert(

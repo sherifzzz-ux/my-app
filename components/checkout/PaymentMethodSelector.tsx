@@ -40,6 +40,12 @@ const paymentMethods: { value: PaymentMethod; label: string; icon: string; descr
     icon: '💳',
     description: 'Visa, Mastercard',
   },
+  {
+    value: 'CASH_ON_DELIVERY',
+    label: 'Paiement à la livraison',
+    icon: '💵',
+    description: 'Payez en espèces à la réception',
+  },
 ]
 
 export function PaymentMethodSelector({ onBack, onSubmit }: PaymentMethodSelectorProps) {

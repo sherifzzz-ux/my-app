@@ -3,7 +3,7 @@
  * Based on PayTech Senegal API documentation
  */
 
-export type PaymentMethod = 'ORANGE_MONEY' | 'WAVE' | 'CARD'
+export type PaymentMethod = 'ORANGE_MONEY' | 'WAVE' | 'CARD' | 'CASH_ON_DELIVERY'
 
 export type PaymentStatus =
   | 'PENDING' // En attente

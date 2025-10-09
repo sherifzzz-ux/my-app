@@ -78,11 +78,12 @@ export async function POST(req: NextRequest) {
           },
         })
 
+        // Mettre à jour le stock des produits
+        const { updateProductStock } = await import('@/server/actions/checkout')
+        await updateProductStock(result.orderId)
+
         // TODO: Envoyer email de confirmation
         // await sendOrderConfirmationEmail(order)
-
-        // TODO: Mettre à jour le stock des produits
-        // await updateProductStock(order.items)
 
         console.log('Order confirmed:', order.orderNumber)
         break
@@ -109,7 +110,10 @@ export async function POST(req: NextRequest) {
           },
         })
 
-        // TODO: Restaurer le stock
+        // Restaurer le stock
+        const { restoreProductStock } = await import('@/server/actions/checkout')
+        await restoreProductStock(result.orderId)
+
         console.log('Order refunded:', order.orderNumber)
         break
 
