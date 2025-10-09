@@ -29,6 +29,7 @@ enum PaymentMethod {
   ORANGE_MONEY
   WAVE
   CARD
+  CASH_ON_DELIVERY  // Paiement à la livraison
 }
 
 enum ShippingZone {

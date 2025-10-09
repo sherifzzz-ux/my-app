@@ -7,8 +7,8 @@ import { Suspense } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { CheckCircle2, Package, Truck, Mail, Home } from 'lucide-react'
-import { getOrderByNumber } from '@/server/actions/checkout'
+import { CheckCircle2, Package, Truck, Mail, Home, AlertCircle } from 'lucide-react'
+import { getOrder, getOrderByNumber, confirmCashOnDeliveryOrder } from '@/server/actions/checkout'
 import { formatCFA } from '@/lib/utils/price-utils'
 import { getDeliveryDelay } from '@/lib/paytech/config'
 
@@ -16,14 +16,32 @@ interface SearchParams {
   token?: string
   ref?: string
   order?: string
+  orderId?: string
+  method?: string
 }
 
 async function SuccessContent({ searchParams }: { searchParams: SearchParams }) {
   // Try to get order from params
   let order = null
   let error = null
+  let isCashOnDelivery = searchParams.method === 'cash'
 
-  if (searchParams.order) {
+  // Handle cash on delivery
+  if (searchParams.orderId && isCashOnDelivery) {
+    const result = await getOrder(searchParams.orderId)
+    if (result.success && result.order) {
+      order = result.order
+      
+      // Confirm the order and update stock
+      if (order.status === 'PENDING') {
+        await confirmCashOnDeliveryOrder(searchParams.orderId)
+      }
+    } else {
+      error = result.error
+    }
+  }
+  // Handle order number
+  else if (searchParams.order) {
     const result = await getOrderByNumber(searchParams.order)
     if (result.success) {
       order = result.order
@@ -31,9 +49,8 @@ async function SuccessContent({ searchParams }: { searchParams: SearchParams }) 
       error = result.error
     }
   }
-
-  // Verify payment if token provided
-  if (searchParams.token && !order) {
+  // Verify PayTech payment if token provided
+  else if (searchParams.token && !order) {
     try {
       const verifyResponse = await fetch(
         `${process.env.NEXTAUTH_URL}/api/paytech/verify?token=${searchParams.token}`,
@@ -67,7 +84,9 @@ async function SuccessContent({ searchParams }: { searchParams: SearchParams }) 
               <div>
                 <h1 className="text-3xl font-bold mb-2">Commande confirmée !</h1>
                 <p className="text-lg text-muted-foreground">
-                  Merci pour votre commande. Nous avons bien reçu votre paiement.
+                  {isCashOnDelivery
+                    ? "Merci pour votre commande. Vous paierez à la livraison."
+                    : "Merci pour votre commande. Nous avons bien reçu votre paiement."}
                 </p>
               </div>
               {order && (
@@ -80,6 +99,26 @@ async function SuccessContent({ searchParams }: { searchParams: SearchParams }) 
               )}
             </CardContent>
           </Card>
+
+          {/* Cash on delivery notice */}
+          {isCashOnDelivery && order && (
+            <Card className="border-blue-200 dark:border-blue-900">
+              <CardContent className="py-6">
+                <div className="flex items-start gap-3">
+                  <AlertCircle className="w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5" />
+                  <div>
+                    <p className="font-medium mb-1 text-blue-600 dark:text-blue-400">
+                      Paiement à la livraison
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      Vous devrez payer <span className="font-semibold">{formatCFA(order.totalCents)}</span> en espèces lors de la réception de votre commande.
+                      Assurez-vous d&apos;avoir le montant exact.
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          )}
 
           {/* Order details */}
           {order && (
