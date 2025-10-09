@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { useCart } from '@/hooks/use-cart'
 import { CartPopup } from '@/components/ui/cart-popup'
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 interface AddToCartButtonProps {
   productId: string
@@ -33,7 +34,8 @@ export default function AddToCartButton({
   variant = 'default',
   className,
 }: AddToCartButtonProps) {
-  const { addItem, setIsOpen } = useCart()
+  const { addItem } = useCart()
+  const router = useRouter()
   const [showPopup, setShowPopup] = useState(false)
   
   const handleAddToCart = () => {
@@ -55,7 +57,7 @@ export default function AddToCartButton({
 
   const handleViewCart = () => {
     setShowPopup(false)
-    setIsOpen(true)
+    router.push('/cart')
   }
 
   const handleContinueShopping = () => {

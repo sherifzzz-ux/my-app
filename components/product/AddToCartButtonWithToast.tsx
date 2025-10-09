@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { useCart } from '@/hooks/use-cart'
 import { toast } from '@/hooks/use-toast'
 import { CartToast } from '@/components/ui/cart-toast'
+import { useRouter } from 'next/navigation'
 
 interface AddToCartButtonWithToastProps {
   productId: string
@@ -33,7 +34,8 @@ export default function AddToCartButtonWithToast({
   variant = 'default',
   className,
 }: AddToCartButtonWithToastProps) {
-  const { addItem, setIsOpen } = useCart()
+  const { addItem } = useCart()
+  const router = useRouter()
   
   const handleAddToCart = () => {
     addItem({ 
@@ -62,7 +64,7 @@ export default function AddToCartButtonWithToast({
             imageUrl,
             quantity
           }}
-          onViewCart={() => setIsOpen(true)}
+          onViewCart={() => router.push('/cart')}
         />
       ),
     })
