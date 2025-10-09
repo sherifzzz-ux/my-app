@@ -53,7 +53,7 @@
 | totalCents | integer | null | 0 | NO |
 | createdAt | timestamp | null | CURRENT_TIMESTAMP | NO |
 | updatedAt | timestamp | null | null | NO |
-| userId | text | null | null | NO |
+| userId | text | null | null | YES |
 
 ### Contraintes
 
@@ -69,16 +69,15 @@
 - SHIPPED
 - CANCELLED
 
-## 🚨 PROBLÈME IDENTIFIÉ : Colonnes Manquantes dans Order
+## 🚨 PROBLÈME RÉSOLU : Contrainte userId
 
-### Colonnes Manquantes (24 colonnes)
+### Modification Appliquée
 
-❌ **Informations de Base**
-- `orderNumber` - **CRITIQUE** (cause l'erreur actuelle)
-- `email`
-- `firstName`
-- `lastName`
-- `phone`
+✅ **userId maintenant nullable**
+- La colonne `userId` peut maintenant être `NULL`
+- Permet le **guest checkout** (commandes sans compte utilisateur)
+- Les utilisateurs connectés auront toujours un `userId` renseigné
+- Les guests auront `userId = NULL` et leurs infos dans `guestEmail`, `guestName`, `guestPhone`
 
 ❌ **Informations Guest Checkout**
 - `guestEmail`
@@ -109,20 +108,30 @@
 - `subtotalCents`
 - `orderNote`
 
-## Impact de l'Erreur
+## Impact de la Correction
 
-L'erreur actuelle provient de la tentative de créer une commande avec la colonne `orderNumber` qui n'existe pas :
-
+### Avant la correction
 ```
-Invalid `prisma.order.create()` invocation:
-The column `orderNumber` does not exist in the current database.
+Null constraint violation on the fields: (`userId`)
 ```
+Cette erreur bloquait le checkout pour les utilisateurs non connectés (guests).
 
-Cette erreur bloque complètement le processus de checkout et empêche les utilisateurs de passer des commandes.
+### Après la correction
+✅ Le checkout fonctionne pour tous les types d'utilisateurs :
+- **Utilisateurs connectés** : `userId` renseigné, commande liée au compte
+- **Guests** : `userId = NULL`, infos stockées dans `guestEmail`, `guestName`, `guestPhone`
 
-## Solution Requise
+## Scripts SQL de Correction
 
-Il faut exécuter un script SQL ALTER TABLE pour ajouter toutes les colonnes manquantes à la table Order avec les types et contraintes appropriés.
+### 1. Correction des colonnes manquantes (APPLIQUÉ ✅)
+- Script : `scripts/sql/02-fix-order-table.sql`
+- Guide : `COMMANDES_SQL_SUPABASE.md`
+
+### 2. Correction de la contrainte userId (À APPLIQUER ⏳)
+- Script : `scripts/sql/03-fix-userid-nullable.sql`
+- Guide : `scripts/sql/COMMANDE_FIX_USERID.md`
+
+**⚠️ Important** : Exécutez le script 03 pour permettre le guest checkout !
 
 ---
 
@@ -138,7 +147,7 @@ Il faut exécuter un script SQL ALTER TABLE pour ajouter toutes les colonnes man
 | totalCents | integer | NO | 0 | Montant total en centimes |
 | createdAt | timestamp | NO | CURRENT_TIMESTAMP | Date de création |
 | updatedAt | timestamp | NO | null | Date de mise à jour |
-| userId | text | NO | null | ID de l'utilisateur |
+| userId | text | YES | null | ID de l'utilisateur (NULL pour guests) |
 
 #### Colonnes à Ajouter (24)
 
