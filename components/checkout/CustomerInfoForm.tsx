@@ -114,8 +114,12 @@ export function CustomerInfoForm({ onNext, onBack }: CustomerInfoFormProps) {
     }
 
     // Update checkout state with all new fields
+    // Combine firstName and lastName into name for validation
+    const fullName = `${formData.firstName} ${formData.lastName}`.trim()
+    
     updateCustomer({
       email: formData.email,
+      name: fullName, // Add combined name for validation
       firstName: formData.firstName,
       lastName: formData.lastName,
       phone: formData.phone,
