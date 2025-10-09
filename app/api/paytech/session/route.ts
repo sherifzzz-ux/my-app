@@ -76,7 +76,7 @@ export async function POST(req: NextRequest) {
 
     // 3. Créer la session PayTech
     const session = await createPaytechSession({
-      item_name: `Commande Univers Cosmetix #${order.orderNumber}`,
+      item_name: `Commande FlawlessBeauty #${order.orderNumber}`,
       item_price: formatPaytechAmount(order.totalCents),
       currency: paytechConfig.currency,
       ref_command: order.orderNumber,

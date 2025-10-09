@@ -84,8 +84,14 @@ export interface PaytechVerifyResponse {
  */
 export interface CheckoutCustomer {
   email: string
-  name: string
+  firstName?: string
+  lastName?: string
+  name: string // Kept for backward compatibility
   phone: string
+  ville?: string
+  quartier?: string
+  adresseDetaillee?: string
+  orderNote?: string
   isGuest: boolean
 }
 

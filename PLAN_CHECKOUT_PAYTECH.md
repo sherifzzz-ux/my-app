@@ -5,11 +5,11 @@
 1. ✅ **Commande sans connexion obligatoire** (guest checkout)
 2. ✅ **Intégration complète PayTech** (Orange Money, Wave, CB)
 3. ✅ **Expérience fluide et sécurisée**
-4. ✅ **Conformité avec le modèle Univers Cosmetix**
+4. ✅ **Expérience utilisateur optimisée**
 
 ---
 
-## 📊 Analyse du Site de Référence (universcosmetix.com)
+## 📊 Flow de Checkout
 
 ### Flow de Checkout Observé
 1. **Panier** → Client peut commander sans compte
@@ -650,7 +650,7 @@ export async function sendOrderConfirmationEmail(order: Order) {
   const resend = new Resend(process.env.RESEND_API_KEY)
   
   await resend.emails.send({
-    from: 'Univers Cosmetix <noreply@universcosmetix.com>',
+    from: 'FlawlessBeauty <noreply@flawlessbeauty.com>',
     to: order.guestEmail || order.user.email,
     subject: `Confirmation de commande #${order.orderNumber}`,
     html: `
@@ -876,7 +876,7 @@ DATABASE_URL=postgresql://...
 - Support: [À compléter]
 
 ### Code de Référence
-- Univers Cosmetix: https://www.universcosmetix.com/checkout
+- Documentation PayTech: https://paytech.sn/documentation
 - Stripe Checkout (pour inspiration): https://stripe.com/docs/checkout
 
 ### Outils

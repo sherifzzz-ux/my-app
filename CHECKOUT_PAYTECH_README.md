@@ -302,7 +302,7 @@ Possible de garder les deux systèmes en parallèle:
 
 Développé selon le plan défini dans `PLAN_CHECKOUT_PAYTECH.md`
 
-Architecture inspirée de [Univers Cosmetix](https://www.universcosmetix.com)
+Architecture e-commerce moderne pour FlawlessBeauty
 
 ---
 

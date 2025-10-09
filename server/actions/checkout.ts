@@ -78,12 +78,22 @@ export async function createOrder(
         // User (if authenticated)
         userId: session?.user?.id || null,
 
-        // Guest info (if not authenticated)
+        // Customer info (new fields)
+        firstName: data.customer.firstName || data.customer.name.split(' ')[0] || '',
+        lastName: data.customer.lastName || data.customer.name.split(' ').slice(1).join(' ') || '',
+        email: data.customer.email,
+        phone: data.customer.phone,
+        ville: data.customer.ville || data.shipping.city,
+        quartier: data.customer.quartier || '',
+        adresseDetaillee: data.customer.adresseDetaillee || data.shipping.address,
+        orderNote: data.customer.orderNote || null,
+
+        // Guest info (legacy, kept for compatibility)
         guestEmail: !session?.user ? data.customer.email : null,
         guestName: !session?.user ? data.customer.name : null,
         guestPhone: !session?.user ? data.customer.phone : null,
 
-        // Shipping
+        // Shipping (legacy, kept for compatibility)
         shippingName: data.customer.name,
         shippingPhone: data.customer.phone,
         shippingAddress: data.shipping.address,

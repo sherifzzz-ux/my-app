@@ -1,8 +1,8 @@
-# Configuration PayTech pour Univers Cosmetix
+# Configuration PayTech pour FlawlessBeauty
 
 ## Vue d'ensemble
 
-Ce document explique comment configurer et utiliser le système de paiement PayTech.sn sur votre site e-commerce Univers Cosmetix.
+Ce document explique comment configurer et utiliser le système de paiement PayTech.sn sur votre site e-commerce FlawlessBeauty.
 
 PayTech.sn est une passerelle de paiement sénégalaise qui supporte :
 - **Orange Money** 🟠
