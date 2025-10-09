@@ -20,6 +20,7 @@ import { PaymentMethodSelector } from '@/components/checkout/PaymentMethodSelect
 import { CheckoutSummary } from '@/components/checkout/CheckoutSummary'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
+import { toast } from '@/components/ui/sonner'
 import Link from 'next/link'
 import { ShoppingBag } from 'lucide-react'
 
@@ -75,13 +76,23 @@ export default function CheckoutPage() {
         })
 
         if (!sessionResponse.ok) {
-          throw new Error('Failed to create payment session')
+          const errorData = await sessionResponse.json()
+          
+          if (sessionResponse.status === 503) {
+            throw new Error(
+              'Le système de paiement n\'est pas disponible pour le moment. Veuillez réessayer plus tard ou contacter le support.'
+            )
+          }
+          
+          throw new Error(
+            errorData.details || errorData.error || 'Impossible de créer la session de paiement'
+          )
         }
 
         const sessionData = await sessionResponse.json()
 
         if (!sessionData.redirectUrl) {
-          throw new Error('No redirect URL received')
+          throw new Error('Aucune URL de redirection reçue du système de paiement')
         }
 
         // Clear cart and checkout state
@@ -93,11 +104,16 @@ export default function CheckoutPage() {
       }
     } catch (error) {
       console.error('Checkout error:', error)
-      alert(
-        error instanceof Error
-          ? error.message
-          : 'Une erreur est survenue. Veuillez réessayer.'
-      )
+      
+      const errorMessage = error instanceof Error
+        ? error.message
+        : 'Une erreur est survenue. Veuillez réessayer.'
+      
+      toast.error('Erreur de paiement', {
+        description: errorMessage,
+        duration: 5000,
+      })
+      
       setIsLoading(false)
     }
   }
