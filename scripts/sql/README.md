@@ -1,230 +1,406 @@
-# Scripts SQL de Diagnostic et Correction - FlawlessBeauty
+# 📊 Scripts SQL FlawlessBeauty
 
-Ce dossier contient des scripts SQL pour diagnostiquer et corriger les problèmes de base de données Supabase.
+Ce dossier contient les scripts SQL pour diagnostiquer et corriger la base de données.
 
-## 🔍 Problème Identifié
+---
 
-L'erreur rencontrée au checkout :
-```
-Invalid `prisma.order.create()` invocation:
-The column `orderNumber` does not exist in the current database.
-```
+## 📋 Liste des Scripts
 
-**Cause** : Le schéma Prisma définit des colonnes qui n'existent pas dans la base de données Supabase. Cela arrive quand les migrations Prisma n'ont pas été appliquées correctement.
+### 1. `01-diagnostic-database.sql` 🔍
+**Fonction**: Diagnostic complet de la base de données
 
-## 📋 Scripts Disponibles
+**Utilisation**:
+```bash
+# Via psql
+psql $DATABASE_URL -f scripts/sql/01-diagnostic-database.sql
 
-### 1. `01-diagnostic-database.sql` - Diagnostic Complet
-
-**Objectif** : Analyser l'état actuel de votre base de données
-
-**Ce qu'il fait** :
-- Liste toutes les tables
-- Vérifie la structure de la table `Order`
-- Liste les contraintes et index
-- Vérifie les clés étrangères
-- Compte les enregistrements
-- Vérifie les types ENUM
-- Identifie les colonnes manquantes
-- Affiche l'historique des migrations Prisma
-
-**Comment l'utiliser** :
-1. Connectez-vous à Supabase : https://app.supabase.com
-2. Ouvrez votre projet FlawlessBeauty
-3. Allez dans `SQL Editor`
-4. Créez un nouveau query
-5. Copiez-collez le contenu de ce script
-6. Exécutez chaque requête une par une pour obtenir les informations
-
-**Requêtes importantes** :
-- **Requête 2** : Structure de la table Order (vérifiez si orderNumber existe)
-- **Requête 7** : Liste des colonnes manquantes (❌ = manquante, ✅ = existe)
-- **Requête 9** : Historique des migrations Prisma
-
-### 2. `02-fix-order-table.sql` - Correction de la Table Order
-
-**Objectif** : Ajouter automatiquement toutes les colonnes manquantes
-
-**Ce qu'il fait** :
-- Ajoute la colonne `orderNumber` avec des valeurs uniques
-- Ajoute les colonnes du guest checkout (firstName, lastName, email, phone)
-- Ajoute les colonnes d'adresse détaillée (ville, quartier, adresseDetaillee)
-- Crée les types ENUM si nécessaires
-- Ajoute les colonnes PayTech
-- Vérifie et affiche le résultat final
-
-**⚠️ IMPORTANT : Sauvegardez vos données avant** :
-```sql
-SELECT * INTO "Order_backup" FROM "Order";
+# Via Supabase SQL Editor
+# Copiez-collez le contenu du fichier
 ```
 
-**Comment l'utiliser** :
-1. Ouvrez le `SQL Editor` de Supabase
-2. Copiez-collez TOUT le script
-3. Exécutez-le en une seule fois
-4. Vérifiez les messages de confirmation
+**Ce que fait le script**:
+1. ✅ Liste toutes les tables
+2. ✅ Affiche les colonnes de la table Order
+3. ✅ Affiche les contraintes
+4. ✅ Affiche les relations (foreign keys)
+5. ✅ Compte les enregistrements par table
+6. ✅ Liste les ENUMs
+7. ✅ **Détecte les colonnes manquantes** dans Order
+8. ✅ Affiche un résumé global
 
-**Vérification après exécution** :
-Le script affichera automatiquement toutes les colonnes de la table Order à la fin.
+**Résultat attendu**:
+```
+Section 7: Vérification des colonnes requises
+----------------------------------------------
+| status      | expected_column  |
+| ----------- | ---------------- |
+| ✅ EXISTE    | orderNumber      |
+| ✅ EXISTE    | firstName        |
+| ✅ EXISTE    | lastName         |
+| ... (toutes les colonnes EXISTE) ... |
+```
 
-### 3. `03-reset-prisma-migrations.sql` - Réinitialisation (Avancé)
+Si vous voyez `❌ MANQUANTE`, exécutez le script 02.
 
-**Objectif** : Réinitialiser complètement la base de données
+---
 
-**⚠️ TRÈS DANGEREUX - Supprime toutes les données !**
+### 2. `02-fix-order-table.sql` 🔧
+**Fonction**: Correction automatique de la table Order
 
-**Options disponibles** :
-- Option 1 : Reset complet (supprime tout)
-- Option 2 : Reset uniquement la table Order
-- Option 3 : Vérifier l'état des migrations
+**Utilisation**:
+```bash
+# Via psql
+psql $DATABASE_URL -f scripts/sql/02-fix-order-table.sql
 
-**Quand l'utiliser** :
-- Uniquement en développement
-- Si la corruption est trop importante
-- Pour repartir de zéro
+# Via Supabase SQL Editor
+# Copiez-collez le contenu du fichier
 
-## 🚀 Guide de Résolution Étape par Étape
+# Via script automatisé (RECOMMANDÉ)
+./scripts/fix-database-auto.sh
+```
 
-### Méthode 1 : Correction SQL Directe (Recommandé)
+**Ce que fait le script**:
 
-1. **Diagnostic** :
-   ```bash
-   # Exécutez 01-diagnostic-database.sql dans Supabase SQL Editor
-   # Notez les colonnes manquantes
-   ```
+#### Étape 1: Colonne orderNumber
+- ✅ Vérifie si orderNumber existe
+- ✅ L'ajoute si manquante
+- ✅ Génère des numéros uniques pour les commandes existantes (ORD-00000001, ORD-00000002, ...)
+- ✅ Ajoute la contrainte UNIQUE
 
-2. **Sauvegarde** :
-   ```sql
-   SELECT * INTO "Order_backup" FROM "Order";
-   SELECT * INTO "OrderItem_backup" FROM "OrderItem";
-   ```
+#### Étape 2: Colonnes Guest Checkout
+- ✅ firstName (NOT NULL)
+- ✅ lastName (NOT NULL)
+- ✅ email (NOT NULL)
+- ✅ phone (NOT NULL)
 
-3. **Correction** :
-   ```bash
-   # Exécutez 02-fix-order-table.sql dans Supabase SQL Editor
-   ```
+#### Étape 3: Adresse Détaillée
+- ✅ ville (NOT NULL)
+- ✅ quartier (NOT NULL)
+- ✅ adresseDetaillee (NOT NULL)
+- ✅ orderNote (nullable)
 
-4. **Vérification** :
-   ```sql
-   SELECT column_name FROM information_schema.columns 
-   WHERE table_name = 'Order' 
-   ORDER BY column_name;
-   ```
+#### Étape 4: Colonnes Legacy
+- ✅ guestEmail (nullable)
+- ✅ guestName (nullable)
+- ✅ guestPhone (nullable)
+- ✅ shippingName (nullable)
+- ✅ shippingPhone (nullable)
+- ✅ shippingAddress (nullable)
+- ✅ shippingCity (nullable)
 
-5. **Test** :
-   - Retournez sur votre site
-   - Testez le checkout
-   - Vérifiez qu'il n'y a plus d'erreur
+#### Étape 5: ENUMs
+- ✅ Crée ShippingZone ('DAKAR', 'THIES', 'AUTRE')
+- ✅ Crée PaymentMethod ('ORANGE_MONEY', 'WAVE', 'CARD', 'CASH_ON_DELIVERY')
+- ✅ Crée PaymentStatus ('PENDING', 'PROCESSING', 'PAID', 'FAILED', 'CANCELLED', 'REFUNDED')
+- ✅ Vérifie OrderStatus
 
-### Méthode 2 : Reset Prisma (Si Méthode 1 échoue)
+#### Étape 6: Colonnes ENUM
+- ✅ shippingZone (NOT NULL, default DAKAR)
+- ✅ paymentMethod (NOT NULL, default ORANGE_MONEY)
+- ✅ paymentStatus (NOT NULL, default PENDING)
 
-1. **Backup complet** :
-   ```bash
-   # Depuis Supabase Dashboard > Settings > Database > Backups
-   # Ou utilisez pg_dump si vous avez accès
-   ```
+#### Étape 7: Colonnes PayTech
+- ✅ paytechToken (nullable)
+- ✅ paytechRef (nullable)
 
-2. **Reset local** :
-   ```bash
-   # Dans votre terminal, à la racine du projet
-   npx prisma migrate reset
-   ```
+#### Étape 8: Frais
+- ✅ shippingFees (NOT NULL, default 0)
+- ✅ subtotalCents (si manquant)
+- ✅ shippingCents (si manquant)
 
-3. **Push vers Supabase** :
-   ```bash
-   npx prisma db push
-   ```
-
-4. **Vérification** :
-   ```bash
-   npx prisma studio
-   # Vérifiez que toutes les tables sont correctes
-   ```
-
-5. **Re-seed** (si vous avez un script de seed) :
-   ```bash
-   npx prisma db seed
-   ```
-
-## 📊 Résultats Attendus
-
-Après avoir exécuté `02-fix-order-table.sql`, vous devriez voir :
-
+**Résultat attendu**:
 ```
 NOTICE: Colonne orderNumber ajoutée avec succès
 NOTICE: Colonne firstName ajoutée
 NOTICE: Colonne lastName ajoutée
-NOTICE: Colonne email ajoutée
-NOTICE: Colonne phone ajoutée
-NOTICE: Colonne ville ajoutée
-NOTICE: Colonne quartier ajoutée
-NOTICE: Colonne adresseDetaillee ajoutée
-NOTICE: Colonne orderNote ajoutée
-...
+... (messages de confirmation pour chaque colonne)
+
+Vérification finale de la table Order
+--------------------------------------
+nombre_colonnes: 29
 ```
-
-Et la table finale devrait avoir **environ 30 colonnes**.
-
-## 🔧 Commandes Prisma Utiles
-
-```bash
-# Vérifier l'état du schéma
-npx prisma validate
-
-# Voir le schéma actuel de la BD
-npx prisma db pull
-
-# Comparer schéma Prisma vs BD
-npx prisma migrate status
-
-# Générer le client Prisma
-npx prisma generate
-
-# Ouvrir Prisma Studio
-npx prisma studio
-
-# Push le schéma sans créer de migration
-npx prisma db push
-
-# Reset complet (⚠️ supprime les données)
-npx prisma migrate reset
-```
-
-## ❓ FAQ
-
-### Q: Pourquoi ces colonnes manquent-elles ?
-R: Probablement parce que les migrations Prisma n'ont pas été exécutées sur Supabase, ou que le schéma a été modifié sans migration.
-
-### Q: Vais-je perdre mes données ?
-R: Non, le script `02-fix-order-table.sql` ajoute seulement les colonnes manquantes et préserve les données existantes. Mais faites quand même une sauvegarde !
-
-### Q: Que faire si le script échoue ?
-R: 
-1. Vérifiez les messages d'erreur
-2. Assurez-vous d'avoir les droits d'administration
-3. Vérifiez que vous êtes connecté à la bonne base de données
-4. Contactez le support si le problème persiste
-
-### Q: Comment vérifier que tout fonctionne ?
-R: Testez le checkout sur votre site. Si vous pouvez créer une commande sans erreur, c'est résolu !
-
-## 📞 Support
-
-Si vous rencontrez des problèmes :
-1. Vérifiez les logs d'erreur dans Supabase
-2. Exécutez `01-diagnostic-database.sql` et partagez les résultats
-3. Vérifiez que votre `DATABASE_URL` pointe vers Supabase
-4. Assurez-vous que Prisma est à jour : `npm update prisma @prisma/client`
-
-## 🎯 Prochaines Étapes
-
-Après avoir corrigé la base de données :
-
-1. **Testez le checkout complet**
-2. **Vérifiez les autres fonctionnalités** (panier, commandes, etc.)
-3. **Configurez les migrations automatiques** pour éviter ce problème à l'avenir
-4. **Mettez en place une stratégie de backup régulière**
 
 ---
 
-**Note** : Ces scripts sont spécifiquement conçus pour PostgreSQL/Supabase. Ne les utilisez pas sur d'autres types de bases de données.
+### 3. `03-reset-prisma-migrations.sql` 🔄
+**Fonction**: Réinitialisation des migrations Prisma (utilisé en interne)
+
+⚠️ **ATTENTION**: Ce script est destiné à l'usage interne de Prisma. Ne l'exécutez pas manuellement sauf si vous savez ce que vous faites.
+
+---
+
+## 🚀 Guide d'Utilisation Rapide
+
+### Scenario 1: Première Installation
+```bash
+# 1. Diagnostic
+psql $DATABASE_URL -f scripts/sql/01-diagnostic-database.sql
+
+# 2. Si des colonnes manquent, correction automatique
+./scripts/fix-database-auto.sh
+
+# 3. Vérification
+psql $DATABASE_URL -f scripts/sql/01-diagnostic-database.sql
+```
+
+---
+
+### Scenario 2: Erreur "orderNumber does not exist"
+```bash
+# Solution rapide
+./scripts/fix-database-auto.sh
+
+# OU manuellement
+psql $DATABASE_URL -f scripts/sql/02-fix-order-table.sql
+npx prisma generate
+```
+
+---
+
+### Scenario 3: Via Supabase Dashboard
+
+1. **Diagnostic**:
+   - Ouvrez Supabase SQL Editor
+   - Copiez le contenu de `01-diagnostic-database.sql`
+   - Exécutez
+   - Vérifiez la section 7 (colonnes manquantes)
+
+2. **Correction** (si nécessaire):
+   - Copiez le contenu de `02-fix-order-table.sql`
+   - Exécutez dans l'ordre
+   - Chaque bloc DO $$ est indépendant
+
+3. **Vérification**:
+   - Ré-exécutez `01-diagnostic-database.sql`
+   - Vérifiez que toutes les colonnes sont `✅ EXISTE`
+
+---
+
+## 📊 Interprétation des Résultats
+
+### Section 1: Tables
+Liste toutes les tables dans la base de données.
+
+**Attendu**: 
+- ✅ Order, OrderItem, Product, Category, etc.
+- ⚠️ Possibles doublons: orders, order_items (tables legacy)
+
+---
+
+### Section 2: Colonnes de Order
+Liste toutes les colonnes actuelles de la table Order.
+
+**Attendu**: 29 colonnes minimum
+
+---
+
+### Section 3: Contraintes
+Liste les contraintes (PRIMARY KEY, FOREIGN KEY, UNIQUE).
+
+**Attendu**:
+- ✅ Order_pkey (PRIMARY KEY sur id)
+- ✅ Order_userId_fkey (FOREIGN KEY vers User)
+- ✅ Order_orderNumber_key (UNIQUE sur orderNumber)
+
+---
+
+### Section 4: Relations
+Liste les foreign keys.
+
+**Attendu**:
+- ✅ Order.userId → User.id
+
+---
+
+### Section 5: Comptage
+Compte les enregistrements par table.
+
+**Normal**: Dépend de vos données de seed
+
+---
+
+### Section 6: ENUMs
+Liste les valeurs des ENUMs.
+
+**Attendu**:
+- ✅ OrderStatus: PENDING, CONFIRMED, PROCESSING, SHIPPED, DELIVERED, CANCELLED
+- ✅ PaymentStatus: PENDING, PROCESSING, PAID, FAILED, CANCELLED, REFUNDED
+- ✅ PaymentMethod: ORANGE_MONEY, WAVE, CARD, CASH_ON_DELIVERY
+- ✅ ShippingZone: DAKAR, THIES, AUTRE
+
+---
+
+### Section 7: Colonnes Requises ⭐ IMPORTANT
+Vérifie que toutes les colonnes nécessaires existent.
+
+**SUCCÈS** (base de données OK):
+```
+| status      | expected_column  |
+| ----------- | ---------------- |
+| ✅ EXISTE    | orderNumber      |
+| ✅ EXISTE    | firstName        |
+| ✅ EXISTE    | lastName         |
+| ... toutes ✅ EXISTE ... |
+```
+
+**PROBLÈME** (base de données incomplète):
+```
+| status         | expected_column  |
+| -------------- | ---------------- |
+| ❌ MANQUANTE   | orderNumber      |
+| ❌ MANQUANTE   | firstName        |
+| ... autres manquantes ... |
+```
+
+➡️ **Action**: Exécuter `02-fix-order-table.sql`
+
+---
+
+### Section 8: Incohérences de Schéma
+Détecte les incohérences entre Prisma et la base de données.
+
+**Attendu**: Aucune ligne retournée (OK)
+
+**Si lignes retournées**: Incohérences détectées
+
+---
+
+### Section 10: Résumé
+Vue d'ensemble de toutes les tables avec nombre de colonnes et contraintes.
+
+---
+
+## 🔧 Dépannage
+
+### Erreur: "relation Order does not exist"
+**Cause**: La table Order n'a pas été créée
+
+**Solution**:
+```bash
+npx prisma db push
+# OU
+npx prisma migrate deploy
+```
+
+---
+
+### Erreur: "column orderNumber does not exist"
+**Cause**: La table Order existe mais est incomplète
+
+**Solution**:
+```bash
+./scripts/fix-database-auto.sh
+```
+
+---
+
+### Erreur: "type ShippingZone does not exist"
+**Cause**: Les ENUMs n'ont pas été créés
+
+**Solution**:
+```bash
+# Le script 02 crée automatiquement les ENUMs
+psql $DATABASE_URL -f scripts/sql/02-fix-order-table.sql
+```
+
+---
+
+### Erreur: "permission denied"
+**Cause**: Votre utilisateur DB n'a pas les permissions
+
+**Solution**:
+```bash
+# Vérifiez vos permissions
+psql $DATABASE_URL -c "
+  SELECT current_user, 
+         has_table_privilege('Order', 'INSERT');
+"
+
+# Si nécessaire, utilisez un utilisateur avec plus de privilèges
+```
+
+---
+
+## 📝 Notes Importantes
+
+### ⚠️ Sauvegarde
+Avant toute modification, sauvegardez vos données:
+```sql
+CREATE TABLE "Order_backup" AS SELECT * FROM "Order";
+```
+
+### 🔄 Migrations Prisma
+Ces scripts SQL sont des correctifs ponctuels. Pour les changements futurs, utilisez toujours les migrations Prisma:
+```bash
+npx prisma migrate dev --name description
+```
+
+### 🧪 Environnement de Test
+Testez d'abord sur une base de données de développement:
+```bash
+# Créez une copie de votre base de données
+pg_dump $PROD_DATABASE_URL | psql $DEV_DATABASE_URL
+
+# Testez les scripts sur la copie
+psql $DEV_DATABASE_URL -f scripts/sql/02-fix-order-table.sql
+
+# Si OK, appliquez en production
+psql $PROD_DATABASE_URL -f scripts/sql/02-fix-order-table.sql
+```
+
+---
+
+## 🚀 Commandes Utiles
+
+### Diagnostic Rapide
+```bash
+# Compter les colonnes de Order
+psql $DATABASE_URL -c "
+  SELECT COUNT(*) as nb_colonnes
+  FROM information_schema.columns 
+  WHERE table_name = 'Order'
+"
+```
+
+### Vérifier une Colonne Spécifique
+```bash
+# Vérifier si orderNumber existe
+psql $DATABASE_URL -c "
+  SELECT column_name, data_type, is_nullable
+  FROM information_schema.columns 
+  WHERE table_name = 'Order' 
+    AND column_name = 'orderNumber'
+"
+```
+
+### Lister les ENUMs
+```bash
+psql $DATABASE_URL -c "
+  SELECT t.typname, e.enumlabel
+  FROM pg_type t
+  JOIN pg_enum e ON t.oid = e.enumtypid
+  ORDER BY t.typname, e.enumsortorder
+"
+```
+
+### Restaurer depuis Backup
+```bash
+# Si vous avez créé un backup
+psql $DATABASE_URL -c "
+  TRUNCATE TABLE \"Order\" CASCADE;
+  INSERT INTO \"Order\" SELECT * FROM \"Order_backup\";
+"
+```
+
+---
+
+## 📞 Support
+
+Pour plus d'aide, consultez:
+- `../database_schemas.md` - Documentation complète de la base de données
+- `../../GUIDE_CORRECTION_ERREURS.md` - Guide de correction des erreurs
+- `../../README.md` - Documentation du projet
+
+---
+
+**Dernière mise à jour**: 2025-10-09
