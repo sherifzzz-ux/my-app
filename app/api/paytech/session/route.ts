@@ -6,12 +6,26 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { createPaytechSession, formatPaytechAmount } from '@/lib/paytech/api'
-import { paytechConfig } from '@/lib/paytech/config'
+import { paytechConfig, validatePaytechConfig } from '@/lib/paytech/config'
 import { checkRateLimit, getRateLimitIdentifier, rateLimitConfig } from '@/lib/rate-limit'
 import { paytechSessionSchema } from '@/lib/validations/checkout'
 
 export async function POST(req: NextRequest) {
   try {
+    // Validate PayTech configuration first
+    const configValidation = validatePaytechConfig()
+    if (!configValidation.valid) {
+      console.error('PayTech configuration errors:', configValidation.errors)
+      return NextResponse.json(
+        { 
+          error: 'Payment system not configured', 
+          details: 'PayTech credentials are missing. Please contact support.',
+          configErrors: process.env.NODE_ENV === 'development' ? configValidation.errors : undefined
+        },
+        { status: 503 }
+      )
+    }
+
     // Rate limiting
     const identifier = getRateLimitIdentifier(req)
     const rateLimit = checkRateLimit(
