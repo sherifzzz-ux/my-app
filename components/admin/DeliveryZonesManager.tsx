@@ -77,7 +77,7 @@ export function DeliveryZonesManager() {
       toast({
         title: 'Erreur',
         description: 'Impossible de charger les zones de livraison',
-        variant: 'destructive',
+        variant: 'error',
       })
     } finally {
       setLoading(false)
@@ -112,7 +112,7 @@ export function DeliveryZonesManager() {
         toast({
           title: 'Erreur',
           description: 'Veuillez remplir tous les champs requis',
-          variant: 'destructive',
+          variant: 'error',
         })
         return
       }
@@ -145,7 +145,7 @@ export function DeliveryZonesManager() {
       toast({
         title: 'Erreur',
         description: 'Impossible de sauvegarder la zone',
-        variant: 'destructive',
+        variant: 'error',
       })
     }
   }
@@ -173,7 +173,7 @@ export function DeliveryZonesManager() {
       toast({
         title: 'Erreur',
         description: 'Impossible de supprimer la zone',
-        variant: 'destructive',
+        variant: 'error',
       })
     }
   }
@@ -194,7 +194,7 @@ export function DeliveryZonesManager() {
       toast({
         title: 'Erreur',
         description: 'Impossible de modifier le statut',
-        variant: 'destructive',
+        variant: 'error',
       })
     }
   }

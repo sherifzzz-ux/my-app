@@ -4,6 +4,7 @@ import { createServiceSupabaseClient } from '@/lib/supabase'
 import { typedSupabase } from '@/lib/supabase/client'
 
 export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
 
 export async function GET() {
 	const session = await auth()
