@@ -44,7 +44,13 @@ interface CheckoutState {
 const initialCustomer: CheckoutCustomer = {
   email: '',
   name: '',
+  firstName: '',
+  lastName: '',
   phone: '',
+  ville: '',
+  quartier: '',
+  adresseDetaillee: '',
+  orderNote: '',
   isGuest: true,
 }
 
@@ -135,11 +141,20 @@ export const useCheckout = create<CheckoutState>()(
             // Customer info step
             return !!(
               state.customer.email &&
-              state.customer.name &&
+              state.customer.firstName &&
+              state.customer.lastName &&
               state.customer.phone &&
+              state.customer.ville &&
+              state.customer.quartier &&
+              state.customer.adresseDetaillee &&
               state.customer.email.includes('@') &&
-              state.customer.name.length >= 3 &&
-              state.customer.phone.length >= 9
+              state.customer.firstName.length >= 2 &&
+              state.customer.lastName.length >= 2 &&
+              state.customer.phone.length >= 9 &&
+              state.customer.ville.length >= 2 &&
+              state.customer.quartier.length >= 2 &&
+              state.customer.adresseDetaillee.length >= 5 &&
+              state.customer.adresseDetaillee.length <= 60
             )
 
           case 3:

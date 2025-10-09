@@ -143,16 +143,28 @@ model Order {
   userId       String?
   user         User?        @relation(fields: [userId], references: [id])
   
-  // Infos guest (si pas connecté)
+  // Infos client (guest ou connecté)
+  firstName    String
+  lastName     String
+  email        String
+  phone        String
+  
+  // Adresse de livraison détaillée
+  ville        String
+  quartier     String       // Zone de livraison détaillée
+  adresseDetaillee String    // Point de repère (max 60 caractères)
+  
+  // Note de commande (facultatif)
+  orderNote    String?
+  
+  // Legacy fields (pour compatibilité)
   guestEmail   String?
   guestName    String?
   guestPhone   String?
-  
-  // Adresse de livraison
-  shippingName     String
-  shippingPhone    String
-  shippingAddress  String
-  shippingCity     String
+  shippingName     String?
+  shippingPhone    String?
+  shippingAddress  String?
+  shippingCity     String?
   shippingZone     ShippingZone  @default(DAKAR)
   shippingFees     Int           @default(0)
   
@@ -236,6 +248,16 @@ model UserFavorite {
   productId String
   
   @@unique([userId, productId])
+}
+
+model DeliveryZone {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  ville     String   // Ville principale (ex: Dakar, Thiès, etc.)
+  isActive  Boolean  @default(true)
+  order     Int      @default(0) // Pour le tri
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 

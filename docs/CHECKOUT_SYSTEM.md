@@ -1,8 +1,8 @@
-# Système de Checkout et Paiement - Univers Cosmetix
+# Système de Checkout et Paiement - FlawlessBeauty
 
 ## 📋 Vue d'ensemble
 
-Le système de checkout implémenté sur Univers Cosmetix reproduit fidèlement le fonctionnement du site universcosmetix.com avec une intégration PayTech.sn comme passerelle de paiement principale.
+Le système de checkout implémenté sur FlawlessBeauty offre une expérience complète de commande avec une intégration PayTech.sn comme passerelle de paiement principale.
 
 ## ✨ Fonctionnalités principales
 

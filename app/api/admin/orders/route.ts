@@ -1,69 +1,99 @@
-import { NextResponse } from 'next/server'
-import { auth } from '@/lib/auth'
-import { createServiceSupabaseClient } from '@/lib/supabase'
+/**
+ * Admin Orders API Route
+ * GET - List all orders with filters
+ */
 
-export const runtime = 'nodejs'
+import { NextRequest, NextResponse } from 'next/server'
+import { prisma } from '@/lib/prisma'
+import { auth } from '@/server/auth'
 
-export async function GET(req: Request) {
-	const session = await auth()
-	if (!session?.user?.id) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+export async function GET(req: NextRequest) {
+  try {
+    // Check authentication and admin role
+    const session = await auth()
+    
+    if (!session?.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      )
+    }
 
-	const supabase = createServiceSupabaseClient()
+    // Get query parameters
+    const searchParams = req.nextUrl.searchParams
+    const status = searchParams.get('status')
+    const paymentStatus = searchParams.get('paymentStatus')
+    const search = searchParams.get('search')
+    const page = parseInt(searchParams.get('page') || '1')
+    const limit = parseInt(searchParams.get('limit') || '20')
+    const skip = (page - 1) * limit
 
-	// Vérifier rôle admin
-	const { data: role } = await supabase.rpc('get_user_role', { _user_id: session.user.id })
-	if (role !== 'admin') return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+    // Build filter conditions
+    const where: any = {}
+    
+    if (status && status !== 'all') {
+      where.status = status.toUpperCase()
+    }
+    
+    if (paymentStatus && paymentStatus !== 'all') {
+      where.paymentStatus = paymentStatus.toUpperCase()
+    }
+    
+    if (search) {
+      where.OR = [
+        { orderNumber: { contains: search, mode: 'insensitive' } },
+        { firstName: { contains: search, mode: 'insensitive' } },
+        { lastName: { contains: search, mode: 'insensitive' } },
+        { email: { contains: search, mode: 'insensitive' } },
+      ]
+    }
 
-  // Parse filters
-  const url = new URL(req.url)
-  const status = url.searchParams.get('status') || undefined
-  const paymentStatus = url.searchParams.get('payment_status') || undefined
-  const from = url.searchParams.get('from') || undefined
-  const to = url.searchParams.get('to') || undefined
-  const q = url.searchParams.get('q') || undefined
+    // Fetch orders with pagination
+    const [orders, total] = await Promise.all([
+      prisma.order.findMany({
+        where,
+        include: {
+          items: {
+            include: {
+              product: {
+                select: {
+                  name: true,
+                  imageUrl: true,
+                },
+              },
+            },
+          },
+          user: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+            },
+          },
+        },
+        orderBy: {
+          createdAt: 'desc',
+        },
+        skip,
+        take: limit,
+      }),
+      prisma.order.count({ where }),
+    ])
 
-	// 1) Récupérer les commandes avec filtres simples
-  let query = supabase.from('orders').select('*')
-  if (status && status !== 'all') query = query.eq('status', status)
-  if (paymentStatus && paymentStatus !== 'all') query = query.eq('payment_status', paymentStatus)
-  if (from) query = query.gte('created_at', from)
-  if (to) query = query.lte('created_at', to)
-  const { data: orders, error: ordersError } = await query.order('created_at', { ascending: false })
-
-	if (ordersError) return NextResponse.json({ error: ordersError.message }, { status: 500 })
-
-	if (!orders || orders.length === 0) return NextResponse.json([])
-
-	// 2) Récupérer les profils correspondants et fusionner côté serveur
-	const userIds = Array.from(new Set(orders.map((o: { user_id: string | null }) => o.user_id).filter(Boolean) as string[]))
-	const profilesMap = new Map<string, { first_name: string | null; last_name: string | null }>()
-	if (userIds.length > 0) {
-		const { data: profiles, error: profilesError } = await supabase
-			.from('profiles')
-			.select('id, first_name, last_name')
-			.in('id', userIds)
-		if (profilesError) return NextResponse.json({ error: profilesError.message }, { status: 500 })
-		for (const p of profiles ?? []) {
-			profilesMap.set(p.id as string, { first_name: p.first_name, last_name: p.last_name })
-		}
-	}
-
-	let merged = orders.map((o: { user_id: string | null; order_number: string }) => ({
-		...o,
-		profiles: o.user_id ? profilesMap.get(o.user_id) ?? null : null,
-	}))
-
-  // Filtre recherche texte (client nom/prénom ou numéro commande)
-  if (q) {
-    const qLower = q.toLowerCase()
-    merged = merged.filter((o) =>
-      String(o.order_number || '').toLowerCase().includes(qLower) ||
-      String(o.profiles?.first_name || '').toLowerCase().includes(qLower) ||
-      String(o.profiles?.last_name || '').toLowerCase().includes(qLower)
+    return NextResponse.json({
+      orders,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit),
+      },
+    })
+  } catch (error) {
+    console.error('Error fetching orders:', error)
+    return NextResponse.json(
+      { error: 'Failed to fetch orders' },
+      { status: 500 }
     )
   }
-
-	return NextResponse.json(merged)
 }
-
-

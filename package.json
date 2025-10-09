@@ -11,6 +11,7 @@
     "db:migrate": "prisma migrate dev --name init",
     "db:studio": "prisma studio",
     "db:seed": "prisma db seed",
+    "db:seed-zones": "tsx prisma/seed-delivery-zones.ts",
     "prebuild": "prisma generate",
     "build:full": "prisma migrate deploy && prisma db seed && next build",
     "format": "prettier --write .",

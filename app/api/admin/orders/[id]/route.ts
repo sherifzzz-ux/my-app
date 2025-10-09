@@ -1,77 +1,137 @@
-import { NextResponse } from 'next/server'
-import { auth } from '@/lib/auth'
-import { createServiceSupabaseClient } from '@/lib/supabase'
+/**
+ * Admin Single Order API Route
+ * GET - Get order details
+ * PATCH - Update order status
+ * DELETE - Cancel order
+ */
 
-export const runtime = 'nodejs'
+import { NextRequest, NextResponse } from 'next/server'
+import { prisma } from '@/lib/prisma'
+import { auth } from '@/server/auth'
 
-export async function GET(_req: Request, ctx: { params: Promise<{ id: string }> }) {
-	const session = await auth()
-	if (!session?.user?.id) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-	const supabase = createServiceSupabaseClient()
-	const { data: role } = await supabase.rpc('get_user_role', { _user_id: session.user.id })
-	if (role !== 'admin') return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+export async function GET(
+  req: NextRequest,
+  context: { params: Promise<{ id: string }> }
+) {
+  try {
+    const session = await auth()
+    
+    if (!session?.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      )
+    }
 
-	const { id } = await ctx.params
-	const [{ data: order, error: orderError }, { data: items, error: itemsError }] = await Promise.all([
-		supabase.from('orders').select('*').eq('id', id).single(),
-		supabase.from('order_items').select('*').eq('order_id', id).order('created_at', { ascending: true }),
-	])
-	if (orderError) return NextResponse.json({ error: orderError.message }, { status: 500 })
-	if (itemsError) return NextResponse.json({ error: itemsError.message }, { status: 500 })
-	return NextResponse.json({ order, items })
+    const { id } = await context.params
+
+    const order = await prisma.order.findUnique({
+      where: { id },
+      include: {
+        items: {
+          include: {
+            product: {
+              select: {
+                name: true,
+                imageUrl: true,
+                priceCents: true,
+              },
+            },
+          },
+        },
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
+      },
+    })
+
+    if (!order) {
+      return NextResponse.json(
+        { error: 'Order not found' },
+        { status: 404 }
+      )
+    }
+
+    return NextResponse.json(order)
+  } catch (error) {
+    console.error('Error fetching order:', error)
+    return NextResponse.json(
+      { error: 'Failed to fetch order' },
+      { status: 500 }
+    )
+  }
 }
 
-export async function PATCH(request: Request, ctx: { params: Promise<{ id: string }> }) {
-	const session = await auth()
-	if (!session?.user?.id) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-	const supabase = createServiceSupabaseClient()
-	const { data: role } = await supabase.rpc('get_user_role', { _user_id: session.user.id })
-	if (role !== 'admin') return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+export async function PATCH(
+  req: NextRequest,
+  context: { params: Promise<{ id: string }> }
+) {
+  try {
+    const session = await auth()
+    
+    if (!session?.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      )
+    }
 
-	const { id } = await ctx.params
-	const body = await request.json().catch(() => null) as { status?: string, payment_status?: string } | null
-	if (!body) return NextResponse.json({ error: 'Invalid payload' }, { status: 400 })
+    const { id } = await context.params
+    const body = await req.json()
+    const { status, paymentStatus } = body
 
-	const { error } = await supabase.from('orders').update({
-		...(body.status ? { status: body.status } : {}),
-		...(body.payment_status ? { payment_status: body.payment_status } : {}),
-	}).eq('id', id)
+    const updateData: any = {}
+    if (status) updateData.status = status
+    if (paymentStatus) updateData.paymentStatus = paymentStatus
 
-	if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+    const order = await prisma.order.update({
+      where: { id },
+      data: updateData,
+    })
 
-	// Audit log (best effort)
-	try {
-		await supabase.from('audit_logs').insert({
-			action: 'order.update',
-			entity: 'orders',
-			entity_id: id,
-			actor_id: session.user.id,
-			details: body,
-		})
-	} catch {}
-	return NextResponse.json({ ok: true })
+    return NextResponse.json(order)
+  } catch (error) {
+    console.error('Error updating order:', error)
+    return NextResponse.json(
+      { error: 'Failed to update order' },
+      { status: 500 }
+    )
+  }
 }
 
-export async function DELETE(_req: Request, ctx: { params: Promise<{ id: string }> }) {
-	const session = await auth()
-	if (!session?.user?.id) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-	const supabase = createServiceSupabaseClient()
-	const { data: role } = await supabase.rpc('get_user_role', { _user_id: session.user.id })
-	if (role !== 'admin') return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+export async function DELETE(
+  req: NextRequest,
+  context: { params: Promise<{ id: string }> }
+) {
+  try {
+    const session = await auth()
+    
+    if (!session?.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      )
+    }
 
-	const { id } = await ctx.params
-	const { error } = await supabase.from('orders').update({ status: 'cancelled' }).eq('id', id)
-	if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+    const { id } = await context.params
 
-	try {
-		await supabase.from('audit_logs').insert({
-			action: 'order.cancel',
-			entity: 'orders',
-			entity_id: id,
-			actor_id: session.user.id,
-		})
-	} catch {}
-	return NextResponse.json({ ok: true })
+    await prisma.order.update({
+      where: { id },
+      data: {
+        status: 'CANCELLED',
+      },
+    })
+
+    return NextResponse.json({ success: true })
+  } catch (error) {
+    console.error('Error cancelling order:', error)
+    return NextResponse.json(
+      { error: 'Failed to cancel order' },
+      { status: 500 }
+    )
+  }
 }
-
-

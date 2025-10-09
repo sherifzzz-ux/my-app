@@ -1,6 +1,6 @@
-# 📚 Documentation - Univers Cosmetix
+# 📚 Documentation - FlawlessBeauty
 
-Bienvenue dans la documentation du système e-commerce Univers Cosmetix.
+Bienvenue dans la documentation du système e-commerce FlawlessBeauty.
 
 ## 📂 Structure de la documentation
 
