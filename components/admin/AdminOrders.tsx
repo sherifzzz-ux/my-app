@@ -96,7 +96,7 @@ export function AdminOrders() {
       toast({
         title: 'Erreur',
         description: 'Impossible de charger les commandes',
-        variant: 'destructive',
+        variant: 'error',
       })
     } finally {
       setLoading(false)
@@ -153,7 +153,7 @@ export function AdminOrders() {
       toast({
         title: 'Erreur',
         description: 'Impossible de mettre à jour le statut',
-        variant: 'destructive',
+        variant: 'error',
       })
     }
   }
