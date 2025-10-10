@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { XCircle, ArrowLeft, ShoppingCart } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -102,9 +103,9 @@ export default function CheckoutCancelPage() {
           <div className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
             <p>
               Besoin d&apos;aide ?{' '}
-              <a href="/contact" className="text-primary hover:underline">
+              <Link href="/contact" className="text-primary hover:underline">
                 Contactez notre service client
-              </a>
+              </Link>
             </p>
           </div>
         </div>
