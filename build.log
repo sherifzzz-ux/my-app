@@ -1,0 +1,892 @@
+
+> my-app@0.1.0 prebuild
+> prisma generate
+
+warn The configuration property `package.json#prisma` is deprecated and will be removed in Prisma 7. Please migrate to a Prisma config file (e.g., `prisma.config.ts`).
+For more information, see: https://pris.ly/prisma-config
+
+Prisma schema loaded from prisma/schema.prisma
+
+✔ Generated Prisma Client (v6.17.0) to ./node_modules/@prisma/client in 89ms
+
+Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+
+Tip: Need your database queries to be 1000x faster? Accelerate offers you that and more: https://pris.ly/tip-2-accelerate
+
+
+> my-app@0.1.0 build
+> next build
+
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+   ▲ Next.js 15.4.6
+   - Experiments (use with caution):
+     · optimizePackageImports
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 24.0s
+   Linting and checking validity of types ...
+
+./app/a-propos/page.tsx
+9:29  Warning: 'CardDescription' is defined but never used.  @typescript-eslint/no-unused-vars
+9:46  Warning: 'CardHeader' is defined but never used.  @typescript-eslint/no-unused-vars
+9:58  Warning: 'CardTitle' is defined but never used.  @typescript-eslint/no-unused-vars
+10:10  Warning: 'Badge' is defined but never used.  @typescript-eslint/no-unused-vars
+12:10  Warning: 'ArrowRight' is defined but never used.  @typescript-eslint/no-unused-vars
+12:29  Warning: 'Target' is defined but never used.  @typescript-eslint/no-unused-vars
+12:37  Warning: 'Heart' is defined but never used.  @typescript-eslint/no-unused-vars
+12:44  Warning: 'Award' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./app/account/components/AccountDashboard.tsx
+65:14  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+131:55  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./app/admin/brands/page.tsx
+53:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+66:5  Warning: React Hook useEffect has a missing dependency: 'loadBrands'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+122:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+149:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+229:42  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./app/admin/categories/page.tsx
+53:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+66:5  Warning: React Hook useEffect has a missing dependency: 'loadCategories'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+122:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+149:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+229:42  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./app/admin/products/page.tsx
+464:51  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./app/admin/products-simple/page.tsx
+17:3  Warning: 'X' is defined but never used.  @typescript-eslint/no-unused-vars
+20:3  Warning: 'Eye' is defined but never used.  @typescript-eslint/no-unused-vars
+21:3  Warning: 'EyeOff' is defined but never used.  @typescript-eslint/no-unused-vars
+23:3  Warning: 'TrendingUp' is defined but never used.  @typescript-eslint/no-unused-vars
+130:14  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+143:6  Warning: React Hook useEffect has a missing dependency: 'loadData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+164:52  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+216:14  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+243:14  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+445:51  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./app/admin/stock-faible/page.tsx
+16:2  Warning: 'CheckCircle' is defined but never used.  @typescript-eslint/no-unused-vars
+51:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+64:5  Warning: React Hook useEffect has a missing dependency: 'loadProducts'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+249:14  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./app/api/account/addresses/route.ts
+19:33  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+53:7  Warning: 'company' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+75:35  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+82:33  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+123:7  Warning: 'type' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+126:7  Warning: 'company' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+130:7  Warning: 'postal_code' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+131:7  Warning: 'country' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+146:33  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+161:35  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+169:33  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+219:33  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+233:33  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+247:35  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+255:37  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/api/account/favorites/route.ts
+9:11  Warning: 'Product' is defined but never used.  @typescript-eslint/no-unused-vars
+60:28  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+85:53  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/api/account/stats/route.ts
+55:41  Warning: 'order' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./app/api/admin/analytics/route.ts
+10:7  Warning: 'from' is never reassigned. Use 'const' instead.  prefer-const
+45:14  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+93:42  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+106:20  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/api/admin/delivery-zones/route.ts
+11:27  Warning: 'req' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./app/api/admin/messages/route.ts
+18:8  Warning: 'data' is never reassigned. Use 'const' instead.  prefer-const
+18:14  Warning: 'error' is never reassigned. Use 'const' instead.  prefer-const
+28:34  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+32:34  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/api/admin/newsletter/export/route.ts
+25:54  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/api/admin/newsletter/subscribers/route.ts
+32:26  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/api/admin/orders/[id]/route.ts
+87:23  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/api/admin/orders/export/route.ts
+7:22  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/api/admin/orders/route.ts
+32:18  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/api/admin/products/import/route.ts
+85:24  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/api/admin/products/route.ts
+45:16  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/api/admin/settings/ecommerce/route.ts
+19:66  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/api/admin/settings/shipping/route.ts
+30:57  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/api/admin/taxonomy-supabase/route.ts
+3:10  Warning: 'createServiceSupabaseClient' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./app/api/admin/users/[id]/reactivate/route.ts
+84:12  Warning: 'authAdminError' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./app/api/admin/users/[id]/suspend/route.ts
+89:12  Warning: 'authAdminError' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./app/api/admin/users/route.ts
+29:35  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+50:42  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/api/auth/logout/route.ts
+2:10  Warning: 'cookies' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./app/api/categories/[slug]/subcategories/route.ts
+2:10  Warning: 'createServiceSupabaseClient' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./app/api/maintenance/route.ts
+10:59  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/api/products/route.ts
+2:10  Warning: 'createServiceSupabaseClient' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./app/auth/page.tsx
+11:10  Warning: 'Badge' is defined but never used.  @typescript-eslint/no-unused-vars
+20:3  Warning: 'AlertCircle' is defined but never used.  @typescript-eslint/no-unused-vars
+68:14  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+123:14  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+149:23  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+448:28  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+450:41  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./app/brands/page.tsx
+32:9  Warning: 'orderBy' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./app/catalog/page.tsx
+1:8  Warning: 'Image' is defined but never used.  @typescript-eslint/no-unused-vars
+2:8  Warning: 'Link' is defined but never used.  @typescript-eslint/no-unused-vars
+5:10  Warning: 'Badge' is defined but never used.  @typescript-eslint/no-unused-vars
+7:10  Warning: 'ProductGridSkeleton' is defined but never used.  @typescript-eslint/no-unused-vars
+8:8  Warning: 'AddToCartButton' is defined but never used.  @typescript-eslint/no-unused-vars
+9:10  Warning: 'formatCFA' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./app/category/[categorySlug]/subcategory/[subcategorySlug]/page.tsx
+17:11  Warning: 'supabase' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./app/checkout/page.tsx
+29:17  Warning: 'session' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+31:17  Warning: 'goToStep' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+32:10  Warning: 'isLoading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./app/checkout/success/page.tsx
+27:7  Warning: 'isCashOnDelivery' is never reassigned. Use 'const' instead.  prefer-const
+136:45  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/cheveux/sous-categorie/[slug]/page.tsx
+10:35  Warning: 'slug' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./app/contact/page.tsx
+9:10  Warning: 'Badge' is defined but never used.  @typescript-eslint/no-unused-vars
+11:10  Warning: 'ArrowRight' is defined but never used.  @typescript-eslint/no-unused-vars
+11:50  Warning: 'MapPin' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./app/delivery/page.tsx
+10:3  Warning: 'CreditCard' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./app/demo-phase4/page.tsx
+35:50  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+51:44  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+95:44  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./app/demo-phase5/page.tsx
+3:10  Warning: 'OptimizedImage' is defined but never used.  @typescript-eslint/no-unused-vars
+3:40  Warning: 'HeroImage' is defined but never used.  @typescript-eslint/no-unused-vars
+3:51  Warning: 'AvatarImage' is defined but never used.  @typescript-eslint/no-unused-vars
+5:10  Warning: 'LazySection' is defined but never used.  @typescript-eslint/no-unused-vars
+37:62  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+52:67  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+241:34  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./app/guide-beaute/page.tsx
+108:19  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./app/idees-cadeaux/page.tsx
+7:29  Warning: 'CardDescription' is defined but never used.  @typescript-eslint/no-unused-vars
+7:46  Warning: 'CardHeader' is defined but never used.  @typescript-eslint/no-unused-vars
+7:58  Warning: 'CardTitle' is defined but never used.  @typescript-eslint/no-unused-vars
+8:10  Warning: 'Badge' is defined but never used.  @typescript-eslint/no-unused-vars
+10:10  Warning: 'Gift' is defined but never used.  @typescript-eslint/no-unused-vars
+10:16  Warning: 'Heart' is defined but never used.  @typescript-eslint/no-unused-vars
+10:33  Warning: 'TrendingUp' is defined but never used.  @typescript-eslint/no-unused-vars
+10:45  Warning: 'Users' is defined but never used.  @typescript-eslint/no-unused-vars
+10:59  Warning: 'Package' is defined but never used.  @typescript-eslint/no-unused-vars
+10:68  Warning: 'MessageSquare' is defined but never used.  @typescript-eslint/no-unused-vars
+12:36  Warning: 'giftCategories' is defined but never used.  @typescript-eslint/no-unused-vars
+12:52  Warning: 'giftRecipients' is defined but never used.  @typescript-eslint/no-unused-vars
+20:9  Warning: 'featuredGifts' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+21:9  Warning: 'newGifts' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+22:9  Warning: 'popularGifts' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+23:9  Warning: 'limitedGifts' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./app/korean-beauty/page.tsx
+11:10  Warning: 'Star' is defined but never used.  @typescript-eslint/no-unused-vars
+11:33  Warning: 'TrendingUp' is defined but never used.  @typescript-eslint/no-unused-vars
+11:59  Warning: 'Heart' is defined but never used.  @typescript-eslint/no-unused-vars
+11:66  Warning: 'Shield' is defined but never used.  @typescript-eslint/no-unused-vars
+11:74  Warning: 'Leaf' is defined but never used.  @typescript-eslint/no-unused-vars
+21:9  Warning: 'featuredProducts' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+181:55  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+274:33  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./app/korean-skincare/page.tsx
+11:17  Warning: 'Sparkles' is defined but never used.  @typescript-eslint/no-unused-vars
+11:27  Warning: 'TrendingUp' is defined but never used.  @typescript-eslint/no-unused-vars
+11:39  Warning: 'Users' is defined but never used.  @typescript-eslint/no-unused-vars
+11:53  Warning: 'Heart' is defined but never used.  @typescript-eslint/no-unused-vars
+11:60  Warning: 'Shield' is defined but never used.  @typescript-eslint/no-unused-vars
+11:68  Warning: 'Leaf' is defined but never used.  @typescript-eslint/no-unused-vars
+11:74  Warning: 'Droplets' is defined but never used.  @typescript-eslint/no-unused-vars
+21:9  Warning: 'featuredProducts' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+22:9  Warning: 'newProducts' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+23:9  Warning: 'trendingProducts' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+24:9  Warning: 'limitedProducts' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./app/maquillage/page.tsx
+10:31  Warning: 'Sparkles' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./app/meilleures-ventes/page.tsx
+116:19  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./app/offres-speciales/page.tsx
+12:54  Warning: 'discountRanges' is defined but never used.  @typescript-eslint/no-unused-vars
+12:70  Warning: 'offerTypes' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./app/orders/page.tsx
+10:3  Warning: 'Filter' is defined but never used.  @typescript-eslint/no-unused-vars
+11:3  Warning: 'Calendar' is defined but never used.  @typescript-eslint/no-unused-vars
+17:29  Warning: 'CardDescription' is defined but never used.  @typescript-eslint/no-unused-vars
+17:46  Warning: 'CardHeader' is defined but never used.  @typescript-eslint/no-unused-vars
+17:58  Warning: 'CardTitle' is defined but never used.  @typescript-eslint/no-unused-vars
+234:40  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/panier/page.tsx
+5:3  Warning: 'ShoppingCart' is defined but never used.  @typescript-eslint/no-unused-vars
+13:3  Warning: 'MapPin' is defined but never used.  @typescript-eslint/no-unused-vars
+14:3  Warning: 'User' is defined but never used.  @typescript-eslint/no-unused-vars
+15:3  Warning: 'Phone' is defined but never used.  @typescript-eslint/no-unused-vars
+16:3  Warning: 'Mail' is defined but never used.  @typescript-eslint/no-unused-vars
+27:10  Warning: 'Alert' is defined but never used.  @typescript-eslint/no-unused-vars
+27:17  Warning: 'AlertDescription' is defined but never used.  @typescript-eslint/no-unused-vars
+38:10  Warning: 'isProcessing' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+39:36  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+65:25  Warning: 'setSameAsBilling' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+101:21  Warning: 'error' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+203:21  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+298:27  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+336:65  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+448:67  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+550:29  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./app/parfumerie/page.tsx
+116:60  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./app/parfums/page.tsx
+10:10  Warning: 'Star' is defined but never used.  @typescript-eslint/no-unused-vars
+10:40  Warning: 'TrendingUp' is defined but never used.  @typescript-eslint/no-unused-vars
+20:9  Warning: 'featuredParfums' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./app/search/page.tsx
+8:3  Warning: 'SortAsc' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./app/support/page.tsx
+4:10  Warning: 'Button' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./app/test-subcategory/page.tsx
+2:10  Warning: 'getCategoryById' is defined but never used.  @typescript-eslint/no-unused-vars
+2:27  Warning: 'getSubcategoryById' is defined but never used.  @typescript-eslint/no-unused-vars
+2:47  Warning: 'getSubcategoryProducts' is defined but never used.  @typescript-eslint/no-unused-vars
+2:71  Warning: 'getSubcategoryGuides' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/Footer.tsx
+186:27  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./components/Header.tsx
+4:10  Warning: 'Button' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/about/TeamCard.tsx
+4:40  Warning: 'ExternalLink' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/admin/AdminMessages.tsx
+39:5  Warning: React Hook useEffect has a missing dependency: 'filterMessages'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+92:12  Warning: 'e' is defined but never used.  @typescript-eslint/no-unused-vars
+103:12  Warning: 'e' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/admin/AdminNewsletter.tsx
+38:5  Warning: React Hook useEffect has a missing dependency: 'filterSubscribers'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./components/admin/AdminOrders.tsx
+28:32  Warning: 'Truck' is defined but never used.  @typescript-eslint/no-unused-vars
+73:6  Warning: React Hook useEffect has a missing dependency: 'fetchOrders'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+77:6  Warning: React Hook useEffect has a missing dependency: 'filterOrders'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+442:27  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./components/admin/AdminOverview.tsx
+8:2  Warning: 'Users' is defined but never used.  @typescript-eslint/no-unused-vars
+9:2  Warning: 'Mail' is defined but never used.  @typescript-eslint/no-unused-vars
+13:2  Warning: 'MessageSquare' is defined but never used.  @typescript-eslint/no-unused-vars
+20:10  Warning: 'AdminCharts' is defined but never used.  @typescript-eslint/no-unused-vars
+21:10  Warning: 'RecentOrdersTable' is defined but never used.  @typescript-eslint/no-unused-vars
+22:10  Warning: 'MetricsOverview' is defined but never used.  @typescript-eslint/no-unused-vars
+66:16  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+67:18  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+68:17  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+69:15  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+102:5  Warning: React Hook useEffect has a missing dependency: 'toast'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+105:8  Warning: 'averageOrderValue' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+275:65  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+303:51  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+313:18  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+326:12  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./components/admin/AdminProducts.tsx
+5:10  Warning: 'LoadingSpinner' is defined but never used.  @typescript-eslint/no-unused-vars
+39:9  Warning: 'viewingProduct' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+51:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+69:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+148:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+193:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+220:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+256:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+269:5  Warning: React Hook useEffect has missing dependencies: 'loadProducts' and 'loadTaxonomy'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+
+./components/admin/AdminSettings.tsx
+32:9  Warning: 'loading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+96:62  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./components/admin/AdminUsers.tsx
+41:47  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+63:5  Warning: React Hook useEffect has a missing dependency: 'filterUsers'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+132:12  Warning: 'e' is defined but never used.  @typescript-eslint/no-unused-vars
+271:23  Warning: 'user' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/admin/BrandsPage.tsx
+21:10  Warning: 'SingleImageTransition' is defined but never used.  @typescript-eslint/no-unused-vars
+57:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+70:5  Warning: React Hook useEffect has a missing dependency: 'loadBrands'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+126:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+153:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/admin/CategoriesPage.tsx
+53:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+66:5  Warning: React Hook useEffect has a missing dependency: 'loadCategories'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+122:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+149:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+229:42  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./components/admin/CategoryManager.tsx
+72:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+106:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+138:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+166:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+194:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+217:5  Warning: React Hook useEffect has a missing dependency: 'loadCategories'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+451:40  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./components/admin/DeliveryZonesManager.tsx
+66:6  Warning: React Hook useEffect has a missing dependency: 'fetchZones'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+340:45  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./components/admin/MetricsOverview.tsx
+4:10  Warning: 'Badge' is defined but never used.  @typescript-eslint/no-unused-vars
+10:2  Warning: 'Truck' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/admin/ProductForm.tsx
+3:20  Warning: 'useEffect' is defined but never used.  @typescript-eslint/no-unused-vars
+108:58  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+155:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+421:56  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./components/admin/ProductList.tsx
+17:2  Warning: 'Filter' is defined but never used.  @typescript-eslint/no-unused-vars
+19:2  Warning: 'MoreHorizontal' is defined but never used.  @typescript-eslint/no-unused-vars
+92:7  Warning: 'filtered' is never reassigned. Use 'const' instead.  prefer-const
+113:16  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+114:16  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+359:12  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./components/admin/StockFaiblePage.tsx
+16:2  Warning: 'CheckCircle' is defined but never used.  @typescript-eslint/no-unused-vars
+51:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+64:5  Warning: React Hook useEffect has a missing dependency: 'loadProducts'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+249:14  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./components/admin/analytics/AnalyticsOverview.tsx
+41:35  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./components/admin/analytics/CustomerAnalytics.tsx
+8:17  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+9:16  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+44:41  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+82:39  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./components/admin/analytics/SalesChart.tsx
+23:51  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./components/cart/CartDrawer.tsx
+84:19  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./components/category/GenericSubcategoryPage.tsx
+74:3  Warning: 'categoryName' is defined but never used.  @typescript-eslint/no-unused-vars
+75:3  Warning: 'categoryDescription' is defined but never used.  @typescript-eslint/no-unused-vars
+76:3  Warning: 'categoryIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+77:3  Warning: 'categoryColor' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/category/SubcategoryGrid.tsx
+7:10  Warning: 'Grid3X3' is defined but never used.  @typescript-eslint/no-unused-vars
+7:19  Warning: 'List' is defined but never used.  @typescript-eslint/no-unused-vars
+20:3  Warning: 'onViewModeChange' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/category/SubcategoryHero.tsx
+86:43  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./components/category/SubcategoryPage.tsx
+10:29  Warning: 'CardDescription' is defined but never used.  @typescript-eslint/no-unused-vars
+32:10  Warning: 'showFilters' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+32:23  Warning: 'setShowFilters' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./components/checkout/ShippingSelector.tsx
+16:42  Warning: 'getDeliveryDelay' is defined but never used.  @typescript-eslint/no-unused-vars
+41:6  Warning: React Hook useEffect has a missing dependency: 'updateShipping'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./components/contact/ContactForm.tsx
+52:14  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/contact/FAQ.tsx
+10:23  Warning: 'FAQType' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/examples/CartPopupExample.tsx
+30:37  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+33:65  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+43:43  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+43:66  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./components/examples/HomePageExample.tsx
+3:10  Warning: 'useState' is defined but never used.  @typescript-eslint/no-unused-vars
+59:37  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+62:91  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+62:109  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+71:64  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+71:82  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+84:45  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+84:63  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+106:33  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+106:41  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+106:54  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+106:72  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+131:35  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+133:32  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+133:50  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+135:79  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./components/flawless/brand-logos.tsx
+7:9  Warning: 'brands' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./components/flawless/header.tsx
+8:10  Warning: 'HeaderNavigation' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/guides/GuideCard.tsx
+4:17  Warning: 'User' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/guides/GuidesGrid.tsx
+9:44  Warning: 'BookOpen' is defined but never used.  @typescript-eslint/no-unused-vars
+9:54  Warning: 'User' is defined but never used.  @typescript-eslint/no-unused-vars
+9:60  Warning: 'Clock' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/idees-cadeaux/GiftIdeaCard.tsx
+4:43  Warning: 'Gift' is defined but never used.  @typescript-eslint/no-unused-vars
+6:8  Warning: 'Link' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/idees-cadeaux/GiftIdeasGrid.tsx
+9:29  Warning: 'CardDescription' is defined but never used.  @typescript-eslint/no-unused-vars
+10:41  Warning: 'Gift' is defined but never used.  @typescript-eslint/no-unused-vars
+10:47  Warning: 'Package' is defined but never used.  @typescript-eslint/no-unused-vars
+10:56  Warning: 'MessageSquare' is defined but never used.  @typescript-eslint/no-unused-vars
+32:9  Warning: 'subcategories' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+54:9  Warning: 'brands' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+61:9  Warning: 'filtered' is never reassigned. Use 'const' instead.  prefer-const
+
+./components/korean-beauty/KoreanBeautyCard.tsx
+6:8  Warning: 'Link' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/korean-beauty/KoreanBeautyGrid.tsx
+9:29  Warning: 'CardDescription' is defined but never used.  @typescript-eslint/no-unused-vars
+55:9  Warning: 'brands' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+62:9  Warning: 'filtered' is never reassigned. Use 'const' instead.  prefer-const
+
+./components/korean-skincare/KoreanSkincareCard.tsx
+6:8  Warning: 'Link' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/korean-skincare/KoreanSkincareGrid.tsx
+9:29  Warning: 'CardDescription' is defined but never used.  @typescript-eslint/no-unused-vars
+10:55  Warning: 'Droplets' is defined but never used.  @typescript-eslint/no-unused-vars
+56:9  Warning: 'brands' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+63:9  Warning: 'filtered' is never reassigned. Use 'const' instead.  prefer-const
+
+./components/navigation/CategoryDropdown.tsx
+12:3  Warning: 'NavigationMenu' is defined but never used.  @typescript-eslint/no-unused-vars
+17:3  Warning: 'navigationMenuTriggerStyle' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/navigation/HeaderWithNavigation.tsx
+8:31  Warning: 'X' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/navigation/MobileMenu.tsx
+9:10  Warning: 'X' is defined but never used.  @typescript-eslint/no-unused-vars
+9:21  Warning: 'Heart' is defined but never used.  @typescript-eslint/no-unused-vars
+9:28  Warning: 'ShoppingBag' is defined but never used.  @typescript-eslint/no-unused-vars
+9:41  Warning: 'User' is defined but never used.  @typescript-eslint/no-unused-vars
+17:3  Warning: 'SheetTrigger' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/navigation/NavigationDemo.tsx
+15:10  Warning: 'CategoryDropdown' is defined but never used.  @typescript-eslint/no-unused-vars
+16:10  Warning: 'NavigationItem' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/offers/OffreCard.tsx
+4:17  Warning: 'Tag' is defined but never used.  @typescript-eslint/no-unused-vars
+4:41  Warning: 'Star' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/offers/OffresGrid.tsx
+9:44  Warning: 'Clock' is defined but never used.  @typescript-eslint/no-unused-vars
+9:51  Warning: 'Tag' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/parapharmacie/ParapharmacieCard.tsx
+4:43  Warning: 'Shield' is defined but never used.  @typescript-eslint/no-unused-vars
+4:51  Warning: 'Pill' is defined but never used.  @typescript-eslint/no-unused-vars
+6:8  Warning: 'Link' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/parapharmacie/ParapharmacieGrid.tsx
+9:29  Warning: 'CardDescription' is defined but never used.  @typescript-eslint/no-unused-vars
+41:9  Warning: 'brands' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+48:9  Warning: 'filtered' is never reassigned. Use 'const' instead.  prefer-const
+
+./components/parfums/ParfumCard.tsx
+6:8  Warning: 'Link' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/parfums/ParfumGrid.tsx
+9:29  Warning: 'CardDescription' is defined but never used.  @typescript-eslint/no-unused-vars
+38:9  Warning: 'filtered' is never reassigned. Use 'const' instead.  prefer-const
+
+./components/promotion/PromotionCarousel.tsx
+88:9  Warning: 'currentPromotion' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./components/ui/ErrorBoundary.tsx
+67:38  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+89:29  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+149:52  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./components/ui/FooterNavigationDemo.tsx
+5:10  Warning: 'Button' is defined but never used.  @typescript-eslint/no-unused-vars
+19:75  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+161:89  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+161:120  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./components/ui/FormValidationDemo.tsx
+127:14  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+335:50  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+350:23  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+356:23  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./components/ui/ImageCompressor.tsx
+4:20  Warning: 'Download' is defined but never used.  @typescript-eslint/no-unused-vars
+4:30  Warning: 'Settings' is defined but never used.  @typescript-eslint/no-unused-vars
+159:19  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+186:15  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./components/ui/ImageCropper.tsx
+4:24  Warning: 'ZoomIn' is defined but never used.  @typescript-eslint/no-unused-vars
+4:32  Warning: 'ZoomOut' is defined but never used.  @typescript-eslint/no-unused-vars
+29:3  Warning: 'aspectRatio' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+140:34  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+194:13  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./components/ui/ImageTransition.tsx
+234:3  Warning: 'transitionType' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+245:10  Warning: 'isTransitioning' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./components/ui/ImageUpload.tsx
+119:38  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+237:11  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+309:23  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./components/ui/ImageVersionHistory.tsx
+92:6  Warning: React Hook useCallback has a missing dependency: 'currentImageUrl'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./components/ui/LazyImage.tsx
+188:9  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./components/ui/MicroInteractionsDemo.tsx
+42:60  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+128:43  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./components/ui/PerformanceOptimizationDemo.tsx
+4:10  Warning: 'Button' is defined but never used.  @typescript-eslint/no-unused-vars
+7:10  Warning: 'Separator' is defined but never used.  @typescript-eslint/no-unused-vars
+15:3  Warning: 'Monitor' is defined but never used.  @typescript-eslint/no-unused-vars
+162:17  Warning: Image elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
+263:30  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./components/ui/ProductCard.tsx
+41:10  Warning: 'formatCFA' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/ui/SmartPlaceholder.tsx
+26:10  Warning: 'isLoaded' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./components/ui/cart-popup.tsx
+89:19  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./components/ui/cart-toast.tsx
+29:11  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./components/ui/collapsible.tsx
+3:13  Warning: 'React' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/ui/form-field.tsx
+37:5  Warning: 'state' is defined but never used.  @typescript-eslint/no-unused-vars
+42:5  Warning: 'disabled' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/ui/typography.tsx
+56:44  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./lib/auth.ts
+61:14  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+62:14  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+63:17  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+65:17  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+139:16  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+140:14  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/app/api-reference/config/eslint#disabling-rules
+   Collecting page data ...
+⚠️  Supabase env vars missing - server client will fail at runtime
+⚠️  Supabase env vars missing - server client will fail at runtime
+⚠️  Supabase env vars missing - server client will fail at runtime
+⚠️  Supabase env vars missing - API routes will fail at runtime
+Error fetching subcategory data: TypeError: fetch failed
+    at async g (.next/server/app/cheveux/sous-categorie/[slug]/page.js:1:2100)
+    at async Object.k [as generateStaticParams] (.next/server/app/cheveux/sous-categorie/[slug]/page.js:1:3990) {
+  [cause]: [AggregateError: ] { code: 'ECONNREFUSED' }
+}
+⚠️  Supabase env vars missing - API routes will fail at runtime
+   Generating static pages (0/52) ...
+⚠️  Supabase env vars missing - server client will fail at runtime
+   Generating static pages (13/52) 
+⚠️  Supabase env vars missing - server client will fail at runtime
+   Generating static pages (26/52) 
+   Generating static pages (39/52) 
+ ✓ Generating static pages (52/52)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                                    Size  First Load JS
+┌ ƒ /                                                       6.28 kB         125 kB
+├ ƒ /_not-found                                               998 B         101 kB
+├ ƒ /[slug]                                                   308 B         100 kB
+├ ƒ /a-propos                                                5.9 kB         126 kB
+├ ƒ /about                                                    189 B         104 kB
+├ ƒ /account                                                12.4 kB         134 kB
+├ ƒ /account/details                                        8.29 kB         117 kB
+├ ƒ /account/wishlist                                       3.58 kB         121 kB
+├ ƒ /addresses                                              1.48 kB         101 kB
+├ ƒ /admin                                                   152 kB         350 kB
+├ ƒ /admin/brands                                           5.68 kB         114 kB
+├ ƒ /admin/categories                                       5.68 kB         114 kB
+├ ƒ /admin/delivery-zones                                   4.13 kB         148 kB
+├ ƒ /admin/products                                         8.43 kB         146 kB
+├ ƒ /admin/products-simple                                  8.32 kB         145 kB
+├ ƒ /admin/stock-faible                                     5.72 kB         114 kB
+├ ƒ /aide                                                   5.11 kB         117 kB
+├ ƒ /api/account/addresses                                    308 B         100 kB
+├ ƒ /api/account/favorites                                    308 B         100 kB
+├ ƒ /api/account/orders                                       308 B         100 kB
+├ ƒ /api/account/profile                                      308 B         100 kB
+├ ƒ /api/account/stats                                        308 B         100 kB
+├ ƒ /api/admin/analytics                                      308 B         100 kB
+├ ƒ /api/admin/audit                                          308 B         100 kB
+├ ƒ /api/admin/brands                                         308 B         100 kB
+├ ƒ /api/admin/brands-supabase                                308 B         100 kB
+├ ƒ /api/admin/brands/[id]                                    308 B         100 kB
+├ ƒ /api/admin/categories                                     308 B         100 kB
+├ ƒ /api/admin/categories/[id]                                308 B         100 kB
+├ ƒ /api/admin/delivery-zones                                 308 B         100 kB
+├ ƒ /api/admin/delivery-zones/[id]                            308 B         100 kB
+├ ƒ /api/admin/fix-images                                     308 B         100 kB
+├ ƒ /api/admin/messages                                       308 B         100 kB
+├ ƒ /api/admin/messages/[id]/archive                          308 B         100 kB
+├ ƒ /api/admin/messages/[id]/read                             308 B         100 kB
+├ ƒ /api/admin/messages/[id]/unread                           308 B         100 kB
+├ ƒ /api/admin/messages/reply                                 308 B         100 kB
+├ ƒ /api/admin/newsletter/export                              308 B         100 kB
+├ ƒ /api/admin/newsletter/subscribers                         308 B         100 kB
+├ ƒ /api/admin/newsletter/subscribers/[id]/toggle             308 B         100 kB
+├ ƒ /api/admin/orders                                         308 B         100 kB
+├ ƒ /api/admin/orders/[id]                                    308 B         100 kB
+├ ƒ /api/admin/orders/export                                  308 B         100 kB
+├ ƒ /api/admin/overview                                       308 B         100 kB
+├ ƒ /api/admin/products                                       308 B         100 kB
+├ ƒ /api/admin/products-supabase                              308 B         100 kB
+├ ƒ /api/admin/products-supabase/[id]                         308 B         100 kB
+├ ƒ /api/admin/products/[id]                                  308 B         100 kB
+├ ƒ /api/admin/products/import                                308 B         100 kB
+├ ƒ /api/admin/settings/ecommerce                             308 B         100 kB
+├ ƒ /api/admin/settings/general                               308 B         100 kB
+├ ƒ /api/admin/settings/shipping                              308 B         100 kB
+├ ƒ /api/admin/taxonomy                                       308 B         100 kB
+├ ƒ /api/admin/taxonomy-supabase                              308 B         100 kB
+├ ƒ /api/admin/users                                          308 B         100 kB
+├ ƒ /api/admin/users/[id]/orders                              308 B         100 kB
+├ ƒ /api/admin/users/[id]/reactivate                          308 B         100 kB
+├ ƒ /api/admin/users/[id]/suspend                             308 B         100 kB
+├ ƒ /api/auth/[...nextauth]                                   308 B         100 kB
+├ ƒ /api/auth/logout                                          308 B         100 kB
+├ ƒ /api/categories/[slug]/subcategories                      308 B         100 kB
+├ ƒ /api/checkout/session                                     308 B         100 kB
+├ ƒ /api/checkout/webhook                                     308 B         100 kB
+├ ƒ /api/maintenance                                          308 B         100 kB
+├ ƒ /api/paytech/session                                      308 B         100 kB
+├ ƒ /api/paytech/verify                                       308 B         100 kB
+├ ƒ /api/paytech/webhook                                      308 B         100 kB
+├ ƒ /api/products                                             308 B         100 kB
+├ ƒ /api/promotions                                           308 B         100 kB
+├ ƒ /api/uploadthing                                          308 B         100 kB
+├ ƒ /auth                                                   6.75 kB         122 kB
+├ ƒ /bebe-enfant                                            7.16 kB         127 kB
+├ ƒ /bebe-enfant/[sub]                                        308 B         100 kB
+├ ƒ /blog                                                     308 B         100 kB
+├ ƒ /brand/[slug]                                             308 B         100 kB
+├ ƒ /brands                                                   182 B         109 kB
+├ ƒ /cart                                                   3.96 kB         121 kB
+├ ƒ /catalog                                                1.79 kB         122 kB
+├ ƒ /categories                                               189 B         104 kB
+├ ● /category/[categorySlug]/subcategory/[subcategorySlug]    155 B         166 kB
+├ ƒ /checkout                                               12.5 kB         176 kB
+├ ƒ /checkout/success                                         172 B         104 kB
+├ ƒ /cheveux                                                6.39 kB         126 kB
+├ ƒ /cheveux/[sub]                                            308 B         100 kB
+├ ƒ /cheveux/complements-alimentaires                         154 B         166 kB
+├ ƒ /cheveux/routine-capillaire                               155 B         166 kB
+├ ƒ /cheveux/soins-cheveux                                    155 B         166 kB
+├ ● /cheveux/sous-categorie/[slug]                            155 B         166 kB
+├ ƒ /compte                                                   308 B         100 kB
+├ ƒ /conditions                                               172 B         104 kB
+├ ƒ /contact                                                 7.7 kB         152 kB
+├ ƒ /cookies                                                  189 B         104 kB
+├ ƒ /corps-bain                                             6.53 kB         126 kB
+├ ƒ /corps-bain/[sub]                                         308 B         100 kB
+├ ƒ /corps-bain/bain-douche                                   155 B         166 kB
+├ ƒ /corps-bain/epilation                                     155 B         166 kB
+├ ƒ /corps-bain/hygiene-intime                                155 B         166 kB
+├ ƒ /corps-bain/mains-pieds                                   155 B         166 kB
+├ ƒ /corps-bain/soins-corps                                   155 B         166 kB
+├ ● /corps-bain/sous-categorie/[slug]                         155 B         166 kB
+├ ƒ /delivery                                                 189 B         104 kB
+├ ƒ /demo-phase4                                              308 B         100 kB
+├ ƒ /demo-phase5                                              27 kB         223 kB
+├ ƒ /faq                                                    3.78 kB         111 kB
+├ ƒ /favoris                                                  308 B         100 kB
+├ ƒ /favorites                                                189 B         104 kB
+├ ƒ /grossesse-post-partum                                  6.84 kB         152 kB
+├ ƒ /guide-beaute                                           8.96 kB         157 kB
+├ ƒ /idees-cadeaux                                          7.54 kB         158 kB
+├ ƒ /korean-beauty                                          9.24 kB         160 kB
+├ ƒ /korean-skincare                                        14.2 kB         160 kB
+├ ƒ /livraison                                                172 B         104 kB
+├ ƒ /loyalty                                                  189 B         104 kB
+├ ƒ /maquillage                                             6.95 kB         127 kB
+├ ƒ /maquillage/[sub]                                         308 B         100 kB
+├ ƒ /marques                                                10.7 kB         156 kB
+├ ƒ /meilleures-ventes                                      8.85 kB         129 kB
+├ ƒ /mentions-legales                                         308 B         100 kB
+├ ƒ /nouveautes                                             8.04 kB         128 kB
+├ ƒ /offres-speciales                                       10.2 kB         156 kB
+├ ƒ /orders                                                 1.55 kB         142 kB
+├ ƒ /panier                                                   10 kB         172 kB
+├ ƒ /parapharmacie                                          6.41 kB         126 kB
+├ ƒ /parapharmacie/[sub]                                      308 B         100 kB
+├ ƒ /parapharmacie/complements                                155 B         166 kB
+├ ƒ /parapharmacie/soins-corps                                155 B         166 kB
+├ ƒ /parapharmacie/soins-visage                               154 B         166 kB
+├ ● /parapharmacie/sous-categorie/[slug]                      155 B         166 kB
+├   ├ /parapharmacie/sous-categorie/complements
+├   ├ /parapharmacie/sous-categorie/soins-visage
+├   └ /parapharmacie/sous-categorie/soins-corps
+├ ƒ /parfumerie                                             6.57 kB         127 kB
+├ ƒ /parfumerie/[sub]                                         308 B         100 kB
+├ ƒ /parfumerie/coffrets-parfums                              155 B         166 kB
+├ ƒ /parfumerie/eaux-de-toilette                              154 B         166 kB
+├ ƒ /parfumerie/parfums-femme                                 155 B         166 kB
+├ ƒ /parfumerie/parfums-homme                                 155 B         166 kB
+├ ● /parfumerie/sous-categorie/[slug]                         155 B         166 kB
+├   ├ /parfumerie/sous-categorie/parfums-femme
+├   ├ /parfumerie/sous-categorie/parfums-homme
+├   ├ /parfumerie/sous-categorie/eaux-de-toilette
+├   └ /parfumerie/sous-categorie/coffrets-parfums
+├ ƒ /parfums                                                11.5 kB         157 kB
+├ ƒ /politique-de-confidentialite                             308 B         100 kB
+├ ƒ /privacy                                                  308 B         100 kB
+├ ƒ /product/[id]                                            1.2 kB         124 kB
+├ ƒ /products                                               1.79 kB         122 kB
+├ ƒ /promo                                                    182 B         109 kB
+├ ƒ /promotion                                              7.21 kB         119 kB
+├ ƒ /promotions                                               11 kB         159 kB
+├ ƒ /recherche                                                308 B         100 kB
+├ ƒ /retours                                                  308 B         100 kB
+├ ƒ /search                                                   189 B         104 kB
+├ ƒ /shop                                                     308 B         100 kB
+├ ƒ /soin-du-visage                                         1.81 kB         129 kB
+├ ƒ /soin-du-visage/[sub]                                    1.6 kB         129 kB
+├ ƒ /soin-du-visage/baumes-levres                             155 B         166 kB
+├ ƒ /soin-du-visage/demaquillants-nettoyants                  155 B         166 kB
+├ ƒ /soin-du-visage/protection-solaire                        155 B         166 kB
+├ ƒ /soin-du-visage/soins-cibles                              155 B         166 kB
+├ ƒ /soin-du-visage/soins-par-produit                         155 B         166 kB
+├ ● /soin-du-visage/sous-categorie/[slug]                     155 B         166 kB
+├   ├ /soin-du-visage/sous-categorie/nettoyants
+├   ├ /soin-du-visage/sous-categorie/hydratants
+├   ├ /soin-du-visage/sous-categorie/serums
+├   └ [+8 more paths]
+├ ƒ /sub/[slug]                                               308 B         100 kB
+├ ƒ /support                                                  189 B         104 kB
+├ ƒ /terms                                                    308 B         100 kB
+├ ƒ /test-integration                                       10.8 kB         142 kB
+└ ƒ /test-subcategory                                         155 B         166 kB
++ First Load JS shared by all                                100 kB
+  ├ chunks/4bd1b696-cc729d47eba2cee4.js                     54.1 kB
+  ├ chunks/5964-6d6a41800488ba64.js                         43.9 kB
+  └ other shared chunks (total)                             1.97 kB
+
+
+ƒ Middleware                                                  86 kB
+
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+
