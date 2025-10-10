@@ -54,11 +54,20 @@ export default function TestEnvPage() {
     SUPABASE_SERVICE_ROLE_KEY: envVars.SUPABASE_SERVICE_ROLE_KEY,
   }
 
-  const allCriticalConfigured = Object.values(criticalVars).every(v => 
-    typeof v === 'boolean' ? v === true : v !== 'NOT SET'
-  )
+  const allCriticalConfigured = Object.values(criticalVars).every(v => {
+    if (typeof v === 'boolean') {
+      return v === true
+    }
+    return v !== 'NOT SET'
+  })
+  
   const missingCritical = Object.entries(criticalVars)
-    .filter(([, value]) => !value || value === 'NOT SET')
+    .filter(([, value]) => {
+      if (typeof value === 'boolean') {
+        return !value
+      }
+      return value === 'NOT SET'
+    })
     .map(([key]) => key)
 
   return (
