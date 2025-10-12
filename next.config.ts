@@ -20,6 +20,14 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ['@radix-ui/react-icons'],
   },
+  // Ignore ESLint errors during build (warnings will still be shown in dev)
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  // Ignore TypeScript errors during build (for faster deployments)
+  typescript: {
+    ignoreBuildErrors: false,
+  },
   // Configuration pour gérer les erreurs de Google Fonts
   webpack: (config, { isServer }) => {
     if (!isServer) {

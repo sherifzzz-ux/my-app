@@ -1,179 +1,312 @@
-# 🚀 Guide de Déploiement Vercel - FlawlessBeauty
+# 🚀 Guide de déploiement Vercel - FlawlessBeauty
 
-## 🔍 Diagnostic du Problème
+Ce guide vous accompagne pas à pas pour déployer votre application e-commerce sur Vercel.
 
-Votre déploiement échoue sur Vercel probablement à cause des **variables d'environnement manquantes**. Le build passe localement mais échoue sur Vercel car les secrets ne sont pas configurés.
+## 📋 Pré-requis
 
-## ✅ Variables d'Environnement OBLIGATOIRES
+- [ ] Compte Vercel (gratuit : https://vercel.com/signup)
+- [ ] Repository GitHub avec le code
+- [ ] Base de données PostgreSQL (recommandé : Supabase, Neon, ou Railway)
+- [ ] Comptes configurés pour les services externes (PayTech, Uploadthing, Resend)
 
-### 1. Base de Données (CRITIQUE)
-```bash
-DATABASE_URL="postgresql://username:password@host/database?sslmode=require"
-```
-**Où le trouver :** Votre dashboard Neon ou autre fournisseur PostgreSQL
+## 🔧 Étape 1 : Préparer la base de données
 
-### 2. NextAuth (CRITIQUE)
-```bash
-AUTH_URL="https://votre-domaine.vercel.app"
-AUTH_SECRET="genere-avec-openssl-rand-base64-32"
-```
-**Comment générer AUTH_SECRET :**
-```bash
-openssl rand -base64 32
-```
+### Option A : Supabase (Recommandé)
 
-### 3. Supabase (CRITIQUE pour l'Admin)
-```bash
-NEXT_PUBLIC_SUPABASE_URL="https://votre-projet.supabase.co"
-NEXT_PUBLIC_SUPABASE_ANON_KEY="eyJhbG..."
-SUPABASE_SERVICE_ROLE_KEY="eyJhbG..."
-```
-**Où le trouver :** Dashboard Supabase → Settings → API
+1. Créer un projet sur https://supabase.com
+2. Récupérer l'URL de connexion PostgreSQL :
+   - Settings > Database > Connection String (URI)
+   - Format : `postgresql://postgres:[PASSWORD]@[HOST]:5432/postgres`
+3. Copier cette URL pour la variable `DATABASE_URL`
 
-### 4. Stripe (pour les paiements)
-```bash
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY="pk_live_..."
-STRIPE_SECRET_KEY="sk_live_..."
-STRIPE_WEBHOOK_SECRET="whsec_..."
-```
-**Où le trouver :** Dashboard Stripe → Developers → API Keys
+### Option B : Neon
 
-### 5. PayTech (paiements Mobile Money)
-```bash
-PAYTECH_API_KEY="votre-api-key"
-PAYTECH_API_SECRET="votre-api-secret"
-PAYTECH_ENV="production"
-PAYTECH_SUCCESS_URL="https://votre-domaine.vercel.app/checkout/success"
-PAYTECH_CANCEL_URL="https://votre-domaine.vercel.app/checkout"
-PAYTECH_IPN_URL="https://votre-domaine.vercel.app/api/paytech/webhook"
-```
-**Où le trouver :** Dashboard PayTech
+1. Créer un projet sur https://neon.tech
+2. Copier la connection string PostgreSQL
+3. L'utiliser pour `DATABASE_URL`
 
-### 6. Uploadthing (optionnel)
-```bash
-UPLOADTHING_TOKEN="votre-token"
-UPLOADTHING_SECRET="votre-secret"
-```
-**Où le trouver :** Dashboard Uploadthing
+### Option C : Railway
 
-### 7. Resend (emails - optionnel)
-```bash
-RESEND_API_KEY="re_..."
-```
-**Où le trouver :** Dashboard Resend
+1. Créer un projet sur https://railway.app
+2. Ajouter un service PostgreSQL
+3. Copier la `DATABASE_URL` depuis les variables
 
-## 📝 Étapes de Configuration sur Vercel
+## 🔐 Étape 2 : Configurer les services externes
 
-### Étape 1 : Accéder aux Settings
-1. Allez sur votre projet Vercel
-2. Cliquez sur l'onglet **Settings**
-3. Dans le menu latéral, cliquez sur **Environment Variables**
+### PayTech (Paiements locaux Sénégal)
 
-### Étape 2 : Ajouter les Variables
-Pour chaque variable ci-dessus :
-1. Cliquez sur **Add New**
-2. **Key** : Nom de la variable (ex: `DATABASE_URL`)
-3. **Value** : Valeur de la variable
-4. **Environments** : Cochez `Production`, `Preview`, et `Development`
-5. Cliquez sur **Save**
+1. Inscription : https://paytech.sn
+2. Récupérer :
+   - API Key
+   - API Secret
+3. Configurer le webhook :
+   - URL : `https://votre-domaine.vercel.app/api/checkout/paytech-webhook`
+   - Événements : Tous
 
-### Étape 3 : Redéployer
-Après avoir ajouté toutes les variables :
-1. Allez dans l'onglet **Deployments**
-2. Trouvez le dernier déploiement
-3. Cliquez sur les 3 points → **Redeploy**
-4. Cochez "Use existing Build Cache" (optionnel)
-5. Cliquez sur **Redeploy**
+### Uploadthing (Upload d'images)
 
-## 🔧 Variables Minimales pour Faire Fonctionner l'Admin
+1. Créer un compte : https://uploadthing.com
+2. Créer une nouvelle application
+3. Récupérer :
+   - Secret
+   - App ID
 
-Si vous voulez juste que l'interface admin fonctionne rapidement, configurez AU MINIMUM :
+### Resend (Emails)
 
-```bash
-# Base de données
-DATABASE_URL="postgresql://..."
+1. Créer un compte : https://resend.com
+2. Générer une API Key
+3. Configurer le domaine d'envoi (optionnel)
 
-# Auth
-AUTH_URL="https://votre-domaine.vercel.app"
-AUTH_SECRET="votre-secret-genere"
+### NextAuth (Authentification sociale)
 
-# Supabase (pour l'authentification admin)
-NEXT_PUBLIC_SUPABASE_URL="https://..."
-NEXT_PUBLIC_SUPABASE_ANON_KEY="eyJ..."
-SUPABASE_SERVICE_ROLE_KEY="eyJ..."
-```
+#### Google OAuth
+1. Console Google Cloud : https://console.cloud.google.com
+2. Créer un projet
+3. APIs & Services > Credentials
+4. Create OAuth 2.0 Client ID
+5. Authorized redirect URIs : `https://votre-domaine.vercel.app/api/auth/callback/google`
 
-## 🐛 Dépannage
+#### GitHub OAuth
+1. GitHub Settings > Developer settings > OAuth Apps
+2. New OAuth App
+3. Authorization callback URL : `https://votre-domaine.vercel.app/api/auth/callback/github`
 
-### Erreur : "Deployment has failed"
-**Cause :** Variables d'environnement manquantes
-**Solution :** Ajoutez toutes les variables OBLIGATOIRES ci-dessus
+## 🚀 Étape 3 : Déployer sur Vercel
 
-### Erreur : "Database connection failed"
-**Cause :** `DATABASE_URL` invalide ou manquant
-**Solution :** Vérifiez que votre URL de base de données est correcte et inclut `?sslmode=require`
+### Via l'interface web
 
-### Erreur : "Supabase client error"
-**Cause :** Variables Supabase manquantes
-**Solution :** Ajoutez `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, et `SUPABASE_SERVICE_ROLE_KEY`
+1. **Connecter le repository**
+   - Aller sur https://vercel.com/new
+   - Importer votre repository GitHub
+   - Sélectionner le repository FlawlessBeauty
 
-### L'admin redirige vers la page d'accueil
-**Cause :** Vous n'êtes pas authentifié comme admin
-**Solution :** 
-1. Connectez-vous d'abord sur le site
-2. Dans votre base de données Supabase, exécutez :
-   ```sql
-   -- Mettre à jour le rôle de votre utilisateur
-   UPDATE profiles 
-   SET role = 'admin' 
-   WHERE email = 'votre-email@example.com';
+2. **Configurer le projet**
+   - Framework Preset : Next.js (détecté automatiquement)
+   - Root Directory : `.` (racine)
+   - Build Command : `npm run build` (par défaut)
+   - Output Directory : `.next` (par défaut)
+
+3. **Ajouter les variables d'environnement**
+   
+   Dans la section "Environment Variables", ajouter :
+
+   ```
+   DATABASE_URL=postgresql://...
+   NEXTAUTH_URL=https://votre-domaine.vercel.app
+   NEXTAUTH_SECRET=votre-secret-genere
+   PAYTECH_API_KEY=...
+   PAYTECH_API_SECRET=...
+   PAYTECH_ENV=test
+   UPLOADTHING_SECRET=...
+   UPLOADTHING_APP_ID=...
+   NEXT_PUBLIC_SUPABASE_URL=...
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+   SUPABASE_SERVICE_ROLE_KEY=...
+   RESEND_API_KEY=...
+   GOOGLE_CLIENT_ID=...
+   GOOGLE_CLIENT_SECRET=...
+   GITHUB_ID=...
+   GITHUB_SECRET=...
    ```
 
-## 📊 Vérifier les Logs
+   **Important :** Toutes les variables sont nécessaires pour les environnements :
+   - ✅ Production
+   - ✅ Preview
+   - ⚠️ Development (optionnel)
 
-Si le déploiement échoue encore :
-1. Allez dans **Deployments**
-2. Cliquez sur le déploiement qui a échoué
-3. Regardez les logs dans l'onglet **Build Logs**
-4. Cherchez les lignes avec "error" ou "missing"
+4. **Déployer**
+   - Cliquer sur "Deploy"
+   - Attendre la fin du build (2-5 minutes)
+   - Vérifier les logs en cas d'erreur
 
-## 🎯 Checklist Finale
+### Via Vercel CLI
 
-- [ ] `DATABASE_URL` configuré
-- [ ] `AUTH_URL` configuré avec le bon domaine Vercel
-- [ ] `AUTH_SECRET` généré et configuré
-- [ ] `NEXT_PUBLIC_SUPABASE_URL` configuré
-- [ ] `NEXT_PUBLIC_SUPABASE_ANON_KEY` configuré
-- [ ] `SUPABASE_SERVICE_ROLE_KEY` configuré
-- [ ] Toutes les variables marquées pour `Production`, `Preview`, et `Development`
-- [ ] Redéploiement lancé
+```bash
+# Installer Vercel CLI
+npm i -g vercel
 
-## 💡 Astuce
+# Se connecter
+vercel login
 
-Pour tester rapidement si vos variables sont bien configurées, ajoutez une page de test :
+# Déployer (depuis la racine du projet)
+vercel
 
-```typescript
-// app/test-env/page.tsx
-export default function TestEnv() {
-  const vars = {
-    DATABASE_URL: !!process.env.DATABASE_URL,
-    AUTH_URL: !!process.env.AUTH_URL,
-    AUTH_SECRET: !!process.env.AUTH_SECRET,
-    SUPABASE_URL: !!process.env.NEXT_PUBLIC_SUPABASE_URL,
-    SUPABASE_ANON: !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-  }
-  
-  return (
-    <div className="p-8">
-      <h1>Test Variables d'Environnement</h1>
-      <pre>{JSON.stringify(vars, null, 2)}</pre>
-    </div>
-  )
-}
+# Pour la production
+vercel --prod
 ```
 
-Visitez `/test-env` sur votre déploiement Vercel pour voir quelles variables sont manquantes (les valeurs `false` indiquent une variable manquante).
+## 🔍 Étape 4 : Vérifications post-déploiement
+
+### Checklist de vérification
+
+- [ ] **Page d'accueil** : `https://votre-domaine.vercel.app`
+  - ✅ S'affiche correctement
+  - ✅ Images chargées
+  - ✅ Navigation fonctionnelle
+
+- [ ] **Base de données**
+  - ✅ Connexion établie
+  - ✅ Tables créées (Prisma migrate)
+  - ✅ Données de seed si nécessaire
+
+- [ ] **Authentification**
+  - ✅ Connexion email/password
+  - ✅ OAuth Google
+  - ✅ OAuth GitHub
+  - ✅ Création de compte
+
+- [ ] **Produits**
+  - ✅ Listing des produits
+  - ✅ Détails d'un produit
+  - ✅ Ajout au panier
+  - ✅ Images des produits
+
+- [ ] **Panier**
+  - ✅ Ajout/suppression d'articles
+  - ✅ Mise à jour des quantités
+  - ✅ Calcul des totaux
+
+- [ ] **Checkout**
+  - ✅ Formulaire de livraison
+  - ✅ Méthodes de paiement affichées
+  - ✅ Redirection vers PayTech
+  - ✅ Page de succès
+  - ✅ Page d'annulation
+
+- [ ] **Administration**
+  - ✅ Accès au dashboard `/admin`
+  - ✅ Gestion des produits
+  - ✅ Gestion des commandes
+  - ✅ Upload d'images
+
+## 🐛 Résolution des problèmes courants
+
+### Build échoue
+
+**Erreur : "Failed to compile"**
+```
+Solution : Vérifier que les fichiers suivants sont présents :
+- next.config.ts (avec eslint.ignoreDuringBuilds)
+- .eslintrc.json
+```
+
+**Erreur : "Prisma Client not found"**
+```
+Solution : Vérifier que le script prebuild est présent dans package.json :
+"prebuild": "prisma generate"
+```
+
+### Runtime errors
+
+**Erreur : "DATABASE_URL not defined"**
+```
+Solution : Ajouter DATABASE_URL dans Vercel Environment Variables
+```
+
+**Erreur : "Invalid NEXTAUTH_URL"**
+```
+Solution : S'assurer que NEXTAUTH_URL pointe vers le domaine Vercel :
+https://votre-domaine.vercel.app
+```
+
+**Erreur : "NEXTAUTH_SECRET not defined"**
+```
+Solution : Générer un secret avec :
+openssl rand -base64 32
+
+Puis l'ajouter dans Vercel Environment Variables
+```
+
+### Problèmes de paiement
+
+**PayTech ne fonctionne pas**
+```
+Solution :
+1. Vérifier PAYTECH_API_KEY et PAYTECH_API_SECRET
+2. Vérifier que le webhook est configuré
+3. Tester avec PAYTECH_ENV=test d'abord
+```
+
+### Problèmes d'upload
+
+**Les images ne s'uploadent pas**
+```
+Solution :
+1. Vérifier UPLOADTHING_SECRET et UPLOADTHING_APP_ID
+2. Vérifier les CORS dans Uploadthing dashboard
+3. Vérifier la limite de taille des fichiers
+```
+
+## 🔄 Mise à jour du déploiement
+
+### Déploiement automatique
+
+Par défaut, Vercel redéploie automatiquement à chaque push sur la branche principale (main/master).
+
+### Déploiement manuel
+
+```bash
+# Depuis le terminal
+vercel --prod
+
+# Ou via l'interface Vercel
+# Project > Deployments > Redeploy
+```
+
+### Rollback
+
+1. Aller dans Vercel Dashboard
+2. Project > Deployments
+3. Trouver le déploiement précédent
+4. Cliquer sur "..." > "Promote to Production"
+
+## 📊 Monitoring
+
+### Logs
+
+- **Build logs** : Vercel Dashboard > Project > Deployments > [Deployment] > Build Logs
+- **Runtime logs** : Vercel Dashboard > Project > Logs
+- **Analytics** : Vercel Dashboard > Project > Analytics
+
+### Performance
+
+- **Web Vitals** : Vercel Analytics (gratuit)
+- **Speed Insights** : Activer dans Project Settings
+
+## 🔒 Sécurité
+
+### Bonnes pratiques
+
+- ✅ Utiliser HTTPS uniquement (Vercel le fait par défaut)
+- ✅ Secrets dans Environment Variables, jamais dans le code
+- ✅ Rotation régulière des secrets (NEXTAUTH_SECRET, API keys)
+- ✅ Limiter les permissions des clés API
+- ✅ Activer 2FA sur les comptes Vercel et GitHub
+
+### Variables sensibles
+
+Ne JAMAIS committer :
+- ❌ .env.local
+- ❌ .env.production
+- ❌ Clés API
+- ❌ Secrets
+
+## 📚 Ressources
+
+- [Documentation Vercel](https://vercel.com/docs)
+- [Next.js Deployment](https://nextjs.org/docs/deployment)
+- [Prisma avec Vercel](https://www.prisma.io/docs/guides/deployment/deployment-guides/deploying-to-vercel)
+- [NextAuth.js Deployment](https://next-auth.js.org/deployment)
+
+## 🆘 Support
+
+En cas de problème :
+1. Consulter les logs Vercel
+2. Vérifier les variables d'environnement
+3. Tester localement avec les mêmes variables
+4. Consulter la documentation officielle
+5. Créer une issue sur GitHub
 
 ---
 
-**Besoin d'aide ?** Si le problème persiste après avoir suivi ce guide, vérifiez les logs de build sur Vercel et partagez le message d'erreur exact.
+**Dernière mise à jour :** 2025-10-12
