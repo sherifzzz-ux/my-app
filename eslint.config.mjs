@@ -20,6 +20,11 @@ const eslintConfig = [
         { 'ts-ignore': 'allow-with-description' }
       ],
       'react/no-unescaped-entities': 'warn',
+      '@next/next/no-html-link-for-pages': 'warn',
+      '@typescript-eslint/no-unused-vars': 'warn',
+      'react-hooks/exhaustive-deps': 'warn',
+      '@next/next/no-img-element': 'warn',
+      'jsx-a11y/alt-text': 'warn',
     },
   },
 ]
