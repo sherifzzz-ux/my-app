@@ -1,75 +1,114 @@
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
+    "hero-carousel": {
+      "type": "hero-carousel",
       "blocks": {
-        "heading": {
-          "type": "heading",
+        "slide-1": {
+          "type": "slide",
           "settings": {
-            "heading": "Browse our latest products",
-            "heading_size": "h0"
+            "subtitle": "✨ Nouvelle Collection",
+            "title": "Révélez votre beauté naturelle",
+            "description": "Découvrez notre sélection exclusive de produits de beauté",
+            "button_text": "Découvrir",
+            "button_link": "/collections/all"
           }
         },
-        "button": {
-          "type": "buttons",
+        "slide-2": {
+          "type": "slide",
           "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
+            "subtitle": "🎁 Offre Spéciale",
+            "title": "Jusqu'à -50% sur une sélection",
+            "description": "Profitez de nos promotions exceptionnelles",
+            "button_text": "Voir les promos",
+            "button_link": "/collections/promotions"
+          }
+        },
+        "slide-3": {
+          "type": "slide",
+          "settings": {
+            "subtitle": "🚀 Livraison Express",
+            "title": "Livrée en moins de 24h à Dakar",
+            "description": "Commandez maintenant et recevez demain",
+            "button_text": "Commander",
+            "button_link": "/collections/all"
           }
         }
       },
-      "block_order": [
-        "heading",
-        "button"
-      ],
+      "block_order": ["slide-1", "slide-2", "slide-3"]
+    },
+    "category-grid": {
+      "type": "category-grid",
       "settings": {
-        "image_overlay_opacity": 40,
-        "image_height": "large",
-        "desktop_content_position": "bottom-center",
-        "show_text_box": false,
-        "image_behavior": "none",
-        "desktop_content_alignment": "center",
-        "color_scheme": "scheme-3",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": false,
-        "show_text_below": false
+        "title": "Nos Catégories",
+        "subtitle": "Explorez nos univers beauté"
+      },
+      "blocks": {
+        "cat-1": {
+          "type": "category",
+          "settings": {
+            "title": "Soin du visage",
+            "link": "/collections/soin-du-visage"
+          }
+        },
+        "cat-2": {
+          "type": "category",
+          "settings": {
+            "title": "Corps & Bain",
+            "link": "/collections/corps-bain"
+          }
+        },
+        "cat-3": {
+          "type": "category",
+          "settings": {
+            "title": "Maquillage",
+            "link": "/collections/maquillage"
+          }
+        },
+        "cat-4": {
+          "type": "category",
+          "settings": {
+            "title": "Cheveux",
+            "link": "/collections/cheveux"
+          }
+        },
+        "cat-5": {
+          "type": "category",
+          "settings": {
+            "title": "Parfumerie",
+            "link": "/collections/parfumerie"
+          }
+        },
+        "cat-6": {
+          "type": "category",
+          "settings": {
+            "title": "Parapharmacie",
+            "link": "/collections/parapharmacie"
+          }
+        }
+      },
+      "block_order": ["cat-1", "cat-2", "cat-3", "cat-4", "cat-5", "cat-6"]
+    },
+    "featured-products": {
+      "type": "featured-products",
+      "settings": {
+        "title": "Nos Coups de Cœur",
+        "subtitle": "Les produits préférés de nos clientes",
+        "products_limit": 8,
+        "button_text": "Voir tous les produits",
+        "button_link": "/collections/all"
       }
     },
-    "featured_collection": {
-      "type": "featured-collection",
+    "brand-logos": {
+      "type": "brand-logos",
       "settings": {
-        "title": "Featured products",
-        "heading_size": "h2",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "collection": "all",
-        "products_to_show": 8,
-        "columns_desktop": 4,
-        "color_scheme": "scheme-1",
-        "full_width": false,
-        "show_view_all": true,
-        "view_all_style": "solid",
-        "enable_desktop_slider": false,
-        "swipe_on_mobile": false,
-        "image_ratio": "adapt",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "quick_add": "none",
-        "columns_mobile": "2",
-        "padding_top": 44,
-        "padding_bottom": 36
+        "title": "Nos Marques Partenaires"
       }
     }
   },
   "order": [
-    "image_banner",
-    "featured_collection"
+    "hero-carousel",
+    "category-grid",
+    "featured-products",
+    "brand-logos"
   ]
 }

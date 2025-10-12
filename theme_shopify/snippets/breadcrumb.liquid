@@ -1,0 +1,53 @@
+<nav class="breadcrumb" aria-label="Fil d'Ariane">
+  <ol class="breadcrumb__list">
+    <li class="breadcrumb__item">
+      <a href="/" class="breadcrumb__link">Accueil</a>
+    </li>
+
+    {% case template %}
+      {% when 'product' %}
+        {% if collection %}
+          <li class="breadcrumb__item">
+            <a href="{{ collection.url }}" class="breadcrumb__link">{{ collection.title }}</a>
+          </li>
+        {% elsif product.collections.size > 0 %}
+          <li class="breadcrumb__item">
+            <a href="{{ product.collections.first.url }}" class="breadcrumb__link">
+              {{ product.collections.first.title }}
+            </a>
+          </li>
+        {% endif %}
+        <li class="breadcrumb__item">
+          <span class="breadcrumb__current">{{ product.title }}</span>
+        </li>
+
+      {% when 'collection' %}
+        <li class="breadcrumb__item">
+          <span class="breadcrumb__current">{{ collection.title }}</span>
+        </li>
+
+      {% when 'page' %}
+        <li class="breadcrumb__item">
+          <span class="breadcrumb__current">{{ page.title }}</span>
+        </li>
+
+      {% when 'blog' %}
+        <li class="breadcrumb__item">
+          <span class="breadcrumb__current">{{ blog.title }}</span>
+        </li>
+
+      {% when 'article' %}
+        <li class="breadcrumb__item">
+          <a href="{{ blog.url }}" class="breadcrumb__link">{{ blog.title }}</a>
+        </li>
+        <li class="breadcrumb__item">
+          <span class="breadcrumb__current">{{ article.title }}</span>
+        </li>
+
+      {% else %}
+        <li class="breadcrumb__item">
+          <span class="breadcrumb__current">{{ page_title }}</span>
+        </li>
+    {% endcase %}
+  </ol>
+</nav>

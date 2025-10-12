@@ -1,0 +1,111 @@
+{% render 'breadcrumb' %}
+
+<div class="collection-page">
+  <div class="container">
+    <!-- Collection Header -->
+    <div class="collection-header">
+      {% if collection.image %}
+        <div class="collection-image">
+          <img 
+            src="{{ collection.image | img_url: '1200x' }}" 
+            alt="{{ collection.title | escape }}"
+            loading="eager"
+          >
+        </div>
+      {% endif %}
+      
+      <div class="collection-info">
+        <h1 class="collection-title">{{ collection.title }}</h1>
+        {% if collection.description != blank %}
+          <div class="collection-description">
+            {{ collection.description }}
+          </div>
+        {% endif %}
+        <p class="collection-count">{{ collection.products_count }} produits</p>
+      </div>
+    </div>
+
+    <!-- Filters & Sort -->
+    <div class="collection-toolbar">
+      <!-- Sort -->
+      <div class="collection-sort">
+        <label for="sort-by">Trier par:</label>
+        <select id="sort-by" onchange="window.location.href = this.value">
+          <option value="{{ collection.url }}?sort_by=manual" {% if collection.sort_by == 'manual' %}selected{% endif %}>
+            Mis en avant
+          </option>
+          <option value="{{ collection.url }}?sort_by=best-selling" {% if collection.sort_by == 'best-selling' %}selected{% endif %}>
+            Meilleures ventes
+          </option>
+          <option value="{{ collection.url }}?sort_by=title-ascending" {% if collection.sort_by == 'title-ascending' %}selected{% endif %}>
+            A-Z
+          </option>
+          <option value="{{ collection.url }}?sort_by=title-descending" {% if collection.sort_by == 'title-descending' %}selected{% endif %}>
+            Z-A
+          </option>
+          <option value="{{ collection.url }}?sort_by=price-ascending" {% if collection.sort_by == 'price-ascending' %}selected{% endif %}>
+            Prix croissant
+          </option>
+          <option value="{{ collection.url }}?sort_by=price-descending" {% if collection.sort_by == 'price-descending' %}selected{% endif %}>
+            Prix décroissant
+          </option>
+          <option value="{{ collection.url }}?sort_by=created-descending" {% if collection.sort_by == 'created-descending' %}selected{% endif %}>
+            Nouveautés
+          </option>
+        </select>
+      </div>
+
+      <!-- Products per page -->
+      <div class="collection-per-page">
+        <label for="per-page">Afficher:</label>
+        <select id="per-page" onchange="window.location.href = this.value">
+          <option value="{{ collection.url }}?per_page=16" {% if request.page_size == 16 %}selected{% endif %}>16</option>
+          <option value="{{ collection.url }}?per_page=32" {% if request.page_size == 32 or request.page_size == blank %}selected{% endif %}>32</option>
+          <option value="{{ collection.url }}?per_page=48" {% if request.page_size == 48 %}selected{% endif %}>48</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="product-grid">
+      {% for product in collection.products %}
+        {% render 'product-card', product: product %}
+      {% else %}
+        <div class="collection-empty">
+          <p>Aucun produit trouvé dans cette collection.</p>
+          <a href="/collections/all" class="btn btn-primary">Voir tous les produits</a>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    {% if paginate.pages > 1 %}
+      <div class="pagination">
+        {% if paginate.previous %}
+          <a href="{{ paginate.previous.url }}" class="pagination-link">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M12 4l-8 8 8 8"/>
+            </svg>
+            Précédent
+          </a>
+        {% endif %}
+
+        <span class="pagination-info">
+          Page {{ paginate.current_page }} sur {{ paginate.pages }}
+        </span>
+
+        {% if paginate.next %}
+          <a href="{{ paginate.next.url }}" class="pagination-link">
+            Suivant
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M8 4l8 8-8 8"/>
+            </svg>
+          </a>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% paginate collection.products by 32 %}
+{% endpaginate %}

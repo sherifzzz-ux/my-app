@@ -1,0 +1,131 @@
+<section class="category-grid section-spacing">
+  <div class="container">
+    {% if section.settings.title %}
+      <h2 class="section-title">{{ section.settings.title }}</h2>
+    {% endif %}
+    
+    {% if section.settings.subtitle %}
+      <p class="section-subtitle">{{ section.settings.subtitle }}</p>
+    {% endif %}
+
+    <div class="category-grid__inner">
+      {% for block in section.blocks %}
+        <a 
+          href="{{ block.settings.link }}" 
+          class="category-card"
+          {{ block.shopify_attributes }}
+        >
+          {% if block.settings.image %}
+            <div class="category-card__image">
+              <img 
+                src="{{ block.settings.image | img_url: '600x' }}" 
+                alt="{{ block.settings.title | escape }}"
+                loading="lazy"
+              >
+            </div>
+          {% endif %}
+          
+          <div class="category-card__content">
+            <h3 class="category-card__title">{{ block.settings.title }}</h3>
+            {% if block.settings.count %}
+              <p class="category-card__count">{{ block.settings.count }} produits</p>
+            {% endif %}
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Grille de catégories",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titre",
+      "default": "Nos Catégories"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Sous-titre",
+      "default": "Découvrez nos univers beauté"
+    }
+  ],
+  "max_blocks": 12,
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Catégorie",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titre",
+          "default": "Soin du visage"
+        },
+        {
+          "type": "text",
+          "id": "count",
+          "label": "Nombre de produits"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Lien"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Grille de catégories",
+      "blocks": [
+        {
+          "type": "category",
+          "settings": {
+            "title": "Soin du visage"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Corps & Bain"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Maquillage"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Cheveux"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Parfumerie"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Parapharmacie"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

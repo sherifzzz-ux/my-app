@@ -1,0 +1,159 @@
+<div class="hero-carousel" x-data="{ currentSlide: 0, autoplay: true }" x-init="
+  setInterval(() => {
+    if (autoplay) {
+      currentSlide = (currentSlide + 1) % {{ section.blocks.size }}
+    }
+  }, {{ settings.hero_autoplay_speed | default: 5 }}000)
+">
+  <div class="hero-carousel__container">
+    {% for block in section.blocks %}
+      <div 
+        class="hero-slide" 
+        x-show="currentSlide === {{ forloop.index0 }}"
+        x-transition:enter="transition ease-out duration-500"
+        x-transition:enter-start="opacity-0 transform scale-95"
+        x-transition:enter-end="opacity-100 transform scale-100"
+        {{ block.shopify_attributes }}
+      >
+        <div class="hero-slide__inner">
+          {% if block.settings.image %}
+            <div class="hero-slide__image">
+              <img 
+                src="{{ block.settings.image | img_url: '2048x' }}" 
+                alt="{{ block.settings.title | escape }}"
+                loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+              >
+            </div>
+          {% endif %}
+          
+          <div class="hero-slide__content">
+            <div class="container">
+              <div class="hero-slide__text">
+                {% if block.settings.subtitle %}
+                  <p class="hero-subtitle">{{ block.settings.subtitle }}</p>
+                {% endif %}
+                
+                {% if block.settings.title %}
+                  <h1 class="hero-title">{{ block.settings.title }}</h1>
+                {% endif %}
+                
+                {% if block.settings.description %}
+                  <p class="hero-description">{{ block.settings.description }}</p>
+                {% endif %}
+                
+                {% if block.settings.button_text and block.settings.button_link %}
+                  <a href="{{ block.settings.button_link }}" class="hero-button">
+                    {{ block.settings.button_text }}
+                  </a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- Navigation Dots -->
+  {% if section.blocks.size > 1 %}
+    <div class="hero-carousel__dots">
+      {% for block in section.blocks %}
+        <button 
+          class="hero-dot"
+          :class="{ 'active': currentSlide === {{ forloop.index0 }} }"
+          @click="currentSlide = {{ forloop.index0 }}; autoplay = false"
+          aria-label="Slide {{ forloop.index }}"
+        ></button>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <!-- Navigation Arrows -->
+  {% if section.blocks.size > 1 %}
+    <button 
+      class="hero-arrow hero-arrow--prev"
+      @click="currentSlide = (currentSlide - 1 + {{ section.blocks.size }}) % {{ section.blocks.size }}; autoplay = false"
+      aria-label="Slide précédent"
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M15 18l-6-6 6-6"/>
+      </svg>
+    </button>
+    
+    <button 
+      class="hero-arrow hero-arrow--next"
+      @click="currentSlide = (currentSlide + 1) % {{ section.blocks.size }}; autoplay = false"
+      aria-label="Slide suivant"
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M9 18l6-6-6-6"/>
+      </svg>
+    </button>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Carrousel Hero",
+  "max_blocks": 10,
+  "settings": [],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Sous-titre",
+          "default": "Nouveau"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titre",
+          "default": "Collection Automne/Hiver"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Découvrez notre nouvelle collection de produits de beauté"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Texte du bouton",
+          "default": "Découvrir"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Lien du bouton"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Carrousel Hero",
+      "blocks": [
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

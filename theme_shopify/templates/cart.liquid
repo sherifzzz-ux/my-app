@@ -1,0 +1,155 @@
+<div class="cart-page">
+  <div class="container">
+    <h1 class="page-title">Panier</h1>
+
+    {% if cart.item_count > 0 %}
+      <div class="cart-layout">
+        <!-- Cart Items -->
+        <div class="cart-items-table">
+          {% for item in cart.items %}
+            <div class="cart-row">
+              <!-- Product Image -->
+              <div class="cart-cell cart-cell--image">
+                <a href="{{ item.url }}">
+                  {% if item.image %}
+                    <img 
+                      src="{{ item.image | img_url: '200x' }}" 
+                      alt="{{ item.title | escape }}"
+                      loading="lazy"
+                    >
+                  {% endif %}
+                </a>
+              </div>
+
+              <!-- Product Info -->
+              <div class="cart-cell cart-cell--info">
+                <a href="{{ item.url }}" class="cart-item-title">
+                  {{ item.product.title }}
+                </a>
+                {% if item.variant.title != 'Default Title' %}
+                  <p class="cart-item-variant">{{ item.variant.title }}</p>
+                {% endif %}
+              </div>
+
+              <!-- Price -->
+              <div class="cart-cell cart-cell--price">
+                {% if item.original_price > item.final_price %}
+                  <span class="price price--sale">{{ item.final_price | money }}</span>
+                  <span class="price price--compare">{{ item.original_price | money }}</span>
+                {% else %}
+                  <span class="price">{{ item.final_price | money }}</span>
+                {% endif %}
+              </div>
+
+              <!-- Quantity -->
+              <div class="cart-cell cart-cell--quantity">
+                <div class="quantity-selector">
+                  <button 
+                    class="qty-btn"
+                    onclick="updateCartItem({{ forloop.index }}, {{ item.quantity | minus: 1 }})"
+                    {% if item.quantity <= 1 %}disabled{% endif %}
+                  >−</button>
+                  
+                  <input 
+                    type="number" 
+                    value="{{ item.quantity }}"
+                    min="1"
+                    class="qty-input"
+                    onchange="updateCartItem({{ forloop.index }}, this.value)"
+                  >
+                  
+                  <button 
+                    class="qty-btn"
+                    onclick="updateCartItem({{ forloop.index }}, {{ item.quantity | plus: 1 }})"
+                  >+</button>
+                </div>
+              </div>
+
+              <!-- Total -->
+              <div class="cart-cell cart-cell--total">
+                <span class="price">{{ item.final_line_price | money }}</span>
+              </div>
+
+              <!-- Remove -->
+              <div class="cart-cell cart-cell--remove">
+                <button 
+                  class="btn-remove"
+                  onclick="removeCartItem({{ forloop.index }})"
+                  aria-label="Supprimer"
+                >
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M6 6l8 8M6 14l8-8"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+
+        <!-- Cart Summary -->
+        <div class="cart-summary-box">
+          <h2 class="summary-title">Récapitulatif</h2>
+          
+          <div class="summary-row">
+            <span>Sous-total</span>
+            <span class="summary-value">{{ cart.total_price | money }}</span>
+          </div>
+
+          {% if cart.total_discount > 0 %}
+            <div class="summary-row">
+              <span>Réduction</span>
+              <span class="summary-value">-{{ cart.total_discount | money }}</span>
+            </div>
+          {% endif %}
+
+          <div class="summary-row summary-row--total">
+            <span>Total</span>
+            <span class="summary-value">{{ cart.total_price | money }}</span>
+          </div>
+
+          <p class="summary-note">
+            Les frais de livraison seront calculés à l'étape suivante
+          </p>
+
+          <a href="/checkout" class="btn btn-primary btn-block">
+            Commander
+          </a>
+
+          <a href="/collections/all" class="btn btn-secondary btn-block">
+            Continuer les achats
+          </a>
+        </div>
+      </div>
+    {% else %}
+      <div class="cart-empty">
+        <svg width="100" height="100" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M10 10h12l8 40a5 5 0 005 4h36a5 5 0 005-4l8-40H20"/>
+        </svg>
+        <h2>Votre panier est vide</h2>
+        <p>Découvrez notre sélection de produits de beauté</p>
+        <a href="/collections/all" class="btn btn-primary">
+          Continuer les achats
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+function updateCartItem(line, quantity) {
+  fetch('/cart/change.js', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ line, quantity: parseInt(quantity) })
+  })
+  .then(response => response.json())
+  .then(() => {
+    window.location.reload();
+  })
+  .catch(error => console.error('Error:', error));
+}
+
+function removeCartItem(line) {
+  updateCartItem(line, 0);
+}
+</script>
