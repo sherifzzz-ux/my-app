@@ -15,7 +15,8 @@
     "prebuild": "prisma generate",
     "build:full": "prisma migrate deploy && prisma db seed && next build",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "export:shopify": "node scripts/export-to-shopify.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
