@@ -11,7 +11,7 @@ function getStripe() {
     throw new Error('STRIPE_SECRET_KEY manquant côté serveur')
   }
   return new Stripe(secretKey, {
-    apiVersion: '2025-08-27.basil',
+    apiVersion: '2025-07-30.basil',
   })
 }
 
