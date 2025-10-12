@@ -202,7 +202,7 @@ DATABASE_URL
 ### Stripe Integration
 
 ✅ **Configuration**
-- API version: `2025-07-30.basil`
+- API version: `2025-08-27.basil`
 - Devise: **XOF (CFA)** - devise à 0 décimales
 - Webhook configuré
 
