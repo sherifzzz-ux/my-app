@@ -1,0 +1,50 @@
+{%- comment -%}
+  FlawlessBeauty - Announcement Bar
+  Bandeau USP: "Livraison en moins de 24h à Dakar"
+{%- endcomment -%}
+
+{% if section.settings.show_announcement %}
+  <div class="announcement-bar gradient-primary">
+    <div class="page-width">
+      <div class="announcement-bar__message">
+        {% if section.settings.announcement_icon %}
+          <span class="announcement-bar__icon">
+            {{ section.settings.announcement_icon }}
+          </span>
+        {% endif %}
+        <span class="announcement-bar__text">
+          {{ section.settings.announcement_text | default: "Livraison en moins de 24h à Dakar (hors dimanches/jours fériés) 🚚" }}
+        </span>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+<style>
+  .announcement-bar {
+    background: var(--gradient-primary, linear-gradient(135deg, rgb(247, 146, 204), rgb(252, 174, 217)));
+    color: rgb(255, 255, 255);
+    text-align: center;
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .announcement-bar__message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .announcement-bar__icon {
+    font-size: 1.25rem;
+  }
+
+  @media screen and (max-width: 749px) {
+    .announcement-bar__text {
+      font-size: 0.8125rem;
+    }
+  }
+</style>

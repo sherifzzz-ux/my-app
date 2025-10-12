@@ -1,0 +1,220 @@
+{
+  "name": "FlawlessBeauty Theme Settings",
+  "theme_info": {
+    "name": "FlawlessBeauty Cosmetics",
+    "version": "1.0.0",
+    "description": "Thème e-commerce premium pour cosmétiques et beauté - Design FlawlessBeauty",
+    "author": "FlawlessBeauty Team",
+    "documentation_url": "https://github.com/flawlessbeauty/shopify-theme",
+    "theme_support_url": "https://support.flawlessbeauty.sn"
+  },
+  "color_schemes": [
+    {
+      "name": "FlawlessBeauty Primary",
+      "settings": {
+        "background": "#FFFFFF",
+        "text": "#0C0A09",
+        "button": "#F792CC",
+        "button_label": "#FFFFFF",
+        "secondary_button_label": "#F792CC",
+        "shadow": "#0C0A09"
+      }
+    },
+    {
+      "name": "FlawlessBeauty Muted",
+      "settings": {
+        "background": "#FAF2F7",
+        "text": "#0C0A09",
+        "button": "#F792CC",
+        "button_label": "#FFFFFF",
+        "secondary_button_label": "#F792CC",
+        "shadow": "#0C0A09"
+      }
+    },
+    {
+      "name": "FlawlessBeauty Accent",
+      "settings": {
+        "background": "#FAEBF5",
+        "text": "#A03172",
+        "button": "#F17B64",
+        "button_label": "#FFFFFF",
+        "secondary_button_label": "#F17B64",
+        "shadow": "#A03172"
+      }
+    }
+  ],
+  "typography": {
+    "body_font": {
+      "family": "Inter",
+      "weight": "400",
+      "style": "normal",
+      "fallback": "sans-serif"
+    },
+    "heading_font": {
+      "family": "Playfair Display",
+      "weight": "700",
+      "style": "normal",
+      "fallback": "serif"
+    }
+  },
+  "layout": {
+    "page_width": 1280,
+    "spacing_sections": 60,
+    "spacing_sections_mobile": 40,
+    "spacing_grid_horizontal": 24,
+    "spacing_grid_vertical": 24
+  },
+  "buttons": {
+    "buttons_radius": 12,
+    "buttons_border_thickness": 0,
+    "buttons_border_opacity": 0,
+    "buttons_shadow_opacity": 10,
+    "buttons_shadow_horizontal_offset": 0,
+    "buttons_shadow_vertical_offset": 2,
+    "buttons_shadow_blur": 10
+  },
+  "inputs": {
+    "inputs_radius": 12,
+    "inputs_border_thickness": 1,
+    "inputs_border_opacity": 100,
+    "inputs_shadow_opacity": 0
+  },
+  "cards": {
+    "product_card": {
+      "corner_radius": 12,
+      "border_thickness": 1,
+      "border_opacity": 100,
+      "image_padding": 0,
+      "text_alignment": "left",
+      "shadow_opacity": 15,
+      "shadow_horizontal_offset": 0,
+      "shadow_vertical_offset": 8,
+      "shadow_blur": 30
+    },
+    "collection_card": {
+      "corner_radius": 12,
+      "border_thickness": 1,
+      "border_opacity": 100,
+      "image_padding": 0,
+      "text_alignment": "center",
+      "shadow_opacity": 10,
+      "shadow_horizontal_offset": 0,
+      "shadow_vertical_offset": 4,
+      "shadow_blur": 20
+    }
+  },
+  "media": {
+    "media_radius": 12,
+    "media_border_thickness": 0,
+    "media_border_opacity": 0,
+    "media_shadow_opacity": 5,
+    "media_shadow_horizontal_offset": 0,
+    "media_shadow_vertical_offset": 2,
+    "media_shadow_blur": 10
+  },
+  "animations": {
+    "animations_reveal_on_scroll": true,
+    "animations_hover_elements": "lift"
+  },
+  "currency": {
+    "currency_code": "XOF",
+    "currency_symbol": "CFA",
+    "currency_format": "{{amount_with_comma_separator}} CFA"
+  },
+  "shipping": {
+    "zones": [
+      {
+        "name": "Dakar",
+        "delivery_time": "Moins de 24h",
+        "rates": [
+          {
+            "name": "Livraison Standard Dakar",
+            "price": 2000
+          },
+          {
+            "name": "Livraison Express Dakar",
+            "price": 3500
+          }
+        ]
+      },
+      {
+        "name": "Thiès",
+        "delivery_time": "24-48h",
+        "rates": [
+          {
+            "name": "Livraison Standard Thiès",
+            "price": 3000
+          }
+        ]
+      },
+      {
+        "name": "Autres régions",
+        "delivery_time": "24-72h",
+        "rates": [
+          {
+            "name": "Livraison Standard Région",
+            "price": 4000
+          }
+        ]
+      }
+    ]
+  },
+  "payment_methods": {
+    "enabled": [
+      {
+        "name": "Orange Money",
+        "icon": "orange-money",
+        "enabled": true
+      },
+      {
+        "name": "Wave",
+        "icon": "wave",
+        "enabled": true
+      },
+      {
+        "name": "Visa",
+        "icon": "visa",
+        "enabled": true
+      },
+      {
+        "name": "Mastercard",
+        "icon": "mastercard",
+        "enabled": true
+      }
+    ]
+  },
+  "announcement_bar": {
+    "enabled": true,
+    "text": "Livraison en moins de 24h à Dakar (hors dimanches/jours fériés) 🚚",
+    "link": "/pages/livraison",
+    "show_icon": true
+  },
+  "footer": {
+    "show_payment_icons": true,
+    "show_social_icons": true,
+    "newsletter_enabled": true,
+    "copyright_text": "© 2024 FlawlessBeauty. Tous droits réservés.",
+    "links": {
+      "categories": [
+        "Cadeau & Promo",
+        "Cheveux",
+        "Corps & Bain",
+        "Maquillage",
+        "Parapharmacie"
+      ],
+      "info": [
+        "Nos Marques",
+        "Mon compte",
+        "Blog",
+        "Conditions",
+        "Livraison",
+        "Politique cookies"
+      ]
+    }
+  },
+  "seo": {
+    "site_name": "FlawlessBeauty",
+    "meta_description": "Votre destination beauté au Sénégal. Cosmétiques de qualité, livraison rapide à Dakar.",
+    "social_sharing_image": "/assets/flawless-beauty-og-image.jpg"
+  }
+}
