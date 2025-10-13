@@ -1,7 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Enable static HTML export to generate the out/ directory
+  output: 'export',
   images: {
+    // For static export, Next/Image optimization must be disabled
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
