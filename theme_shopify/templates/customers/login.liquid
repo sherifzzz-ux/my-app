@@ -1,0 +1,48 @@
+<div class="auth-page">
+  <div class="container">
+    <div class="auth-container">
+      <h1 class="auth-title">Connexion</h1>
+
+      {% form 'customer_login' %}
+        {% if form.errors %}
+          <div class="alert alert-error">
+            <p>{{ form.errors | default_errors }}</p>
+          </div>
+        {% endif %}
+
+        <div class="form-group">
+          <label for="customer-email">Adresse email</label>
+          <input 
+            type="email" 
+            name="customer[email]" 
+            id="customer-email"
+            autocomplete="email"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="customer-password">Mot de passe</label>
+          <input 
+            type="password" 
+            name="customer[password]" 
+            id="customer-password"
+            autocomplete="current-password"
+            required
+          >
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary btn-block">
+            Se connecter
+          </button>
+        </div>
+
+        <div class="form-footer">
+          <a href="/account/register">Créer un compte</a>
+          <a href="/account/recover">Mot de passe oublié ?</a>
+        </div>
+      {% endform %}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,77 @@
+<div class="account-page">
+  <div class="container">
+    <h1 class="page-title">Mon compte</h1>
+
+    <div class="account-layout">
+      <!-- Sidebar -->
+      <aside class="account-sidebar">
+        <nav class="account-nav">
+          <a href="/account" class="account-nav-link active">Tableau de bord</a>
+          <a href="/account/addresses" class="account-nav-link">Adresses</a>
+          <a href="/account/logout" class="account-nav-link">Déconnexion</a>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <div class="account-content">
+        <div class="account-info">
+          <h2>Informations personnelles</h2>
+          <p><strong>Nom:</strong> {{ customer.first_name }} {{ customer.last_name }}</p>
+          <p><strong>Email:</strong> {{ customer.email }}</p>
+        </div>
+
+        <!-- Order History -->
+        <div class="account-orders">
+          <h2>Historique des commandes</h2>
+          
+          {% if customer.orders.size > 0 %}
+            <div class="orders-table">
+              {% for order in customer.orders %}
+                <div class="order-row">
+                  <div class="order-cell">
+                    <strong>Commande #{{ order.name }}</strong>
+                    <span class="order-date">{{ order.created_at | date: "%d/%m/%Y" }}</span>
+                  </div>
+                  <div class="order-cell">
+                    <span class="order-status">{{ order.financial_status_label }}</span>
+                  </div>
+                  <div class="order-cell">
+                    <strong>{{ order.total_price | money }}</strong>
+                  </div>
+                  <div class="order-cell">
+                    <a href="{{ order.customer_url }}" class="btn btn-secondary btn-sm">
+                      Voir les détails
+                    </a>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          {% else %}
+            <p class="empty-message">Vous n'avez pas encore passé de commande.</p>
+            <a href="/collections/all" class="btn btn-primary">
+              Découvrir nos produits
+            </a>
+          {% endif %}
+        </div>
+
+        <!-- Default Address -->
+        {% if customer.default_address %}
+          <div class="account-address">
+            <h2>Adresse par défaut</h2>
+            <div class="address-card">
+              <p>{{ customer.default_address.address1 }}</p>
+              {% if customer.default_address.address2 %}
+                <p>{{ customer.default_address.address2 }}</p>
+              {% endif %}
+              <p>{{ customer.default_address.zip }} {{ customer.default_address.city }}</p>
+              <p>{{ customer.default_address.country }}</p>
+            </div>
+            <a href="/account/addresses" class="btn btn-secondary">
+              Gérer mes adresses
+            </a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>

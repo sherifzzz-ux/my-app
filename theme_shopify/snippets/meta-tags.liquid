@@ -1,39 +1,45 @@
-{%- liquid
-  assign og_title = page_title | default: shop.name
-  assign og_url = canonical_url | default: request.origin
-  assign og_type = 'website'
-  assign og_description = page_description | default: shop.description | default: shop.name
-
-  if request.page_type == 'product'
-    assign og_type = 'product'
-  elsif request.page_type == 'article'
-    assign og_type = 'article'
-  elsif request.page_type == 'password'
-    assign og_url = request.origin
-  endif
-%}
-
+<!-- Meta Tags -->
 <meta property="og:site_name" content="{{ shop.name }}">
-<meta property="og:url" content="{{ og_url }}">
-<meta property="og:title" content="{{ og_title | escape }}">
-<meta property="og:type" content="{{ og_type }}">
-<meta property="og:description" content="{{ og_description | escape }}">
+<meta property="og:url" content="{{ canonical_url }}">
+<meta property="og:title" content="{{ page_title | default: shop.name }}">
+<meta property="og:type" content="website">
+<meta property="og:description" content="{{ page_description | default: shop.description | escape }}">
 
-{%- if page_image -%}
-  <meta property="og:image" content="http:{{ page_image | image_url }}">
-  <meta property="og:image:secure_url" content="https:{{ page_image | image_url }}">
-  <meta property="og:image:width" content="{{ page_image.width }}">
-  <meta property="og:image:height" content="{{ page_image.height }}">
-{%- endif -%}
+{% if page_image %}
+  <meta property="og:image" content="http:{{ page_image | img_url: '1200x630' }}">
+  <meta property="og:image:secure_url" content="https:{{ page_image | img_url: '1200x630' }}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+{% elsif settings.seo_image %}
+  <meta property="og:image" content="http:{{ settings.seo_image | img_url: '1200x630' }}">
+  <meta property="og:image:secure_url" content="https:{{ settings.seo_image | img_url: '1200x630' }}">
+{% endif %}
 
-{%- if request.page_type == 'product' -%}
-  <meta property="og:price:amount" content="{{ product.price | money_without_currency | strip_html }}">
-  <meta property="og:price:currency" content="{{ cart.currency.iso_code }}">
-{%- endif -%}
-
-{%- if settings.social_twitter_link != blank -%}
-  <meta name="twitter:site" content="{{ settings.social_twitter_link | split: 'twitter.com/' | last | prepend: '@' }}">
-{%- endif -%}
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="{{ og_title | escape }}">
-<meta name="twitter:description" content="{{ og_description | escape }}">
+<meta name="twitter:title" content="{{ page_title | default: shop.name }}">
+<meta name="twitter:description" content="{{ page_description | default: shop.description | escape }}">
+
+{% if settings.social_twitter %}
+  <meta name="twitter:site" content="{{ settings.social_twitter | split: 'twitter.com/' | last | prepend: '@' }}">
+{% endif %}
+
+<!-- Additional Product Meta -->
+{% if template contains 'product' %}
+  <meta property="og:type" content="product">
+  <meta property="og:price:amount" content="{{ product.price | money_without_currency | strip }}">
+  <meta property="og:price:currency" content="{{ shop.currency }}">
+  {% if product.available %}
+    <meta property="product:availability" content="in stock">
+  {% else %}
+    <meta property="product:availability" content="out of stock">
+  {% endif %}
+{% endif %}
+
+<!-- Theme Color -->
+<meta name="theme-color" content="{{ settings.color_primary }}">
+
+<!-- Mobile Web App -->
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="{{ shop.name }}">

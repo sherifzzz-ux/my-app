@@ -1,0 +1,83 @@
+<section class="featured-products section-spacing">
+  <div class="container">
+    {% if section.settings.title %}
+      <h2 class="section-title">{{ section.settings.title }}</h2>
+    {% endif %}
+    
+    {% if section.settings.subtitle %}
+      <p class="section-subtitle">{{ section.settings.subtitle }}</p>
+    {% endif %}
+
+    <div class="product-grid">
+      {% if section.settings.collection %}
+        {% assign collection = collections[section.settings.collection] %}
+        {% for product in collection.products limit: section.settings.products_limit %}
+          {% render 'product-card', product: product %}
+        {% endfor %}
+      {% else %}
+        {% for product in collections.all.products limit: section.settings.products_limit %}
+          {% render 'product-card', product: product %}
+        {% endfor %}
+      {% endif %}
+    </div>
+
+    {% if section.settings.button_text and section.settings.button_link %}
+      <div class="section-cta">
+        <a href="{{ section.settings.button_link }}" class="btn btn-primary">
+          {{ section.settings.button_text }}
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Produits mis en avant",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titre",
+      "default": "Nos Coups de Cœur"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Sous-titre",
+      "default": "Découvrez notre sélection de produits populaires"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_limit",
+      "label": "Nombre de produits",
+      "min": 4,
+      "max": 20,
+      "step": 4,
+      "default": 8
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Texte du bouton",
+      "default": "Voir tous les produits"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Lien du bouton",
+      "default": "/collections/all"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Produits mis en avant"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,84 @@
+<div class="product-card">
+  <a href="{{ product.url }}" class="product-card__link">
+    <!-- Image -->
+    <div class="product-card__image">
+      {% if product.featured_image %}
+        <img 
+          src="{{ product.featured_image | img_url: '600x' }}" 
+          alt="{{ product.featured_image.alt | default: product.title | escape }}"
+          loading="lazy"
+          width="600"
+          height="800"
+        >
+      {% else %}
+        <div class="product-card__placeholder">
+          <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
+            <rect width="100" height="100" fill="#f3f4f6"/>
+            <path d="M50 30v40M30 50h40" stroke="#9ca3af" stroke-width="2"/>
+          </svg>
+        </div>
+      {% endif %}
+      
+      <!-- Badges -->
+      <div class="product-card__badges">
+        {% if product.compare_at_price > product.price %}
+          <span class="badge badge-promo">
+            -{{ product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price }}%
+          </span>
+        {% endif %}
+        
+        {% if product.tags contains 'nouveau' %}
+          <span class="badge badge-new">Nouveau</span>
+        {% endif %}
+        
+        {% if product.available == false %}
+          <span class="badge badge-sold-out">Rupture</span>
+        {% endif %}
+      </div>
+
+      <!-- Quick Add Button -->
+      {% if product.available and settings.show_quick_add %}
+        <button 
+          class="product-card__quick-add"
+          data-product-id="{{ product.id }}"
+          data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+          onclick="addToCart(event, {{ product.selected_or_first_available_variant.id }})"
+        >
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M3 1h3l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L21 6H6"/>
+          </svg>
+          Ajouter
+        </button>
+      {% endif %}
+    </div>
+
+    <!-- Content -->
+    <div class="product-card__content">
+      <!-- Title -->
+      <h3 class="product-card__title">{{ product.title }}</h3>
+
+      <!-- Brand/Vendor -->
+      {% if product.vendor %}
+        <p class="product-card__vendor">{{ product.vendor }}</p>
+      {% endif %}
+
+      <!-- Price -->
+      <div class="product-card__price">
+        {% if product.compare_at_price > product.price %}
+          <span class="price price--sale">{{ product.price | money }}</span>
+          <span class="price price--compare">{{ product.compare_at_price | money }}</span>
+        {% else %}
+          <span class="price">{{ product.price | money }}</span>
+        {% endif %}
+      </div>
+
+      <!-- Rating (if available) -->
+      {% if product.metafields.reviews.rating.value %}
+        <div class="product-card__rating">
+          {% render 'star-rating', rating: product.metafields.reviews.rating.value %}
+          <span class="rating-count">({{ product.metafields.reviews.rating_count.value }})</span>
+        </div>
+      {% endif %}
+    </div>
+  </a>
+</div>
