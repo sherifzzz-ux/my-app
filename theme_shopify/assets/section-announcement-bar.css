@@ -1,0 +1,183 @@
+/* ===================================================
+   ANNOUNCEMENT BAR - FlawlessBeauty
+   Bandeau USP en haut de page (sticky)
+   =================================================== */
+
+.announcement-bar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--gradient-primary);
+  color: white;
+  padding: 0.75rem 1rem;
+  text-align: center;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.announcement-bar__content {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* Icon avant le texte (optionnel) */
+.announcement-bar__icon {
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+}
+
+/* Lien dans la bannière */
+.announcement-bar a {
+  color: white;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.announcement-bar a:hover {
+  opacity: 0.9;
+}
+
+/* ===== ANIMATIONS ===== */
+
+/* Animation de défilement (si texte long) */
+@keyframes scroll-text {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.announcement-bar__content--scrolling {
+  white-space: nowrap;
+  animation: scroll-text 20s linear infinite;
+}
+
+/* Animation d'apparition */
+@keyframes slide-down {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.announcement-bar {
+  animation: slide-down 0.3s ease-out;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .announcement-bar {
+    font-size: 0.75rem;
+    padding: 0.5rem 1rem;
+  }
+  
+  .announcement-bar__icon {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@media (min-width: 769px) {
+  .announcement-bar {
+    font-size: 0.875rem;
+  }
+}
+
+/* ===== VARIANTS ===== */
+
+/* Urgence (promotions limitées) */
+.announcement-bar--urgent {
+  background: var(--gradient-urgent);
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+/* Succès (livraison gratuite, etc.) */
+.announcement-bar--success {
+  background: linear-gradient(
+    135deg,
+    rgb(var(--color-success)) 0%,
+    rgb(34, 197, 94) 100%
+  );
+}
+
+/* Info (neutre) */
+.announcement-bar--info {
+  background: linear-gradient(
+    135deg,
+    rgb(59, 130, 246) 0%,
+    rgb(96, 165, 250) 100%
+  );
+}
+
+/* ===== BOUTON FERMER (optionnel) ===== */
+.announcement-bar__close {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.announcement-bar__close:hover {
+  opacity: 1;
+}
+
+.announcement-bar__close svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ===== ACCESSIBILITY ===== */
+.announcement-bar:focus-within {
+  outline: 2px solid white;
+  outline-offset: -2px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .announcement-bar {
+    animation: none;
+  }
+  
+  .announcement-bar--urgent {
+    animation: none;
+  }
+  
+  .announcement-bar__content--scrolling {
+    animation: none;
+  }
+}

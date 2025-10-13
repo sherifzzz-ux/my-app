@@ -1,9 +1,11 @@
+{{ 'section-hero-carousel.css' | asset_url | stylesheet_tag }}
+
 <div class="hero-carousel" x-data="{ currentSlide: 0, autoplay: true }" x-init="
   setInterval(() => {
     if (autoplay) {
       currentSlide = (currentSlide + 1) % {{ section.blocks.size }}
     }
-  }, {{ settings.hero_autoplay_speed | default: 5 }}000)
+  }, 5000)
 ">
   <div class="hero-carousel__container">
     {% for block in section.blocks %}

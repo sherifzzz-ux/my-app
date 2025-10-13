@@ -1,4 +1,6 @@
 #!/bin/bash
+# Script de build du thème FlawlessBeauty pour Shopify
+# Usage: ./build-theme.sh
 
 # FlawlessBeauty Theme Builder
 # Ce script crée un fichier ZIP prêt pour Shopify
