@@ -1,12 +1,16 @@
-{% if settings.show_announcement and settings.announcement_text != blank %}
 <div class="announcement-bar">
   <div class="container">
     <div class="announcement-bar__content">
-      {{ settings.announcement_text }}
+      {% if section.settings.announcement_text != blank %}
+        {{ section.settings.announcement_text }}
+      {% else %}
+        LIVRAISON EN MOINS DE 24H À DAKAR (HORS DIMANCHES/JOURS FÉRIÉS)
+      {% endif %}
     </div>
   </div>
 </div>
-{% endif %}
+
+{{ 'section-announcement-bar.css' | asset_url | stylesheet_tag }}
 
 <style>
 .announcement-bar {
@@ -36,6 +40,13 @@
 {% schema %}
 {
   "name": "Bannière d'annonce",
-  "settings": []
+  "settings": [
+    {
+      "type": "text",
+      "id": "announcement_text",
+      "label": "Texte de l'annonce",
+      "default": "LIVRAISON EN MOINS DE 24H À DAKAR (HORS DIMANCHES/JOURS FÉRIÉS)"
+    }
+  ]
 }
 {% endschema %}

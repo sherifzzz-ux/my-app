@@ -1,3 +1,5 @@
+{{ 'section-header.css' | asset_url | stylesheet_tag }}
+
 <header class="header" x-data="{ mobileMenuOpen: false, searchOpen: false }">
   <div class="container">
     <div class="header__inner">
@@ -13,7 +15,10 @@
               loading="eager"
             >
           {% else %}
-            <span class="logo-text">{{ shop.name }}</span>
+            <div style="text-align: center;">
+              <span class="logo-text" style="display: block; font-size: 1.5rem; font-weight: 700; color: rgb(var(--color-primary));">FlawlessBeauty</span>
+              <span style="display: block; font-size: 0.75rem; color: rgb(var(--color-muted-foreground));">Parapharmacie en ligne & Cosmétiques</span>
+            </div>
           {% endif %}
         </a>
       </div>
